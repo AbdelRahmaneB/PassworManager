@@ -1,15 +1,12 @@
 package ub.passwordmanager.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.PersistableBundle;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
@@ -189,7 +186,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
             //Bundle bundle = activeFragment.getArguments();
             //Toast.makeText(getBaseContext(), "Info" + bundle.get("myMessage"), Toast.LENGTH_SHORT).show();
 
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),LogIn.class));
         }
     }
 

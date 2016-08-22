@@ -10,11 +10,22 @@
     <string name="hint_emailAddress">Email address</string>
 
     <string name="l_passwordAccount">Password account information :</string>
-    <string name="hint_password">Enter password</string>
+    <string name="hint_password">Password</string>
     <string name="hint_pwdConfirm">Confirm the password</string>
     <string name="hint_tagVisibility">Visible</string>
 
     <string name="l_note_email">* The email is only used to allow you to recover your password</string>
+
+    <!--******************************************************************************-->
+
+
+
+    <!-- Log In activity -->
+    <string name="title_log_in">Password Manager - log in</string>
+    <string name="button_log_in">Log In</string>
+
+
+
 
     <!--******************************************************************************-->
 

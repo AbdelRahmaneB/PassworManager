@@ -47,6 +47,9 @@ public class SignInUserInfoFragment extends Fragment {
         TextView l_notice = (TextView) view.findViewById(R.id.l_notice);
 //        l_notice.requestFocus();
 
+        TextInputLayout tp = (TextInputLayout) view.findViewById(R.id.input_username);
+        tp.getEditText().setError("haha");
+
 
 
         // Inflate the layout for this fragment
