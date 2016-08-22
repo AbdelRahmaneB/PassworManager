@@ -27,7 +27,9 @@
             android:name=".activities.SignIn"
             android:label="@string/sign_in_part1"
             android:noHistory="true"></activity>
-        <activity android:name=".activities.LogIn"></activity>
+
+        <activity android:name=".activities.LogIn"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>
