@@ -30,7 +30,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         setContentView(R.layout.activity_sign_in);
 
 
-        bt_next = (Button) findViewById(R.id.bt_next);
+        bt_next = (Button) findViewById(R.id.bt__login);
         bt_previous = (Button) findViewById(R.id.bt_previous);
 
 
@@ -46,7 +46,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         }else {
             activeFragment = getSupportFragmentManager().getFragment(savedInstanceState, "activeFragment");
            if( activeFragment.getClass() == FragmentFactory.getInstance().getSignInPwdInfoFragment().getClass()){
-               actionsOfTheButtons(R.id.bt_next);
+               actionsOfTheButtons(R.id.bt__login);
             }
         }
 
@@ -55,7 +55,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionsOfTheButtons(R.id.bt_next);
+                actionsOfTheButtons(R.id.bt__login);
             }
         });
 
@@ -104,7 +104,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     private void actionsOfTheButtons(int IdButton) {
 
         switch (IdButton) {
-            case R.id.bt_next:
+            case R.id.bt__login:
                 // Go to the next fragment - "Password information fragment"
                 ActionForButtonNext();
                 break;

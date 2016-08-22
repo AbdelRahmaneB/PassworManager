@@ -6,13 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import ub.passwordmanager.R;
 
@@ -47,8 +41,8 @@ public class SignInUserInfoFragment extends Fragment {
         TextView l_notice = (TextView) view.findViewById(R.id.l_notice);
 //        l_notice.requestFocus();
 
-        TextInputLayout tp = (TextInputLayout) view.findViewById(R.id.input_username);
-        tp.getEditText().setError("haha");
+        TextInputLayout tp = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
+        tp.getEditText().setError("Error");
 
 
 
