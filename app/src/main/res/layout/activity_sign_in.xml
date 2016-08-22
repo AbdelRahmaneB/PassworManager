@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context=".activities.SignIn">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".activities.SignIn">
-
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="60dp"
+        android:id="@+id/myScroll">
         <!-- Content Fragment - This FrameLayout will contain our Fragment-->
         <FrameLayout
             android:id="@+id/signIn_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="match_parent">
 
         </FrameLayout>
 
+    </ScrollView>
 
-        <!-- This layout contain the buttons for the Next, Previous and Save actions-->
-        <LinearLayout
-            android:layout_width="match_parent"
+
+    <!-- This layout contain the buttons for the Next, Previous and Save actions-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/bt_previous"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/signIn_fragment_container"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_weight="1"
+            android:elevation="2dp"
+            android:text="Previous"
+            android:theme="@style/MyButton"
+            android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/bt_previous"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:elevation="2dp"
-                android:text="Previous"
-                android:theme="@style/MyButton" />
-
-            <Button
-                android:id="@+id/bt_next"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:elevation="2dp"
-                android:text="Next"
-                android:theme="@style/MyButton" />
+        <Button
+            android:id="@+id/bt_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:elevation="2dp"
+            android:text="Next"
+            android:theme="@style/MyButton" />
 
 
-        </LinearLayout>
+    </LinearLayout>
 
 
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>
+
 
 

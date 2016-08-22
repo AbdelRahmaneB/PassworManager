@@ -1,5 +1,6 @@
 package ub.passwordmanager.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
@@ -45,8 +46,6 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
             fragmentManager.beginTransaction()
                     .replace(R.id.signIn_fragment_container, activeFragment)
                     .commit();
-
-            bt_previous.setVisibility(View.INVISIBLE);
         }else {
             activeFragment = getSupportFragmentManager().getFragment(savedInstanceState, "activeFragment");
            if( activeFragment.getClass() == FragmentFactory.getInstance().getSignInPwdInfoFragment().getClass()){
@@ -189,6 +188,8 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
              */
             //Bundle bundle = activeFragment.getArguments();
             //Toast.makeText(getBaseContext(), "Info" + bundle.get("myMessage"), Toast.LENGTH_SHORT).show();
+
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
     }
 
