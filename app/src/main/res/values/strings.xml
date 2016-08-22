@@ -23,6 +23,7 @@
     <!-- Log In activity -->
     <string name="title_log_in">Password Manager - log in</string>
     <string name="button_log_in">Log In</string>
+    <string name="button_forgot_pass">Forgot password ?</string>
 
 
 
