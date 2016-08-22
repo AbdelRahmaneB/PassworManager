@@ -1,0 +1,127 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="ub.passwordmanager.fragments.Connection.SignIn.SignInPwdInfoFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|top">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="29dp"
+                android:src="@drawable/app_logo" />
+
+            <!--*************************************************************************-->
+
+            <TextView
+                android:id="@+id/l_titlePwdInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/l_passwordAccount"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/tertiary_text_dark" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iv_my_visibility"
+                android:tag="@string/hint_tagVisibility"
+                android:src="@drawable/ic_visibility"
+                android:layout_alignRight="@+id/l_titlePwdInfo"
+                android:layout_alignEnd="@+id/pi_separator1"
+                android:layout_below="@+id/imageView2"
+                android:layout_marginTop="15dp"/>
+
+            <View
+                android:id="@+id/pi_separator1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_below="@+id/l_titlePwdInfo"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/Gray_separator" />
+
+            <!--*************************************************************************-->
+
+            <ImageView
+                android:id="@+id/iv_password"
+                android:layout_width="30dip"
+                android:layout_height="40dip"
+                android:layout_alignBottom="@+id/input_password"
+                android:layout_alignLeft="@+id/pi_separator1"
+                android:layout_alignStart="@+id/pi_separator1"
+                android:src="@drawable/ic_pwd" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pi_separator1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/iv_password">
+
+                <EditText
+                    android:id="@+id/t_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_password"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--*************************************************************************-->
+
+            <ImageView
+                android:id="@+id/iv_confirmPwd"
+                android:layout_width="30dip"
+                android:layout_height="40dip"
+                android:layout_alignBottom="@+id/input_confirmPwd"
+                android:layout_toLeftOf="@+id/input_password"
+                android:layout_toStartOf="@+id/input_password"
+                android:src="@drawable/ic_replay" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_confirmPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_password"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/iv_confirmPwd">
+
+                <EditText
+                    android:id="@+id/t_confirmPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_pwdConfirm"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</ScrollView>

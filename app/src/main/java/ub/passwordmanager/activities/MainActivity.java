@@ -1,7 +1,9 @@
-package ub.passwordmanager;
+package ub.passwordmanager.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ub.passwordmanager.R;
 
 public class MainActivity extends AppCompatActivity {
 

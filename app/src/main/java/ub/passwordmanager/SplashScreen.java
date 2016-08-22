@@ -7,6 +7,8 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ub.passwordmanager.activities.SignIn;
+
 /**
  * Description : Splash Screen
  * In this class we will decide if we have to send the user to
@@ -24,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), SignIn.class));
             }
         }, 2000);
     }
