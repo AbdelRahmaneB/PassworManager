@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.SignIn">
+
+        <!-- Content Fragment - This FrameLayout will contain our Fragment-->
+        <FrameLayout
+            android:id="@+id/signIn_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="450dp">
+
+        </FrameLayout>
+
+
+        <!-- This layout contain the buttons for the Next, Previous and Save actions-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/signIn_fragment_container"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/bt_previous"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:elevation="2dp"
+                android:text="Previous"
+                android:theme="@style/MyButton" />
+
+            <Button
+                android:id="@+id/bt_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:elevation="2dp"
+                android:text="Next"
+                android:theme="@style/MyButton" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</ScrollView>
+
+

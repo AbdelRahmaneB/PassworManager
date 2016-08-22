@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!--Theme Color-->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#303F9F</color>
+
+    <!--Button Color-->
+    <color name="bt_disabled">#8e99d7</color>
+    <color name="bt_HighLight">#2e3b84</color>
+
+
+    <color name="black_overlay">#49000000</color>
+    <color name="white_overlay">#cbffffff</color>
+    <color name="Gray_separator">#bfbfbf</color>
+
+
 </resources>

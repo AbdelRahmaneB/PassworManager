@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Password Manager</string>
+
+    <!-- SingIn fragments area -->
+    <string name="sign_in_part1">SignIn - User information</string>
+    <string name="sign_in_part2">SignIn - Password information</string>
+
+    <string name="l_user_account">User account information :</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_emailAddress">Email address</string>
+
+    <string name="l_passwordAccount">Password account information :</string>
+    <string name="hint_password">Enter password</string>
+    <string name="hint_pwdConfirm">Confirm the password</string>
+    <string name="hint_tagVisibility">Visible</string>
+
+    <string name="l_note_email">* The email is only used to allow you to recover your password</string>
+
+    <!--******************************************************************************-->
+
+
 </resources>

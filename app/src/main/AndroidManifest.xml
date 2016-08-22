@@ -8,15 +8,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- The field <android:noHistory="true"> notify the system
-             that he can't keep this activity in the activity stack-->
-        <activity android:name=".SplashScreen" android:noHistory="true">
+
+        <!--
+             The field <android:noHistory="true"> notify the system
+             that he can't keep this activity in the activity stack
+        -->
+        <activity
+            android:name=".SplashScreen"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".activities.MainActivity" />
+
+        <activity
+            android:name=".activities.SignIn"
+            android:label="@string/sign_in_part1"
+            >
+
+        </activity>
     </application>
 
 </manifest>
