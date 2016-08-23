@@ -4,13 +4,20 @@ This README Is destined to explain the purpose of the application and how to get
 
 ### General information. ###
 
-* Quick summary
++ Quick summary
+    * Description
+    * Fonctionalities
+    * Compatibility
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### Getting started ###
 
 * Summary of set up (How to get to work on this repo)
+
+    * To get the latest changes : `git pull`
+    
+
 * Configuration (The current configuration, environment, target and sdk)
 * Dependencies (if there is any)
 * Database configuration (if there is any)
