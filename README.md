@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README Is destined to explain the purpose of the application and how to get it, plus some screen shots of the main functionalities.
 
 ### What is this repository for? ###
 
