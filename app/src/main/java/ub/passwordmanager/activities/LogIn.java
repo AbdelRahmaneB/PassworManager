@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ub.passwordmanager.R;
@@ -38,6 +39,14 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
+        TextView forgotPwd = (TextView) findViewById(R.id.l_forgotPassword);
+        forgotPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),PasswordRecovery.class));
             }
         });
 

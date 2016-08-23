@@ -19,16 +19,20 @@
     <!--******************************************************************************-->
 
 
-
     <!-- Log In activity -->
     <string name="title_log_in">Password Manager - log in</string>
     <string name="button_log_in">Log In</string>
     <string name="button_forgot_pass">Forgot password ?</string>
 
-
-
-
     <!--******************************************************************************-->
+
+    <string name="title_password_recovery">Password recovery</string>
+    <string name="label_password_recovery">
+        This page will allow you to get a new password to access the application
+        and recover your data. it\'s recommended that you change this password once
+        logged in. This operation may take a few minutes.
+    </string>
+    <string name="button_recover">Recover password</string>
 
 
 </resources>
