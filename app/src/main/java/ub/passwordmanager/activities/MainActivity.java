@@ -141,6 +141,10 @@ public class MainActivity extends AppCompatActivity
 
                 // Change the title
                 setTitle(navigationView.getMenu().getItem(index).getTitle().toString());
+
+                // set the visibility of the floating button
+                FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab);
+                mFab.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -164,6 +168,10 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
             activeFragment = toFragment;
+
+            // set the visibility of the floating button
+            FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab);
+            mFab.setVisibility(View.VISIBLE);
         }
     }
 
