@@ -64,10 +64,14 @@
     <!--******************************************************************************-->
 
     <!-- Settings Fragment -->
+    <string-array name="setting_list_view_items">
+        <item>Language</item>
+        <item>Theme</item>
+    </string-array>
     <!--******************************************************************************-->
 
     <!-- About Fragment -->
-    <string name="about_app_title">Password Manager®</string>
+    <string name="about_app_title">Password Manager</string>
     <string name="about_version">Version : 1.0.0</string>
     <string name="about_author">Author : Ucef Ben®</string>
     <string name="about_year">[Year]</string>

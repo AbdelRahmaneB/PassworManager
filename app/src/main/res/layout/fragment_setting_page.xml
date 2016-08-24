@@ -5,11 +5,16 @@
     android:tag="@string/nav_label_setting"
     tools:context="ub.passwordmanager.fragments.mainActivities.SettingPage">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_label_setting"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_gravity="center" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:id="@+id/settings_list_view"
+        android:layout_gravity="center_horizontal|top"
+        android:entries="@array/setting_list_view_items"
+        />
+
+
 
 </FrameLayout>
