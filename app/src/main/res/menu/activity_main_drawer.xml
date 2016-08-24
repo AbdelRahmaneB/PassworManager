@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_label_home" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_account"
+            android:title="@string/nav_label_profile" />
+
+        <item
+            android:id="@+id/nav_import_export"
+            android:icon="@drawable/ic_import_export"
+            android:title="@string/nav_label_ie" />
+
+
+        <item
+            android:id="@+id/nav_password_generator"
+            android:icon="@drawable/ic_pwd_gen"
+            android:title="@string/nav_label_pwd_gen" />
+
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/nav_label_setting" />
+
+        <item
+            android:id="@+id/nav_About"
+            android:icon="@drawable/ic_info"
+            android:title="@string/nav_label_about" />
+
+    </group>
+
+</menu>

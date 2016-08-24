@@ -26,6 +26,7 @@
 
     <!--******************************************************************************-->
 
+    <!-- Password recovery -->
     <string name="title_password_recovery">Password recovery</string>
     <string name="label_password_recovery">
         This page will allow you to get a new password to access the application
@@ -33,6 +34,20 @@
         logged in. This operation may take a few minutes.
     </string>
     <string name="button_recover">Recover password</string>
+    <!--******************************************************************************-->
+
+    <!-- Menu Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_label_home">Home</string>
+    <string name="nav_label_profile">Profile</string>
+    <string name="nav_label_ie">Import / Export</string>
+    <string name="nav_label_pwd_gen">Password generator</string>
+    <string name="nav_label_setting">Settings</string>
+    <string name="nav_label_about">About</string>
+    <!--******************************************************************************-->
+
 
 
 </resources>
