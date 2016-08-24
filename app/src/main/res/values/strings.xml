@@ -61,6 +61,29 @@
     <!--******************************************************************************-->
 
     <!-- Password generator Fragment -->
+    <string name="label_pwd_gen_header">
+        This tool allows you to generate a random password.\n\nThe options section,
+        allow you to select the configuration you want for your generated password.
+    </string>
+    <string name="hint_pwd_gen">Generated password</string>
+    <string name="button_generate">Generate password</string>
+    <string name="l_pwd_gen">The generated password information :</string>
+    <string name="l_pwd_gen_option">Options :</string>
+
+
+    <string name="opt_title1">Use lower case </string>
+    <string name="opt_title2">Use upper case</string>
+    <string name="opt_title3">Use symbols</string>
+    <string name="opt_title5">Use numbers</string>
+    <string name="opt_title4">Password length :</string>
+
+    <string name="opt_title1_desc">You can use the lower case characters to generate the password (a-z).</string>
+    <string name="opt_title2_desc">You can use the upper case characters to generate the password (A-Z).</string>
+    <string name="opt_title3_desc">You can use the symbols to generate the password (,%:#;_).</string>
+    <string name="opt_title5_desc">You can use the numbers to generate the password (1 &#8211; 9)</string>
+    <string name="opt_title4_desc">Password length :</string>
+
+
     <!--******************************************************************************-->
 
     <!-- Settings Fragment -->
