@@ -157,7 +157,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
      */
     private void ActionForButtonNext() {
 
-        if ("Next".equals(bt_next.getText().toString())) {
+        if (getResources().getString(R.string.bt_text_next).equals(bt_next.getText().toString())) {
 
             // Switch the active fragment to "Password information fragment"
             switchFragment(FragmentFactory.getInstance().getSignInPwdInfoFragment(), true);
@@ -172,11 +172,11 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
 
             // Change The visibility, button text and the activity title.
             bt_previous.setVisibility(View.VISIBLE);
-            bt_next.setText("Save");
+            bt_next.setText(getResources().getString(R.string.bt_text_register));
             setTitle(R.string.sign_in_part2);
 
         } else {
-            // TODO : Text is "Save" : Call for saving Data and move to login page
+            // TODO : Text is "Register" : Call for saving Data and move to login page
             /** Steps :
              * 1) Get the information from the previews fragment.
              * 2) Create a user Object and send it to the data base.
@@ -201,7 +201,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
 
         // Change The visibility, button text and the activity title.
         bt_previous.setVisibility(View.INVISIBLE);
-        bt_next.setText("Next");
+        bt_next.setText(getResources().getString(R.string.bt_text_next));
         setTitle(R.string.sign_in_part1);
     }
 
