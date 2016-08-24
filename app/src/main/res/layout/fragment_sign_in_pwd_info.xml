@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="ub.passwordmanager.fragments.Connection.SignIn.SignInPwdInfoFragment">
+    tools:context=".fragments.Registration.SignInPwdInfoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

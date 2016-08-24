@@ -14,6 +14,5 @@ import android.support.v4.app.Fragment;
  */
 public interface OnFragmentInteractionListener {
     void onSwitchToMainFragmentView();
-
     void onSwitchToFragmentView(Fragment fragment);
 }

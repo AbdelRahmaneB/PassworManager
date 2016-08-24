@@ -17,9 +17,6 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     // This field will contain the active fragment
     private Fragment activeFragment = null;
 
-    // This field to get the support fragment
-    private FragmentManager fragmentManager = null;
-
     // The view fields
     private Button bt_next = null;
     private Button bt_previous = null;
@@ -38,18 +35,17 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         if (savedInstanceState == null) {
             // This field allow us to keep in memory the active fragment
             activeFragment = FragmentFactory.getInstance().getSignInUserInfoFragment();
-            fragmentManager = getSupportFragmentManager();
 
-            fragmentManager.beginTransaction()
+            // Allow to place the current fragment int the fragment container
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.signIn_fragment_container, activeFragment)
                     .commit();
-        }else {
+        } else {
             activeFragment = getSupportFragmentManager().getFragment(savedInstanceState, "activeFragment");
-           if( activeFragment.getClass() == FragmentFactory.getInstance().getSignInPwdInfoFragment().getClass()){
-               actionsOfTheButtons(R.id.bt__login);
+            if (activeFragment.getClass() == FragmentFactory.getInstance().getSignInPwdInfoFragment().getClass()) {
+                actionsOfTheButtons(R.id.bt__login);
             }
         }
-
 
 
         bt_next.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +77,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the state of the Activity
-        getSupportFragmentManager().putFragment(savedInstanceState,"activeFragment",activeFragment);
+        getSupportFragmentManager().putFragment(savedInstanceState, "activeFragment", activeFragment);
 
 
         // Always call the superclass so it can save the view hierarchy state
@@ -121,6 +117,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     }
 
 
+    // TODO : find a solution to not duplication this part of the code
     /**
      * Description
      * This function allow us to switch between the fragments
@@ -131,8 +128,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     protected void switchFragment(Fragment toFragment, boolean LeftToRight) {
         if (activeFragment != toFragment) {
             // Insert the fragment by replacing any existing fragment
-            fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations((LeftToRight) ? R.anim.trans_left_in : R.anim.trans_right_in,
                             (LeftToRight) ? R.anim.trans_left_out : R.anim.trans_right_out)
                     .hide(activeFragment)
@@ -186,7 +182,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
             //Bundle bundle = activeFragment.getArguments();
             //Toast.makeText(getBaseContext(), "Info" + bundle.get("myMessage"), Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(getApplicationContext(),LogIn.class));
+            startActivity(new Intent(getApplicationContext(), LogIn.class));
         }
     }
 

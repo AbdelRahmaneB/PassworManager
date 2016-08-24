@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments.Connection.SignIn;
+package ub.passwordmanager.fragments.Registration;
 
 import android.content.Context;
 import android.net.Uri;
