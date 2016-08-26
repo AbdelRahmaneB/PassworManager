@@ -13,20 +13,20 @@
         <!-- Header of the Fragment -->
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ie_gen_header"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:focusableInTouchMode="true"
-            android:id="@+id/ie_gen_header"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/label_ie_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ie_title"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:text="@string/ie_title"
+                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
         </RelativeLayout>
 
@@ -37,17 +37,67 @@
         <!-- Body for generating the password -->
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@+id/ie_gen_header"
             android:layout_gravity="center">
 
-            <!-- The options -->
+            <!-- Imports Title -->
+            <TextView
+                android:id="@+id/l_import_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/l_imports_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/tertiary_text_dark" />
 
+            <View
+                android:id="@+id/ui_separator1"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_below="@+id/l_import_options"
+                android:background="@color/Gray_separator" />
+
+            <!-- The Import options -->
             <ListView
                 android:id="@+id/ie_options_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ui_separator1" />
+
+
+            <!-- Export Title -->
+            <TextView
+                android:id="@+id/l_export_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ie_options_list"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/l_export_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/tertiary_text_dark" />
+
+            <View
+                android:id="@+id/ui_separator2"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_below="@+id/l_export_options"
+                android:background="@color/Gray_separator" />
+
+            <!-- The Export Options -->
+
+            <ListView
+                android:id="@+id/ie_options_list_export"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ui_separator2" />
 
 
         </RelativeLayout>

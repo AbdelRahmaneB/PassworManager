@@ -2,6 +2,7 @@ package ub.passwordmanager.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class ImportExportListAdapter extends BaseAdapter {
     // Our Data from the fragment
     private String[] mTitles;
     private String[] mDesc;
+
 
     // Get the Context and the layoutInflater from the Fragment
     private Context mContext;

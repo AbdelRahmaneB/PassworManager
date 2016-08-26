@@ -14,8 +14,10 @@ import ub.passwordmanager.adapters.ImportExportListAdapter;
 public class ImportExportPage extends Fragment {
 
     // Our data for the Adapter
-    private String[] mTitles;
-    private String[] mDesc;
+    private String[] mImportTitles;
+    private String[] mImportDesc;
+    private String[] mExportTitles;
+    private String[] mExportDesc;
 
     public ImportExportPage() {
         // Required empty public constructor
@@ -40,13 +42,16 @@ public class ImportExportPage extends Fragment {
         initialiseTheData();
 
         // Declare and initialise the ListView
-        ListView mOptionList = (ListView) view.findViewById(R.id.ie_options_list);
+        ListView mImportOptionList = (ListView) view.findViewById(R.id.ie_options_list);
+        ListView mExportOptionList = (ListView) view.findViewById(R.id.ie_options_list_export);
 
         // Create a custom adapter and initialise it.
-        ImportExportListAdapter mListAdapter = new ImportExportListAdapter(getActivity(),mTitles,mDesc);
+        ImportExportListAdapter mImportListAdapter = new ImportExportListAdapter(getActivity(),mImportTitles,mImportDesc);
+        ImportExportListAdapter mExportListAdapter = new ImportExportListAdapter(getActivity(),mExportTitles,mExportDesc);
 
         // Add the adapter to the ListView
-        mOptionList.setAdapter(mListAdapter);
+        mImportOptionList.setAdapter(mImportListAdapter);
+        mExportOptionList.setAdapter(mExportListAdapter);
 
         // Deactivate the Floating button
         FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -59,18 +64,24 @@ public class ImportExportPage extends Fragment {
      * This function initialise the data for our ListView.
      */
     private void initialiseTheData() {
-        mTitles = new String[]{
-                getResources().getString(R.string.ie_title1),
+        mImportTitles = new String[]{
                 getResources().getString(R.string.ie_title2),
-                getResources().getString(R.string.ie_title3),
                 getResources().getString(R.string.ie_title4),
         };
 
-        mDesc = new String[]{
-                getResources().getString(R.string.ie_title1_desc),
+        mExportTitles = new String[]{
+                getResources().getString(R.string.ie_title1),
+                getResources().getString(R.string.ie_title3),
+        };
+
+        mImportDesc = new String[]{
                 getResources().getString(R.string.ie_title2_desc),
-                getResources().getString(R.string.ie_title3_desc),
                 getResources().getString(R.string.ie_title4_desc),
+        };
+
+        mExportDesc = new String[]{
+                getResources().getString(R.string.ie_title1_desc),
+                getResources().getString(R.string.ie_title3_desc),
         };
 
     }

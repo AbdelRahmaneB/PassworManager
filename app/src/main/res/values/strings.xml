@@ -63,6 +63,10 @@
         Note that it is recommended to backup your data frequently.
     </string>
 
+    <string name="l_imports_title">Data import :</string>
+    <string name="l_export_title">Data export :</string>
+
+
     <string name="ie_title1">Export the dataBase</string>
     <string name="ie_title2">Import the dataBase</string>
     <string name="ie_title3">Export data</string>
