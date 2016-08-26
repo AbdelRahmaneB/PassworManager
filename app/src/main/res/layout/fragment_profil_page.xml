@@ -158,27 +158,15 @@
             android:layout_alignStart="@+id/pi_separator1"
             android:src="@drawable/ic_pwd" />
 
-        <ImageView
-            android:id="@+id/iv_pwd_gen_prof"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/pi_separator1"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/password_gen"
-            android:tag="@string/hint_tagVisibility" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_pwd_prof"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pi_separator1"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/iv_pwd_prof"
@@ -189,11 +177,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/iv_pwd_signIn"
-                android:hint="@string/hint_password"
+                android:hint="@string/hint_password_old"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
+        <!--*************************************************************************-->
+
+
+        <ImageView
+            android:id="@+id/iv_pwd_new_prof"
+            android:layout_width="30dip"
+            android:layout_height="40dip"
+            android:layout_alignBottom="@+id/input_pwd_new_prof"
+            android:layout_alignLeft="@+id/pi_separator1"
+            android:layout_alignStart="@+id/pi_separator1"
+            android:src="@drawable/ic_pwd" />
+
+        <ImageView
+            android:id="@+id/iv_pwd_gen_prof"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/input_pwd_prof"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/password_gen"
+            android:tag="@string/hint_tagVisibility" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_pwd_new_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_pwd_prof"
+            android:layout_marginEnd="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/iv_pwd_prof"
+            android:layout_toRightOf="@+id/iv_pwd_prof">
+
+            <EditText
+                android:id="@+id/t_password_new_prof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_pwd_signIn"
+                android:hint="@string/hint_password_new"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
         <!--*************************************************************************-->
 
         <ImageView
@@ -209,7 +244,7 @@
             android:id="@+id/input_confirmPwd_prof"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_pwd_prof"
+            android:layout_below="@+id/input_pwd_new_prof"
             android:layout_marginEnd="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
@@ -238,7 +273,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/button_save_profile"
             android:theme="@style/MyButton" />
 

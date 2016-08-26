@@ -11,6 +11,8 @@
 
     <string name="l_passwordAccount">Password account information :</string>
     <string name="hint_password">Password</string>
+    <string name="hint_password_new">New password</string>
+    <string name="hint_password_old">Old password</string>
     <string name="hint_pwdConfirm">Confirm the password</string>
     <string name="hint_tagVisibility">Visible</string>
 
