@@ -22,7 +22,7 @@ public class PwdGenListAdapter extends BaseAdapter {
     private String[] mDesc;
     private int[] mCb;
 
-    Context context;
+    private Context context;
     private static LayoutInflater inflater = null;
 
     public PwdGenListAdapter(Activity mainActivity, String[] titles, String[] desc, int[] cb) {
@@ -54,7 +54,7 @@ public class PwdGenListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Holder holder = new Holder();
-        View view  = inflater.inflate(R.layout.adapter_row_option_list, null);
+        View view = inflater.inflate(R.layout.adapter_row_option_list, null);
 
         holder.title = (TextView) view.findViewById(R.id.l_opt_title);
         holder.desc = (TextView) view.findViewById(R.id.l_opt_sub_item);
@@ -69,7 +69,8 @@ public class PwdGenListAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "You Clicked " + mTitles[position], Toast.LENGTH_LONG).show();
+                // Todo : when the item Clicked select the checkBox
+                Toast.makeText(context, "You Clicked " + mTitles[position], Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -77,10 +78,17 @@ public class PwdGenListAdapter extends BaseAdapter {
     }
 
 
+    /**
+     *  This Holder class allow us to set the model for our listView Adapter
+     */
+    private class Holder {
 
-    public class Holder {
-        TextView title;
-        TextView desc;
-        CheckBox cb;
+        private TextView title;
+        private TextView desc;
+        private CheckBox cb;
+
+        Holder() {
+            // leave it empty
+        }
     }
 }

@@ -58,12 +58,36 @@
     <!--******************************************************************************-->
 
     <!-- Import / Export Fragment -->
+    <string name="ie_title">
+        This tool helps you to import and export your data.\n
+        Note that it is recommended to backup your data frequently.
+    </string>
+
+    <string name="ie_title1">Export the dataBase</string>
+    <string name="ie_title2">Import the dataBase</string>
+    <string name="ie_title3">Export data</string>
+    <string name="ie_title4">Import data</string>
+
+
+    <string name="ie_title1_desc">
+        This option helps you to export your dataBase to your phone
+    </string>
+    <string name="ie_title2_desc">
+        This option helps you to import an existing dataBase.
+        Note that this action will replace the current data.
+    </string>
+    <string name="ie_title3_desc">
+        This option allows you to export your data to an XML file.
+    </string>
+    <string name="ie_title4_desc">
+        This option allows you to import your data from an XML file.
+    </string>
+
     <!--******************************************************************************-->
 
     <!-- Password generator Fragment -->
     <string name="label_pwd_gen_header">
-        This tool allows you to generate a random password.\n\nThe options section,
-        allow you to select the configuration you want for your generated password.
+        This tool allows you to generate a random password.
     </string>
     <string name="hint_pwd_gen">Generated password</string>
     <string name="button_generate">Generate password</string>

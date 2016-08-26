@@ -1,15 +1,60 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="@string/nav_label_ie"
-    tools:context="ub.passwordmanager.fragments.mainActivities.ImportExportPage">
+    android:background="@drawable/bg_image"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nav_label_ie"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_gravity="center" />
+        android:focusableInTouchMode="true">
 
-</FrameLayout>
+        <!-- Header of the Fragment -->
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:focusableInTouchMode="true"
+            android:id="@+id/ie_gen_header"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/label_ie_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ie_title"
+                android:textAppearance="?android:attr/textAppearanceSmallInverse"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+
+        <!--**********************************************************-->
+
+
+        <!-- Body for generating the password -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ie_gen_header"
+            android:layout_gravity="center">
+
+            <!-- The options -->
+
+            <ListView
+                android:id="@+id/ie_options_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+        </RelativeLayout>
+
+        <!--**********************************************************-->
+
+
+    </RelativeLayout>
+
+</ScrollView>
