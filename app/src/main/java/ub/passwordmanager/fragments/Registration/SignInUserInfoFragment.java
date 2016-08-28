@@ -42,7 +42,7 @@ public class SignInUserInfoFragment extends Fragment {
 //        l_notice.requestFocus();
 
         TextInputLayout tp = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
-        tp.getEditText().setError("Error");
+        //tp.getEditText().setError("Error");
 
 
 

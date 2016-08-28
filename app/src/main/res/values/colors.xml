@@ -16,6 +16,8 @@
     <color name="Gray_separator">#bfbfbf</color>
     <color name="invisible_text">#f2f2f2</color>
 
+    <color name="bg_cardView">#f2f2f2</color>
+
     <color name="transparent">#00000000</color>
 
 

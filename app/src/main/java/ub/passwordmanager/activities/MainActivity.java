@@ -26,56 +26,61 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-        // Add the customized action bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+            // Add the customized action bar
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        // Add the even handler for the floating button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO : Add the action for creation a new account
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            // Add the even handler for the floating button
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO : Add the action for creation a new account
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
 
-        // Add the navigation menu drawer to the view
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            // Add the navigation menu drawer to the view
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
 
-        // Add the listener for our navigation menu
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            // Add the listener for our navigation menu
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
 
-        // Get the default Fragment to show when the user log in or changed view
-        if (savedInstanceState == null)
-            activeFragment = FragmentFactory.getInstance().getFragment(-1);
-        else
-            activeFragment = getSupportFragmentManager()
-                    .getFragment(savedInstanceState
-                            , "activeFragment");
+            // Get the default Fragment to show when the user log in or changed view
+            if (savedInstanceState == null)
+                activeFragment = FragmentFactory.getInstance().getFragment(-1);
+            else
+                activeFragment = getSupportFragmentManager()
+                        .getFragment(savedInstanceState
+                                , "activeFragment");
 
-        // Allow to place the current fragment int the fragment container
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.my_frame_container, activeFragment)
-                .commit();
+            // Allow to place the current fragment int the fragment container
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.my_frame_container, activeFragment)
+                    .commit();
 
-        // Change the stat of the activity
-        changeActivityState(
-                FragmentFactory
-                        .getInstance()
-                        .getIndexOf(activeFragment
-                                .getClass()
-                                .getSimpleName())
-        );
+            // Change the stat of the activity
+            changeActivityState(
+                    FragmentFactory
+                            .getInstance()
+                            .getIndexOf(activeFragment
+                                    .getClass()
+                                    .getSimpleName())
+            );
+        }catch(Exception ex){
+
+        }
+
 
     }
 
@@ -145,6 +150,9 @@ public class MainActivity extends AppCompatActivity
                 switchFragment(FragmentFactory.getInstance().getFragment(-1), false);
         }
     }
+
+
+
 
     /**
      * Description
