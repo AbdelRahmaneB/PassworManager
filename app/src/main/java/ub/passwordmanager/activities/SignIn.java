@@ -3,16 +3,15 @@ package ub.passwordmanager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.fragments.OnFragmentInteractionListener;
+import ub.passwordmanager.fragments.OnDataPass;
 
-public class SignIn extends AppCompatActivity implements OnFragmentInteractionListener {
+public class SignIn extends AppCompatActivity implements OnDataPass {
 
     // This field will contain the active fragment
     private Fragment activeFragment = null;
@@ -27,7 +26,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         setContentView(R.layout.activity_sign_in);
 
 
-        bt_next = (Button) findViewById(R.id.bt__login);
+        bt_next = (Button) findViewById(R.id.bt_next);
         bt_previous = (Button) findViewById(R.id.bt_previous);
 
 
@@ -43,7 +42,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         } else {
             activeFragment = getSupportFragmentManager().getFragment(savedInstanceState, "activeFragment");
             if (activeFragment.getClass() == FragmentFactory.getInstance().getSignInPwdInfoFragment().getClass()) {
-                actionsOfTheButtons(R.id.bt__login);
+                actionsOfTheButtons(R.id.bt_next);
             }
         }
 
@@ -51,7 +50,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionsOfTheButtons(R.id.bt__login);
+                actionsOfTheButtons(R.id.bt_next);
             }
         });
 
@@ -63,16 +62,6 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
         });
     }
 
-
-    @Override
-    public void onSwitchToMainFragmentView() {
-
-    }
-
-    @Override
-    public void onSwitchToFragmentView(Fragment fragment) {
-
-    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -100,7 +89,7 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     private void actionsOfTheButtons(int IdButton) {
 
         switch (IdButton) {
-            case R.id.bt__login:
+            case R.id.bt_next:
                 // Go to the next fragment - "Password information fragment"
                 ActionForButtonNext();
                 break;
@@ -201,5 +190,9 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
     }
 
 
+    @Override
+    public void onDataPass(Object data) {
+        // ToDo : Get The object data from the Fragment
+    }
 }
 

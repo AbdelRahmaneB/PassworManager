@@ -37,21 +37,6 @@ public class SignInPwdInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_in_pwd_info, container, false);
 
-        final ImageView iv = (ImageView) view.findViewById(R.id.iv_my_visibility_sigIn);
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity().getBaseContext(), "Button", Toast.LENGTH_SHORT).show();
-                if ("Visible".equals(iv.getTag().toString())) {
-                    iv.setBackgroundResource(R.drawable.ic_visibility_off);
-                    iv.setTag("NotVisible");
-                }else{
-                    iv.setBackgroundResource(R.drawable.ic_visibility);
-                    iv.setTag("Visible");
-                }
-
-            }
-        });
 
         return view;
     }
