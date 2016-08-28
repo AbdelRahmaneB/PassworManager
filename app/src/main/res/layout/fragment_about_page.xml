@@ -5,11 +5,54 @@
     android:tag="@string/nav_label_about"
     tools:context="ub.passwordmanager.fragments.mainActivities.AboutPage">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_label_about"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/about_app_title"
+        android:id="@+id/l_about_app_title"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="80dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15sp"
+        android:text="@string/about_version"
+        android:id="@+id/l_about_version"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="110dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:src="@drawable/app_logo"
         android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15sp"
+        android:text="@string/about_author"
+        android:id="@+id/l_about_author"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="120dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15sp"
+        android:text="@string/about_year"
+        android:id="@+id/l_about_year"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp" />
+
+
+
 
 </FrameLayout>

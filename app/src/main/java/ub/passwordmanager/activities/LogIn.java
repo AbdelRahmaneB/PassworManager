@@ -18,21 +18,21 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        final ImageView iv = (ImageView) findViewById(R.id.iv_my_visibility_login);
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getBaseContext(), "Button", Toast.LENGTH_SHORT).show();
-                if ("Visible".equals(iv.getTag().toString())) {
-                    iv.setBackgroundResource(R.drawable.ic_visibility_off);
-                    iv.setTag("NotVisible");
-                }else{
-                    iv.setBackgroundResource(R.drawable.ic_visibility);
-                    iv.setTag("Visible");
-                }
-
-            }
-        });
+//        final ImageView iv = (ImageView) findViewById(R.id.iv_my_visibility_login);
+//        iv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getBaseContext(), "Button", Toast.LENGTH_SHORT).show();
+//                if ("Visible".equals(iv.getTag().toString())) {
+//                    iv.setBackgroundResource(R.drawable.ic_visibility_off);
+//                    iv.setTag("NotVisible");
+//                }else{
+//                    iv.setBackgroundResource(R.drawable.ic_visibility);
+//                    iv.setTag("Visible");
+//                }
+//
+//            }
+//        });
 
         Button logiButton = (Button) findViewById(R.id.bt__login);
         logiButton.setOnClickListener(new View.OnClickListener() {

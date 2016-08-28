@@ -33,16 +33,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/tertiary_text_dark" />
 
-        <ImageView
-            android:id="@+id/iv_my_visibility_sigIn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignEnd="@+id/pi_separator1"
-            android:layout_alignRight="@+id/l_pwd_signIn"
-            android:layout_below="@+id/app_logo_signIn2"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/ic_visibility"
-            android:tag="@string/hint_tagVisibility" />
 
         <View
             android:id="@+id/pi_separator1"

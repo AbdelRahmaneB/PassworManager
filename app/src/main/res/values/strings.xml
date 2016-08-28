@@ -11,6 +11,8 @@
 
     <string name="l_passwordAccount">Password account information :</string>
     <string name="hint_password">Password</string>
+    <string name="hint_password_new">New password</string>
+    <string name="hint_password_old">Old password</string>
     <string name="hint_pwdConfirm">Confirm the password</string>
     <string name="hint_tagVisibility">Visible</string>
 
@@ -52,10 +54,82 @@
     <string name="nav_label_about">About</string>
 
     <!-- Home Fragment -->
+    <!--******************************************************************************-->
+
+    <!-- Profile Fragment -->
+    <string name="button_save_profile">save</string>
+
+    <!--******************************************************************************-->
+
+    <!-- Import / Export Fragment -->
+    <string name="ie_title">
+        This tool helps you to import and export your data.\n
+        Note that it is recommended to backup your data frequently.
+    </string>
+
+    <string name="l_imports_title">Data import :</string>
+    <string name="l_export_title">Data export :</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ie_title1">Export the dataBase</string>
+    <string name="ie_title2">Import the dataBase</string>
+    <string name="ie_title3">Export data</string>
+    <string name="ie_title4">Import data</string>
+
+
+    <string name="ie_title1_desc">
+        This option helps you to export your dataBase to your phone
+    </string>
+    <string name="ie_title2_desc">
+        This option helps you to import an existing dataBase.
+        Note that this action will replace the current data.
+    </string>
+    <string name="ie_title3_desc">
+        This option allows you to export your data to an XML file.
+    </string>
+    <string name="ie_title4_desc">
+        This option allows you to import your data from an XML file.
+    </string>
+
+    <!--******************************************************************************-->
+
+    <!-- Password generator Fragment -->
+    <string name="label_pwd_gen_header">
+        This tool allows you to generate a random password.
+    </string>
+    <string name="hint_pwd_gen">Generated password</string>
+    <string name="button_generate">Generate password</string>
+    <string name="l_pwd_gen">The generated password information :</string>
+    <string name="l_pwd_gen_option">Options :</string>
+
+
+    <string name="opt_title1">Use lower case </string>
+    <string name="opt_title2">Use upper case</string>
+    <string name="opt_title3">Use symbols</string>
+    <string name="opt_title5">Use numbers</string>
+    <string name="opt_title4">Password length :</string>
+
+    <string name="opt_title1_desc">You can use the lower case characters to generate the password (a-z).</string>
+    <string name="opt_title2_desc">You can use the upper case characters to generate the password (A-Z).</string>
+    <string name="opt_title3_desc">You can use the symbols to generate the password (,%:#;_).</string>
+    <string name="opt_title5_desc">You can use the numbers to generate the password (1 &#8211; 9)</string>
+    <string name="opt_title4_desc">Password length :</string>
+
+
+    <!--******************************************************************************-->
+
+    <!-- Settings Fragment -->
+    <string-array name="setting_list_view_items">
+        <item>Language</item>
+        <item>Theme</item>
+    </string-array>
+    <!--******************************************************************************-->
+
+    <!-- About Fragment -->
+    <string name="about_app_title">Password Manager</string>
+    <string name="about_version">Version : 1.0.0</string>
+    <string name="about_author">Author : Ucef Ben®</string>
+    <string name="about_year">[Year]</string>
     <!--******************************************************************************-->
 
 

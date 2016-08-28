@@ -108,7 +108,6 @@ public class SignIn extends AppCompatActivity implements OnFragmentInteractionLi
             case R.id.bt_previous:
                 // Go back to the previous fragment - "User information fragment"
                 actionForButtonPrevious();
-
                 break;
 
             default:
