@@ -11,6 +11,7 @@ public class UserAccountModel {
     private String mUsername;
     private String mEmail;
     private String mPassword;
+    private String mConfirmationPwd;
     private Date mLastLogIn;
 
     public UserAccountModel() {
@@ -59,5 +60,13 @@ public class UserAccountModel {
 
     public void setLastLogIn(Date mLastLogIn) {
         this.mLastLogIn = mLastLogIn;
+    }
+
+    public String getmConfirmationPwd() {
+        return mConfirmationPwd;
+    }
+
+    public void setmConfirmationPwd(String mConfirmationPwd) {
+        this.mConfirmationPwd = mConfirmationPwd;
     }
 }

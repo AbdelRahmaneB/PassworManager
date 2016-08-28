@@ -1,125 +1,130 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal|top"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    tools:context=".fragments.Registration.SignInUserInfoFragment">
+    android:focusableInTouchMode="true">
 
+    <ImageView
+        android:id="@+id/app_logo_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:src="@drawable/app_logo" />
 
-    <RelativeLayout
+    <!--*************************************************************************-->
+
+    <TextView
+        android:id="@+id/l_titleUserInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_logo_signIn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/l_user_account"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/tertiary_text_dark" />
+
+    <View
+        android:id="@+id/ui_separator1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/l_titleUserInfo"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/Gray_separator" />
+
+    <!--*************************************************************************-->
+
+    <ImageView
+        android:id="@+id/iv_username_signIn"
+        android:layout_width="30dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="15dp"
+        android:layout_alignTop="@+id/input_username_signIn"
+        android:layout_alignLeft="@+id/ui_separator1"
+        android:layout_alignStart="@+id/ui_separator1"
+        android:contentDescription="@string/about_app_title"
+        android:src="@drawable/ic_account" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_username_signIn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ui_separator1"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/iv_username_signIn"
+        android:layout_toRightOf="@+id/iv_username_signIn">
 
-        <ImageView
-            android:id="@+id/app_logo_signIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="29dp"
-            android:focusable="true"
-            android:src="@drawable/app_logo" />
-
-        <!--*************************************************************************-->
-
-        <TextView
-            android:id="@+id/l_titleUserInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/app_logo_signIn"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/l_user_account"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/tertiary_text_dark" />
-
-        <View
-            android:id="@+id/ui_separator1"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_below="@+id/l_titleUserInfo"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/Gray_separator" />
-
-        <!--*************************************************************************-->
-
-        <ImageView
-            android:id="@+id/iv_username_signIn"
-            android:layout_width="30dip"
-            android:layout_height="40dip"
-            android:layout_alignBottom="@+id/input_username_signIn"
-            android:layout_alignLeft="@+id/ui_separator1"
-            android:layout_alignStart="@+id/ui_separator1"
-            android:src="@drawable/ic_account" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_username_signIn"
+        <EditText
+            android:id="@+id/t_username_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ui_separator1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/iv_username_signIn">
+            android:layout_alignTop="@+id/iv_username_signIn"
+            android:hint="@string/hint_username"
+            android:inputType="text" />
 
-            <EditText
-                android:id="@+id/t_username_signIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_username_signin"
-                android:hint="@string/hint_username"
-                android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
-
-        <!--*************************************************************************-->
+    <!--*************************************************************************-->
 
 
-        <ImageView
-            android:id="@+id/iv_email_signIn"
-            android:layout_width="30dip"
-            android:layout_height="40dip"
-            android:layout_alignBottom="@+id/input_email_signIn"
-            android:layout_toLeftOf="@+id/input_username_signIn"
-            android:layout_toStartOf="@+id/input_username_signIn"
-            android:src="@drawable/ic_email" />
+    <ImageView
+        android:id="@+id/iv_email_signIn"
+        android:layout_width="30dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="15dp"
+        android:layout_alignTop="@+id/input_email_signIn"
+        android:layout_toLeftOf="@+id/input_username_signIn"
+        android:layout_toStartOf="@+id/input_username_signIn"
+        android:contentDescription="@string/about_app_title"
+        android:src="@drawable/ic_email" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_email_signIn"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_email_signIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_username_signIn"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/iv_email_signIn"
+        android:layout_toRightOf="@+id/iv_email_signIn">
+
+        <EditText
+            android:id="@+id/t_email_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_username_signIn"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="3dp"
-            android:layout_toRightOf="@+id/iv_email_signIn">
+            android:hint="@string/hint_emailAddress"
+            android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/t_email_signIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_emailAddress"
-                android:inputType="textEmailAddress" />
+    </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/l_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/input_email_signIn"
-            android:layout_alignLeft="@+id/iv_email_signIn"
-            android:layout_alignRight="@+id/input_email_signIn"
-            android:layout_alignStart="@+id/iv_email_signIn"
-            android:layout_below="@+id/input_email_signIn"
-            android:text="@string/l_note_email"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12dp" />
+    <TextView
+        android:id="@+id/l_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/input_email_signIn"
+        android:layout_alignLeft="@+id/iv_email_signIn"
+        android:layout_alignRight="@+id/input_email_signIn"
+        android:layout_alignStart="@+id/iv_email_signIn"
+        android:layout_below="@+id/input_email_signIn"
+        android:gravity="center_horizontal"
+        android:text="@string/l_note_email"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="12sp" />
 
 
-    </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>

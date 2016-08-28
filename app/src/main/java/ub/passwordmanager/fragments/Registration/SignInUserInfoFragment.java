@@ -3,6 +3,7 @@ package ub.passwordmanager.fragments.Registration;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -28,6 +29,13 @@ public class SignInUserInfoFragment extends Fragment {
 
     // Our DataHolder for the UserAccount
     private UserAccountModel mUserAccount;
+
+
+    // Our view fields
+    private EditText tv_Username;
+    private EditText tv_Email;
+    private TextInputLayout t_InputEmail;
+    private TextInputLayout t_InputUsername;
 
     public SignInUserInfoFragment() {
         // Required empty public constructor
@@ -55,30 +63,76 @@ public class SignInUserInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in_user_info, container, false);
 
-        EditText tv_Username = (EditText) view.findViewById(R.id.t_username_signIn);
-        EditText tv_Email = (EditText) view.findViewById(R.id.t_email_signIn);
+        this.tv_Username = (EditText) view.findViewById(R.id.t_username_signIn);
+        this.tv_Email = (EditText) view.findViewById(R.id.t_email_signIn);
+        this.t_InputEmail = (TextInputLayout) view.findViewById(R.id.input_email_signIn);
+        this.t_InputUsername = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
 
-        tv_Username.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Nothing to do here
-            }
+        this.mUserAccount = new UserAccountModel();
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Nothing to do here
-            }
+        // Add the textWatcher listener to  our fields
+        this.tv_Username.addTextChangedListener(watchUsername);
+        this.tv_Email.addTextChangedListener(watchEmail);
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Toast.makeText(getContext(),"Lol",Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // Inflate the layout for this fragment
         return view;
     }
 
+    /**
+     * TextWatcher Listener for the Username field
+     */
+    TextWatcher watchUsername = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Nothing to do here
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Nothing to do here
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            passData();
+        }
+    };
+
+    /**
+     * TextWatcher Listener for the Email field
+     */
+    TextWatcher watchEmail = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Nothing to do here
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Nothing to do here
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            passData();
+        }
+    };
+
+
+    /**
+     * Method to define the Error Message of our Email TextView
+     */
+    public void setEmailErrorMessage(String message) {
+        t_InputEmail.setError(message);
+    }
+
+    /**
+     * Method to define the Error Message of our Username TextView
+     */
+    public void setUsernameErrorMessage(String message) {
+        t_InputUsername.setError(message);
+    }
 
 
     @Override
@@ -86,7 +140,8 @@ public class SignInUserInfoFragment extends Fragment {
         super.onDetach();
     }
 
-    /** Description :
+    /**
+     * Description :
      * This method is called once the fragment is attached to it's activity.
      *
      * @param context : of the activity that the fragment is attached to.
@@ -103,10 +158,13 @@ public class SignInUserInfoFragment extends Fragment {
     /**
      * Description :
      * In this method we pass our object to the activity
-     *
-     * @param data : User account which contain Username and Email
      */
-    public void passData(UserAccountModel data) {
-        dataPasser.onDataPass(data);
+    public void passData() {
+        // Fill the object before passing it to the Activity
+        this.mUserAccount.setUsername(tv_Username.getText().toString());
+        this.mUserAccount.setEmail(tv_Email.getText().toString());
+
+        // Notify the listener that the data changed so he can notify the activity
+        dataPasser.onDataPass(this.mUserAccount);
     }
 }
