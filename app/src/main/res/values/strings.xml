@@ -36,6 +36,7 @@
     <string name="button_log_in">Log In</string>
     <string name="button_forgot_pass">Forgot password ?</string>
     <string name="logIn_empty_password">Required password</string>
+    <string name="hint_log">[UcefBen]</string>
 
 
     <!--******************************************************************************-->
