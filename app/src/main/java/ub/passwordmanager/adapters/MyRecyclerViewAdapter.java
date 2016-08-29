@@ -142,7 +142,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             // Initialise the View objects
             hSiteWeb = (TextView) itemView.findViewById(R.id.l_SiteWeb);
             hLastUpdate = (TextView) itemView.findViewById(R.id.l_LastUpdate);
-            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAdress);
+            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
             h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
 
             // Log the current action

@@ -63,6 +63,11 @@
     <string name="nav_label_about">About</string>
 
     <!-- Home Fragment -->
+    <string name="home_hint_site">Facebook</string>
+    <string name="home_hint_email">MyEmailAddress@Gmail.com</string>
+    <string name="home_hint_date">Last update : 27/08/2016</string>
+    <string name="home_hint_last_conn">Last connection : 27/08/2016</string>
+
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->

@@ -10,37 +10,38 @@
         android:id="@+id/logo_app_drawer"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/ic_menu_logo"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="35dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_menu_logo" />
 
     <TextView
         android:id="@+id/label_username_profile_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_above="@+id/label_email_profile_drawer"
+        android:layout_toEndOf="@+id/logo_app_drawer"
         android:layout_toRightOf="@+id/logo_app_drawer"
-        android:layout_toEndOf="@+id/logo_app_drawer" />
+        android:text="@string/hint_log"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/label_email_profile_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"
         android:layout_above="@+id/textView"
+        android:layout_toEndOf="@+id/logo_app_drawer"
         android:layout_toRightOf="@+id/logo_app_drawer"
-        android:layout_toEndOf="@+id/logo_app_drawer" />
+        android:text="@string/home_hint_email" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last connection : 23/08/2016"
         android:layout_alignBottom="@+id/logo_app_drawer"
+        android:layout_toEndOf="@+id/logo_app_drawer"
         android:layout_toRightOf="@+id/logo_app_drawer"
-        android:layout_toEndOf="@+id/logo_app_drawer" />
+        android:text="@string/home_hint_last_conn" />
 
 
 </RelativeLayout>
