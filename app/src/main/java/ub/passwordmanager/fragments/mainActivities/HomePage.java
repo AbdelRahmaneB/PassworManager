@@ -1,8 +1,6 @@
 package ub.passwordmanager.fragments.mainActivities;
 
 import android.content.Context;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ub.passwordmanager.Models.AccountModel;
+import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.adapters.MyRecyclerViewAdapter;
 
@@ -71,13 +69,13 @@ public class HomePage extends Fragment {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                ArrayList<AccountModel> mDataSet = getDataSet();
+                ArrayList<PwdAccountModel> mDataSet = getDataSet();
                 Log.i("***", " Clicked on Item " + mDataSet.get(position).getmWebSite());
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
-                ArrayList<AccountModel> mDataSet = getDataSet();
+                ArrayList<PwdAccountModel> mDataSet = getDataSet();
                 ImageView bt_delete = (ImageView) v.findViewById(R.id.bt_deleteAccount);
                 ImageView bt_edit = (ImageView) v.findViewById(R.id.bt_editAccount);
                 bt_delete.setVisibility(View.VISIBLE);
@@ -101,10 +99,10 @@ public class HomePage extends Fragment {
         super.onDetach();
     }
 
-    private ArrayList<AccountModel> getDataSet() {
-        ArrayList<AccountModel> results = new ArrayList<>();
+    private ArrayList<PwdAccountModel> getDataSet() {
+        ArrayList<PwdAccountModel> results = new ArrayList<>();
         for (int index = 0; index < 20; index++) {
-            AccountModel obj = new AccountModel("Some Primary Text " + index,
+            PwdAccountModel obj = new PwdAccountModel("Some Primary Text " + index,
                     "Secondary " + index, "Last Update : 27/08/2016");
             results.add(index, obj);
         }

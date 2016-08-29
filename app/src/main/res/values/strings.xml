@@ -22,6 +22,12 @@
 
     <string name="l_note_email">* The email is only used to allow you to recover your password</string>
 
+    <string name="invalid_email_error_signIn">Invalid email</string>
+    <string name="empty_email_error_signIn">Required email</string>
+    <string name="empty_username_error_signIn">Required username</string>
+    <string name="empty_password_error_signIn">Required password</string>
+    <string name="empty_confirmation_error_signIn">Required confirmation</string>
+    <string name="diff_error_signIn">Confirmation doesn\'t match the password</string>
     <!--******************************************************************************-->
 
 
@@ -29,6 +35,9 @@
     <string name="title_log_in">Password Manager - log in</string>
     <string name="button_log_in">Log In</string>
     <string name="button_forgot_pass">Forgot password ?</string>
+    <string name="logIn_empty_password">Required password</string>
+    <string name="hint_log">[UcefBen]</string>
+
 
     <!--******************************************************************************-->
 
@@ -54,6 +63,11 @@
     <string name="nav_label_about">About</string>
 
     <!-- Home Fragment -->
+    <string name="home_hint_site">Facebook</string>
+    <string name="home_hint_email">MyEmailAddress@Gmail.com</string>
+    <string name="home_hint_date">Last update : 27/08/2016</string>
+    <string name="home_hint_last_conn">Last connection : 27/08/2016</string>
+
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->

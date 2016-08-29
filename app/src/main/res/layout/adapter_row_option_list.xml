@@ -13,6 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/l_opt_check"
+        android:layout_toLeftOf="@+id/l_opt_check"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp" />
 

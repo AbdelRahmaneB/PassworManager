@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ub.passwordmanager.Models.AccountModel;
+import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 
 /**
@@ -28,7 +28,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * 1. List of DataObject that represent our CardView
      * 2. Our Adapter listener
      */
-    private ArrayList<AccountModel> mDataSet;
+    private ArrayList<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
     /** *********************************************************************** */
 
@@ -47,7 +47,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      *
      * @param dataSet
      */
-    public MyRecyclerViewAdapter(ArrayList<AccountModel> dataSet) {
+    public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet) {
         this.mDataSet = dataSet;
     }
 
@@ -86,7 +86,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * @param dataObj : The data information "DataObject" for the CardView
      * @param index   : The position where we want to add the new CardView
      */
-    public void addItem(AccountModel dataObj, int index) {
+    public void addItem(PwdAccountModel dataObj, int index) {
         mDataSet.add(index, dataObj);
         notifyItemInserted(index);
     }
@@ -142,7 +142,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             // Initialise the View objects
             hSiteWeb = (TextView) itemView.findViewById(R.id.l_SiteWeb);
             hLastUpdate = (TextView) itemView.findViewById(R.id.l_LastUpdate);
-            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAdress);
+            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
             h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
 
             // Log the current action

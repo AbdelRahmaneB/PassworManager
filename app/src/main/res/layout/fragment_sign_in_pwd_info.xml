@@ -1,126 +1,130 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal|top"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    tools:context=".fragments.Registration.SignInPwdInfoFragment">
+    android:focusableInTouchMode="true">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/app_logo_signIn2"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:src="@drawable/app_logo" />
+
+    <!--*************************************************************************-->
+
+    <TextView
+        android:id="@+id/l_pwd_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_logo_signIn2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/l_passwordAccount"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/tertiary_text_dark" />
+
+
+    <View
+        android:id="@+id/pi_separator1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/l_pwd_signIn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/Gray_separator" />
+
+    <!--*************************************************************************-->
+
+    <ImageView
+        android:id="@+id/iv_pwd_signIn"
+        android:layout_width="30dip"
+        android:layout_height="40dip"
+        android:contentDescription="@string/app_name"
+        android:layout_alignLeft="@+id/pi_separator1"
+        android:layout_alignStart="@+id/pi_separator1"
+        android:layout_alignTop="@+id/input_pwd_sigIn"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_pwd" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_pwd_sigIn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pi_separator1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_pwd_signIn"
+        android:layout_toEndOf="@+id/iv_pwd_signIn">
 
-        <ImageView
-            android:id="@+id/app_logo_signIn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="29dp"
-            android:src="@drawable/app_logo" />
-
-        <!--*************************************************************************-->
-
-        <TextView
-            android:id="@+id/l_pwd_signIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/app_logo_signIn2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/l_passwordAccount"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/tertiary_text_dark" />
-
-
-        <View
-            android:id="@+id/pi_separator1"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_below="@+id/l_pwd_signIn"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/Gray_separator" />
-
-        <!--*************************************************************************-->
-
-        <ImageView
-            android:id="@+id/iv_pwd_signIn"
-            android:layout_width="30dip"
-            android:layout_height="40dip"
-            android:layout_alignBottom="@+id/input_pwd_sigIn"
-            android:layout_alignLeft="@+id/pi_separator1"
-            android:layout_alignStart="@+id/pi_separator1"
-            android:src="@drawable/ic_pwd" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_pwd_sigIn"
+        <EditText
+            android:id="@+id/t_password_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pi_separator1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/iv_pwd_signIn">
+            android:layout_alignTop="@+id/iv_pwd_signIn"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword" />
 
-            <EditText
-                android:id="@+id/t_password_signIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_pwd_signIn"
-                android:hint="@string/hint_password"
-                android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
+    <!--*************************************************************************-->
 
-        <!--*************************************************************************-->
+    <ImageView
+        android:id="@+id/iv_confirmPwd"
+        android:layout_width="30dip"
+        android:layout_height="40dip"
+        android:contentDescription="@string/app_name"
+        android:layout_alignTop="@+id/input_confirmPwd_signIn"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/input_pwd_sigIn"
+        android:layout_toStartOf="@+id/input_pwd_sigIn"
+        android:src="@drawable/ic_replay" />
 
-        <ImageView
-            android:id="@+id/iv_confirmPwd"
-            android:layout_width="30dip"
-            android:layout_height="40dip"
-            android:layout_alignBottom="@+id/input_confirmPwd_signIn"
-            android:layout_toLeftOf="@+id/input_pwd_sigIn"
-            android:layout_toStartOf="@+id/input_pwd_sigIn"
-            android:src="@drawable/ic_replay" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_confirmPwd_signIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_pwd_sigIn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@+id/iv_confirmPwd"
+        android:layout_toEndOf="@+id/iv_confirmPwd">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_confirmPwd_signIn"
+        <EditText
+            android:id="@+id/t_confirmPwd_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_pwd_sigIn"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="3dp"
-            android:layout_toRightOf="@+id/iv_confirmPwd">
+            android:hint="@string/hint_pwdConfirm"
+            android:inputType="textPassword" />
 
-            <EditText
-                android:id="@+id/t_confirmPwd_signIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_pwdConfirm"
-                android:inputType="textPassword" />
-
-        </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
 
-        <TextView
-            android:id="@+id/l_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/input_confirmPwd_signIn"
-            android:layout_alignLeft="@+id/iv_confirmPwd"
-            android:layout_alignRight="@+id/input_confirmPwd_signIn"
-            android:layout_alignStart="@+id/iv_confirmPwd"
-            android:layout_below="@+id/input_confirmPwd_signIn"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/invisible_text"
-            android:textSize="12dp" />
+    <TextView
+        android:id="@+id/l_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/input_confirmPwd_signIn"
+        android:layout_alignLeft="@+id/iv_confirmPwd"
+        android:layout_alignRight="@+id/input_confirmPwd_signIn"
+        android:layout_alignStart="@+id/iv_confirmPwd"
+        android:layout_below="@+id/input_confirmPwd_signIn"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/invisible_text"
+        android:textSize="12sp" />
 
 
-    </RelativeLayout>
+</RelativeLayout>
 
-
-</FrameLayout>

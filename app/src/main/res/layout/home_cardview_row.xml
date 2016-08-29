@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:text="Facebook"
+                android:text="@string/home_hint_site"
                 android:textStyle="bold" />
 
             <TextView
@@ -41,16 +41,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_below="@+id/l_SiteWeb"
-                android:text="Last update : 27/08/2016" />
+                android:text="@string/home_hint_date" />
 
 
             <TextView
-                android:id="@+id/l_EmailAdress"
+                android:id="@+id/l_EmailAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/l_SiteWeb"
                 android:layout_marginTop="10dp"
-                android:text="MyEmailAdress@gmail.com" />
+                android:text="@string/home_hint_email" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -58,6 +58,7 @@
                 android:id="@+id/bt_deleteAccount"
                 android:src="@drawable/ic_delete"
                 android:layout_below="@+id/l_LastUpdate"
+                android:contentDescription="@string/app_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="8dp"
                 android:visibility="invisible"
@@ -68,6 +69,7 @@
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:contentDescription="@string/app_name"
                 android:id="@+id/bt_editAccount"
                 android:src="@drawable/ic_edit"
                 android:layout_toLeftOf="@+id/bt_deleteAccount"

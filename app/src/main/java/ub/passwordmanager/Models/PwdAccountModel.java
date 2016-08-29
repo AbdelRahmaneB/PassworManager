@@ -3,26 +3,26 @@ package ub.passwordmanager.Models;
 /**
  * Created by UB on 27/08/2016.
  */
-public class AccountModel {
+public class PwdAccountModel {
 
     private String mWebSite;
     private String mEmail;
     private String mPassword;
     private String mLastUpdate;
 
-    public AccountModel() {
+    public PwdAccountModel() {
         // leave this empty
     }
 
 
-    public AccountModel(String mWebSite, String mEmail, String mPassword, String mLastUpdate) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
         this.mLastUpdate = mLastUpdate;
     }
 
-    public AccountModel(String mWebSite, String mEmail, String mLastUpdate) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mLastUpdate = mLastUpdate;
