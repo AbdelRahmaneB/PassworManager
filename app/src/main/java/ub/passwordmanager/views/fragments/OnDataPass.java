@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments;
+package ub.passwordmanager.views.fragments;
 
 /** Description :
  * This interface will be implemented by

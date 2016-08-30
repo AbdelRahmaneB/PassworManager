@@ -1,4 +1,4 @@
-package ub.passwordmanager;
+package ub.passwordmanager.views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,8 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ub.passwordmanager.activities.SignIn;
+import ub.passwordmanager.R;
+import ub.passwordmanager.views.activities.SignIn;
 
 /**
  * Description : Splash Screen

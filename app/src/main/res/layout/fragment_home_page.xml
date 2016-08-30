@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:tag="@string/nav_label_home"
-    tools:context="ub.passwordmanager.fragments.mainActivities.HomePage">
+    tools:context=".views.fragments.mainActivities.HomePage">
 
 
     <android.support.v7.widget.RecyclerView

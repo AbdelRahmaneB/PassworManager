@@ -1,4 +1,4 @@
-package ub.passwordmanager.adapters;
+package ub.passwordmanager.views.adapters;
 
 import android.app.Activity;
 import android.content.Context;

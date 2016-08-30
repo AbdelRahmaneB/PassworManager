@@ -6,14 +6,14 @@ import android.support.v4.app.Fragment;
 import java.util.HashMap;
 
 import ub.passwordmanager.R;
-import ub.passwordmanager.fragments.Registration.SignInPwdInfoFragment;
-import ub.passwordmanager.fragments.Registration.SignInUserInfoFragment;
-import ub.passwordmanager.fragments.mainActivities.AboutPage;
-import ub.passwordmanager.fragments.mainActivities.HomePage;
-import ub.passwordmanager.fragments.mainActivities.ImportExportPage;
-import ub.passwordmanager.fragments.mainActivities.PasswordGeneratorPage;
-import ub.passwordmanager.fragments.mainActivities.ProfilePage;
-import ub.passwordmanager.fragments.mainActivities.SettingPage;
+import ub.passwordmanager.views.fragments.Registration.SignInPwdInfoFragment;
+import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
+import ub.passwordmanager.views.fragments.mainActivities.AboutPage;
+import ub.passwordmanager.views.fragments.mainActivities.HomePage;
+import ub.passwordmanager.views.fragments.mainActivities.ImportExportPage;
+import ub.passwordmanager.views.fragments.mainActivities.PasswordGeneratorPage;
+import ub.passwordmanager.views.fragments.mainActivities.ProfilePage;
+import ub.passwordmanager.views.fragments.mainActivities.SettingPage;
 
 public class FragmentFactory {
 

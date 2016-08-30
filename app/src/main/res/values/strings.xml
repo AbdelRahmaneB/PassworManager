@@ -22,12 +22,13 @@
 
     <string name="l_note_email">* The email is only used to allow you to recover your password</string>
 
-    <string name="invalid_email_error_signIn">Invalid email</string>
-    <string name="empty_email_error_signIn">Required email</string>
-    <string name="empty_username_error_signIn">Required username</string>
-    <string name="empty_password_error_signIn">Required password</string>
-    <string name="empty_confirmation_error_signIn">Required confirmation</string>
-    <string name="diff_error_signIn">Confirmation doesn\'t match the password</string>
+    <string name="invalid_email_error_signIn">Invalid email. ex: exemple@exemple.ex</string>
+    <string name="empty_email_error_signIn">Required email.</string>
+    <string name="empty_username_error_signIn">Required username.</string>
+    <string name="empty_password_error_signIn">Required password.</string>
+    <string name="not_correct_password_error_signIn">Password incorrect !!</string>
+    <string name="empty_confirmation_error_signIn">Required confirmation.</string>
+    <string name="diff_error_signIn">Confirmation does not match the password.</string>
     <!--******************************************************************************-->
 
 

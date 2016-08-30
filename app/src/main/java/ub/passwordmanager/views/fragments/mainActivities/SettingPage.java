@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments.mainActivities;
+package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,13 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import ub.passwordmanager.R;
 

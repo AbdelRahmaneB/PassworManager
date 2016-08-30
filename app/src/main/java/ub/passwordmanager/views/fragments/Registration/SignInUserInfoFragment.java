@@ -1,8 +1,7 @@
-package ub.passwordmanager.fragments.Registration;
+package ub.passwordmanager.views.fragments.Registration;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -12,15 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
-import ub.passwordmanager.fragments.OnDataPass;
+import ub.passwordmanager.views.fragments.OnDataPass;
 
 
-public class SignInPwdInfoFragment extends Fragment {
+public class SignInUserInfoFragment extends Fragment {
 
     // Instance of our interface to send data to our Activity
     private OnDataPass dataPasser;
@@ -30,50 +27,57 @@ public class SignInPwdInfoFragment extends Fragment {
 
 
     // Our view fields
-    private EditText tv_Password;
-    private EditText tv_Confirmation;
-    private TextInputLayout t_InputPwd;
-    private TextInputLayout t_InputConfirmation;
+    private EditText tv_Username;
+    private EditText tv_Email;
+    private TextInputLayout t_InputEmail;
+    private TextInputLayout t_InputUsername;
 
-    public SignInPwdInfoFragment() {
+    public SignInUserInfoFragment() {
         // Required empty public constructor
     }
 
-
-    public static SignInPwdInfoFragment newInstance() {
-        return new SignInPwdInfoFragment();
-
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment SignInUserInfoFragment.
+     */
+    public static SignInUserInfoFragment newInstance() {
+        return new SignInUserInfoFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_in_pwd_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_sign_in_user_info, container, false);
 
-        this.tv_Password = (EditText) view.findViewById(R.id.t_password_signIn);
-        this.tv_Confirmation = (EditText) view.findViewById(R.id.t_confirmPwd_signIn);
-        this.t_InputPwd = (TextInputLayout) view.findViewById(R.id.input_pwd_sigIn);
-        this.t_InputConfirmation = (TextInputLayout) view.findViewById(R.id.input_confirmPwd_signIn);
+        this.tv_Username = (EditText) view.findViewById(R.id.t_username_signIn);
+        this.tv_Email = (EditText) view.findViewById(R.id.t_email_signIn);
+        this.t_InputEmail = (TextInputLayout) view.findViewById(R.id.input_email_signIn);
+        this.t_InputUsername = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
 
         this.mUserAccount = new UserAccountModel();
 
         // Add the textWatcher listener to  our fields
-        this.tv_Password.addTextChangedListener(watchPwd);
-        this.tv_Confirmation.addTextChangedListener(watchConfirmation);
+        this.tv_Username.addTextChangedListener(watchUsername);
+        this.tv_Email.addTextChangedListener(watchEmail);
 
+
+        // Inflate the layout for this fragment
         return view;
     }
 
     /**
-     * TextWatcher Listener for the Password field
+     * TextWatcher Listener for the Username field
      */
-    TextWatcher watchPwd = new TextWatcher() {
+    TextWatcher watchUsername = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             // Nothing to do here
@@ -91,9 +95,9 @@ public class SignInPwdInfoFragment extends Fragment {
     };
 
     /**
-     * TextWatcher Listener for the Confirmation field
+     * TextWatcher Listener for the Email field
      */
-    TextWatcher watchConfirmation = new TextWatcher() {
+    TextWatcher watchEmail = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             // Nothing to do here
@@ -112,24 +116,31 @@ public class SignInPwdInfoFragment extends Fragment {
 
 
     /**
-     * Method to define the Error Message of our Password TextView
+     * Method to define the Error Message of our Email TextView
      */
-    public void setPwdErrorMessage(String message) {
-        t_InputPwd.setError(message);
+    public void setEmailErrorMessage(String message) {
+        t_InputEmail.setError(message);
     }
 
     /**
-     * Method to define the Error Message of our Confirmation TextView
+     * Method to define the Error Message of our Username TextView
      */
-    public void setConfirmErrorMessage(String message) {
-        t_InputConfirmation.setError(message);
+    public void setUsernameErrorMessage(String message) {
+        t_InputUsername.setError(message);
     }
+
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
 
+    /**
+     * Description :
+     * This method is called once the fragment is attached to it's activity.
+     *
+     * @param context : of the activity that the fragment is attached to.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -139,18 +150,16 @@ public class SignInPwdInfoFragment extends Fragment {
         }
     }
 
-
     /**
      * Description :
      * In this method we pass our object to the activity
      */
     public void passData() {
         // Fill the object before passing it to the Activity
-        this.mUserAccount.setPassword(tv_Password.getText().toString());
-        this.mUserAccount.setmConfirmationPwd(tv_Confirmation.getText().toString());
+        this.mUserAccount.setUsername(tv_Username.getText().toString());
+        this.mUserAccount.setEmail(tv_Email.getText().toString());
 
         // Notify the listener that the data changed so he can notify the activity
         dataPasser.onDataPass(this.mUserAccount);
     }
-
 }

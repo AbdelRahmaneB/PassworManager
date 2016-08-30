@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments.mainActivities;
+package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import ub.passwordmanager.R;
-import ub.passwordmanager.adapters.PwdGenListAdapter;
+import ub.passwordmanager.views.adapters.PwdGenListAdapter;
 
 public class PasswordGeneratorPage extends Fragment {
 

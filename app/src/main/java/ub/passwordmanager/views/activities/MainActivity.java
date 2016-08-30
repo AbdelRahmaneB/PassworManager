@@ -1,4 +1,4 @@
-package ub.passwordmanager.activities;
+package ub.passwordmanager.views.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO : Add the action for creation a new account
+                    // TODO : Add the action for creation a new account (Dialog)
                     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

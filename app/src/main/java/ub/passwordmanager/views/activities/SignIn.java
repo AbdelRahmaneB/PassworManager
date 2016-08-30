@@ -1,12 +1,10 @@
-package ub.passwordmanager.activities;
+package ub.passwordmanager.views.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,10 +13,11 @@ import java.util.regex.Pattern;
 
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.fragments.OnDataPass;
-import ub.passwordmanager.fragments.Registration.SignInPwdInfoFragment;
-import ub.passwordmanager.fragments.Registration.SignInUserInfoFragment;
+import ub.passwordmanager.views.fragments.OnDataPass;
+import ub.passwordmanager.views.fragments.Registration.SignInPwdInfoFragment;
+import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
 
 public class SignIn extends AppCompatActivity implements OnDataPass {
 
@@ -28,10 +27,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
     // The view fields
     private Button bt_next = null;
     private Button bt_previous = null;
-
-    // Our Regex Pattern for the validity of the Email Address
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 
     @Override
@@ -146,12 +141,13 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
      * Description :
      * Give the user the liberty to go to the next fragment.
      * it has two option either The "Next action" or The "Save action" :
-     * <p>
-     * - For the Case - "Next" : the method get the information from the fragment and send it
-     * to the next one.
-     * - For the case - "Save" : The method get the information from both fragment and send it
-     * to the persistence class to save it in a Data Base
-     * <p>
+     * <p/>
+     * - For the Case - "Next" : the method get the information from
+     * the fragment and send it to the next one.
+     * <p/>
+     * - For the case - "Save" : The method get the information from
+     * both fragment and send it to the persistence class to save it in a Data Base
+     * <p/>
      * Uses the @switchFragment() method.
      */
     private void ActionForButtonNext() {
@@ -171,6 +167,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
 
             // Change The visibility, button text and the activity title.
             bt_previous.setVisibility(View.VISIBLE);
+            bt_next.setVisibility(View.INVISIBLE);
             bt_next.setText(getResources().getString(R.string.bt_text_register));
             setTitle(R.string.sign_in_part2);
 
@@ -205,95 +202,36 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
     }
 
 
+    /**
+     * This function is user to link between the fragments and their activity
+     *
+     * @param data : The {@link UserAccountModel} as DataHolder
+     */
     @Override
     public void onDataPass(Object data) {
-        // ToDo : Get The object data from the Fragment
         if (data instanceof UserAccountModel) {
             UserAccountModel mUserAccount = (UserAccountModel) data;
-            String str;
-            // if isValid is tru then it's correct
-            Boolean isValidUS ;
-            Boolean isValidEM ;
-            Boolean isValidPwd ;
-            Boolean isValidConf ;
-            Boolean isNotDiff ;
 
-            // Username
-            str = mUserAccount.getUsername();
-            if (isUsernameEmpty(str)) {
-                setErrorMessage(0); // Username Empty
-                isValidUS = false;
-
-            } else {
-                setErrorMessage(-1); // Username valid
-                isValidUS = true;
-            }
-
-
-            // Email
-            str = mUserAccount.getEmail();
-            if (isEmailEmpty(str)) {
-                setErrorMessage(1); // Email Empty
-                isValidEM = false;
-
-            } else if (!isEmailValid(str)) {
-                setErrorMessage(2); // Email Invalid
-                isValidEM = false;
-
-            } else {
-                setErrorMessage(-1); // Email Correct
-                isValidEM = true;
-            }
-
-            // Handle the button visibility
-            if (isValidEM && isValidUS) {
+            // For the {@link SignInUserInfoFragment} Fragment.
+            if (isEmailValid(mUserAccount.getEmail())
+                    & isUsernameValid(mUserAccount.getUsername())) {
                 bt_next.setVisibility(View.VISIBLE);
             } else {
                 bt_next.setVisibility(View.INVISIBLE);
             }
 
+            // For the {@link SignInPwdInfoFragment} Fragment.
             if ("SignInPwdInfoFragment".equals(activeFragment.getClass().getSimpleName())) {
-                // Password
-                str = mUserAccount.getPassword();
-                if (isPwdEmpty(str)) {
-                    setErrorMessage(3); // Password Empty
-                    isValidPwd = false;
 
-                } else {
-                    setErrorMessage(-1); // Password Correct
-                    isValidPwd = true;
-                }
-
-                // Confirm Password
-                str = mUserAccount.getmConfirmationPwd();
-                if (isPwdEmpty(str)) {
-                    setErrorMessage(4); // Confirmation Empty
-                    isValidConf = false;
-
-                } else {
-                    setErrorMessage(-1); // Confirmation Correct
-                    isValidConf = true;
-                }
-
-                if (!mUserAccount.getmConfirmationPwd().equals(
-                        mUserAccount.getPassword()
-                )) {
-                    setErrorMessage(5); // Pwd != Conf
-                    isNotDiff = false;
-                } else {
-                    setErrorMessage(-1); // Pwd == Conf
-                    isNotDiff = true;
-                }
-
-                if (isValidPwd && isValidConf && isNotDiff) {
+                String pwd = mUserAccount.getPassword();
+                if (isPwdValid(pwd) &&
+                        isCofPwdValid(pwd, mUserAccount.getmConfirmationPwd())) {
                     bt_next.setVisibility(View.VISIBLE);
                 } else {
                     bt_next.setVisibility(View.INVISIBLE);
                 }
 
             }
-
-
 
 
         }
@@ -311,91 +249,174 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
      *                  *) - Number 3 : represent the Password field => Empty
      *                  *) - Number 4 : represent the Confirmation field => Empty
      *                  *) - Number 5 : represent the Confirmation and Pwd field => Different
-     *                  *) - default : Everything correct
+     *                  *) - default : Everything correct (-1, -2)
      */
     private void setErrorMessage(int IdMessage) {
-
         if ("SignInUserInfoFragment".equals(activeFragment.getClass().getSimpleName())) {
             SignInUserInfoFragment tempUserInfo = (SignInUserInfoFragment) activeFragment;
+            // Messages for the SignInUserInfoFragment
+            mUserInfoErrorMessage(IdMessage, tempUserInfo);
 
-            switch (IdMessage) {
-                case 0:
-                    tempUserInfo.setUsernameErrorMessage(
-                            getResources().getText(R.string.empty_username_error_signIn)
-                                    .toString()
-                    );
-                    break;
-
-                case 1:
-                    tempUserInfo.setEmailErrorMessage(
-                            getResources().getText(R.string.empty_email_error_signIn)
-                                    .toString()
-                    );
-                    break;
-
-                case 2:
-                    tempUserInfo.setEmailErrorMessage(
-                            getResources().getText(R.string.invalid_email_error_signIn)
-                                    .toString()
-                    );
-                    break;
-
-                default:
-                    tempUserInfo.setUsernameErrorMessage(null);
-                    tempUserInfo.setEmailErrorMessage(null);
-                    break;
-
-            }
         } else {
-
             SignInPwdInfoFragment tempPwdInfo = (SignInPwdInfoFragment) activeFragment;
+            // Messages for the SignInPwdInfoFragment
+            mPwdInfoErrorMessage(IdMessage, tempPwdInfo);
 
-            switch (IdMessage) {
-                case 3:
-                    tempPwdInfo.setPwdErrorMessage(
-                            getResources().getString(R.string.empty_password_error_signIn)
-                    );
-                    break;
+        }
+    }
 
-                case 4:
-                    tempPwdInfo.setConfirmErrorMessage(
-                            getResources().getString(R.string.empty_confirmation_error_signIn)
-                    );
-                    break;
+    /**
+     * Messages for the user information
+     *
+     * @param IdMessage    : The ID of the message to show.
+     * @param tempUserInfo : the user information data holder
+     */
+    private void mUserInfoErrorMessage(int IdMessage, SignInUserInfoFragment tempUserInfo) {
+        switch (IdMessage) {
+            case 0:
+                tempUserInfo.setUsernameErrorMessage(
+                        getResources().getText(R.string.empty_username_error_signIn)
+                                .toString()
+                );
+                break;
 
-                case 5:
-                    tempPwdInfo.setConfirmErrorMessage(
-                            getResources().getString(R.string.diff_error_signIn)
-                    );
-                    break;
+            case 1:
+                tempUserInfo.setEmailErrorMessage(
+                        getResources().getText(R.string.empty_email_error_signIn)
+                                .toString()
+                );
+                break;
 
-                default:
+            case 2:
+                tempUserInfo.setEmailErrorMessage(
+                        getResources().getText(R.string.invalid_email_error_signIn)
+                                .toString()
+                );
+                break;
+
+            default:
+                if (IdMessage == -1)
+                    tempUserInfo.setUsernameErrorMessage(null);
+                else
+                    tempUserInfo.setEmailErrorMessage(null);
+                break;
+        }
+    }
+
+    /**
+     * Messages for the Password information
+     *
+     * @param IdMessage   : The ID of the message to show.
+     * @param tempPwdInfo : the user information data holder
+     */
+    private void mPwdInfoErrorMessage(int IdMessage, SignInPwdInfoFragment tempPwdInfo) {
+        switch (IdMessage) {
+            case 3:
+                tempPwdInfo.setPwdErrorMessage(
+                        getResources().getString(R.string.empty_password_error_signIn)
+                );
+                break;
+
+            case 4:
+                tempPwdInfo.setConfirmErrorMessage(
+                        getResources().getString(R.string.empty_confirmation_error_signIn)
+                );
+                break;
+
+            case 5:
+                tempPwdInfo.setConfirmErrorMessage(
+                        getResources().getString(R.string.diff_error_signIn)
+                );
+                break;
+
+            default:
+                if (IdMessage == -1)
                     tempPwdInfo.setPwdErrorMessage(null);
+                else
                     tempPwdInfo.setConfirmErrorMessage(null);
-                    // Ad for the password and confirmation
-                    break;
+                break;
+        }
+    }
 
-            }
+
+    /**
+     * This part is for the fields test
+     * -------------------------------------------------------------
+     */
+
+    /**
+     * checks if the Username : !isEmpty
+     *
+     * @return True or False
+     */
+    private boolean isUsernameValid(String username) {
+        if (TextUtils.isEmpty(username)) {
+            setErrorMessage(0); // Username Empty
+            return false;
 
         }
 
+        setErrorMessage(-1); // Username valid
+        return true;
     }
 
+    /**
+     * Checks if the Email : !isEmpty, isValid
+     * <p/>
+     * Uses the {@link AppConfig#isEmailValid(String)}
+     *
+     * @return True or False.
+     */
     private boolean isEmailValid(String email) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-        return matcher.find();
+        if (TextUtils.isEmpty(email)) {
+            setErrorMessage(1); // Email Empty
+            return false;
+
+        } else {
+            if (!AppConfig.getInstance().isEmailValid(email)) {
+                setErrorMessage(2); // Email Invalid
+                return false;
+            }
+        }
+
+        setErrorMessage(-2); // Email Correct
+        return true;
     }
 
-    private boolean isEmailEmpty(String email) {
-        return TextUtils.isEmpty(email);
+    /**
+     * Check if the Old Password : !isEmpty, isCorrect
+     *
+     * @return True or False.
+     */
+    private Boolean isPwdValid(String pwd) {
+        if (TextUtils.isEmpty(pwd)) {
+            setErrorMessage(3); // Password Empty
+            return false;
+
+        }
+
+        setErrorMessage(-1); // Password Correct
+        return true;
     }
 
-    private boolean isUsernameEmpty(String username) {
-        return TextUtils.isEmpty(username);
-    }
+    /**
+     * Check if the Confirmation : !isEmpty, equals
+     *
+     * @return True or False.
+     */
+    private boolean isCofPwdValid(String pwd, String confirmPwd) {
+        if (TextUtils.isEmpty(confirmPwd)) {
+            setErrorMessage(4); // Confirmation Empty
+            return false;
+        } else {
+            if (!confirmPwd.equals(pwd)) {
+                setErrorMessage(5); // Pwd != Conf
+                return false;
+            }
+        }
 
-    private boolean isPwdEmpty(String pwd) {
-        return TextUtils.isEmpty(pwd);
+        setErrorMessage(-2); // Pwd == Conf
+        return true;
     }
 
 

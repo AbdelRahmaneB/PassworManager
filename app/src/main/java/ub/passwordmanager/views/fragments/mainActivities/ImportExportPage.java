@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments.mainActivities;
+package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import ub.passwordmanager.R;
-import ub.passwordmanager.adapters.ImportExportListAdapter;
+import ub.passwordmanager.views.adapters.ImportExportListAdapter;
 
 public class ImportExportPage extends Fragment {
 

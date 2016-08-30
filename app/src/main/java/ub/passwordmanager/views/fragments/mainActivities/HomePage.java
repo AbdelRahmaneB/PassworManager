@@ -1,4 +1,4 @@
-package ub.passwordmanager.fragments.mainActivities;
+package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
-import ub.passwordmanager.adapters.MyRecyclerViewAdapter;
+import ub.passwordmanager.views.adapters.MyRecyclerViewAdapter;
 
 
 public class HomePage extends Fragment {

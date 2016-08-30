@@ -1,4 +1,4 @@
-package ub.passwordmanager.adapters;
+package ub.passwordmanager.views.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 
-/**
+/** Description :
+ * ToDo : explain the purpose of this class
+ *
  * Created by UB on 25/08/2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView

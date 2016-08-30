@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="@string/nav_label_setting"
-    tools:context="ub.passwordmanager.fragments.mainActivities.SettingPage">
+    tools:context=".views.fragments.mainActivities.SettingPage">
 
 
     <ListView
