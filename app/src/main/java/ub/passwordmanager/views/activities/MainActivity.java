@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
+import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity
 
                     // Create the Dialog to add a new Password Account
                     //new NewPwdAccountDialog(MainActivity.this).getDialog();
-                    new EditPwdAccountDialog(MainActivity.this,1).getDialog();
+                    //new EditPwdAccountDialog(MainActivity.this,1).getDialog();
+                    new DeletePwdAccountDialog(MainActivity.this).getDialog();
 
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();

@@ -3,6 +3,7 @@ package ub.passwordmanager.views.fragments.dialogs;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +44,8 @@ public class EditPwdAccountDialog extends CustomDialog {
     /**
      * Create and show the dialog depending on the parameters
      * This method uses the :
-     *  - {@link #initialiseTheFields()} : to initial all the fields in the dialog
-     *  - {@link #fillTheFields()} : to fill the dialog with the data of the selected item
+     * - {@link #initialiseTheFields()} : to initial all the fields in the dialog
+     * - {@link #fillTheFields()} : to fill the dialog with the data of the selected item
      */
     @Override
     public void getDialog() {
@@ -88,7 +89,7 @@ public class EditPwdAccountDialog extends CustomDialog {
     /**
      * Initialise the fields of the edit dialog
      */
-    private void initialiseTheFields(){
+    private void initialiseTheFields() {
         // Initialise the fields in the current dialog
         this.mWebSite = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_siteWeb);
         this.mEmail = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_email);
@@ -98,15 +99,18 @@ public class EditPwdAccountDialog extends CustomDialog {
         final TextView mTitle = (TextView) getCurrentDialog().findViewById(R.id.label_Dialog_title);
         mTitle.setText(getCurrentActivity().getResources().getString(R.string.home_add_edit_ETitle));
 
+        final ImageView mImage = (ImageView) getCurrentDialog().findViewById(R.id.ic_dialog_add_edit);
+        mImage.setImageResource(R.drawable.ic_edit_white);
+
     }
 
     /**
      * Fill the fields of the edit Dialog
      */
-    private void fillTheFields(){
+    private void fillTheFields() {
         // ToDo : get the data from the DataBase
         this.mWebSite.setText("MyWebSite");
-        
+
         // ToDo : Affect the data to the fields
     }
 }
