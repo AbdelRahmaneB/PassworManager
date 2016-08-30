@@ -1,5 +1,7 @@
 package ub.passwordmanager.views.activities;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -8,14 +10,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
+import ub.passwordmanager.views.fragments.dialogs.AddEditDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,8 +45,11 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     // TODO : Add the action for creation a new account (Dialog)
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+                    //mAddEditDialog();
+                   AddEditDialog.getInstance().getAddDialog(MainActivity.this);
+                    //alert.showDialog(MainActivity.this);
                 }
             });
 
@@ -77,7 +85,7 @@ public class MainActivity extends AppCompatActivity
                                     .getClass()
                                     .getSimpleName())
             );
-        }catch(Exception ex){
+        } catch (Exception ex) {
 
         }
 
@@ -119,8 +127,9 @@ public class MainActivity extends AppCompatActivity
     /**
      * This function allow us to save the current State of the activity
      * In our case we save only the Active Fragment.
+     *
      * @param savedInstanceState : we save all our information in this bundle
-     *                              se that our fragment can communicate.
+     *                           se that our fragment can communicate.
      */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -150,8 +159,6 @@ public class MainActivity extends AppCompatActivity
                 switchFragment(FragmentFactory.getInstance().getFragment(-1), false);
         }
     }
-
-
 
 
     /**

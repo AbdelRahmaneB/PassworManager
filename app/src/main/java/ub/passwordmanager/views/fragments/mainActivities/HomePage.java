@@ -1,14 +1,18 @@
 package ub.passwordmanager.views.fragments.mainActivities;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -70,7 +74,7 @@ public class HomePage extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 ArrayList<PwdAccountModel> mDataSet = getDataSet();
-                Log.i("***", " Clicked on Item " + mDataSet.get(position).getmWebSite());
+                Log.i("***", " Clicked on Item " + mDataSet.get(position).getWebSite());
             }
 
             @Override
@@ -80,11 +84,10 @@ public class HomePage extends Fragment {
                 ImageView bt_edit = (ImageView) v.findViewById(R.id.bt_editAccount);
                 bt_delete.setVisibility(View.VISIBLE);
                 bt_edit.setVisibility(View.VISIBLE);
-                Toast.makeText(v.getContext(), "LongPress" + mDataSet.get(position).getmWebSite(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "LongPress" + mDataSet.get(position).getWebSite(), Toast.LENGTH_SHORT).show();
             }
 
         });
-
 
     }
 
@@ -108,5 +111,8 @@ public class HomePage extends Fragment {
         }
         return results;
     }
+
+
+
 
 }

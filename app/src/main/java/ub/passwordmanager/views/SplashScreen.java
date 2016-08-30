@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.views.activities.MainActivity;
 import ub.passwordmanager.views.activities.SignIn;
 
 /**
@@ -27,7 +28,8 @@ public class SplashScreen extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), SignIn.class));
+               // startActivity(new Intent(getApplicationContext(), SignIn.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         }, 2000);
     }

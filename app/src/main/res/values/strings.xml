@@ -69,6 +69,11 @@
     <string name="home_hint_date">Last update : 27/08/2016</string>
     <string name="home_hint_last_conn">Last connection : 27/08/2016</string>
 
+    <string name="home_add_edit_webSite">WebSite</string>
+    <string name="home_add_edit_email">Email (Optional)</string>
+    <string name="home_add_edit_pwd">Password (Optional)</string>
+    <string name="home_add_edit_other">Other Information (Optional)</string>
+
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->
