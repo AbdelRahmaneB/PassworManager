@@ -30,7 +30,7 @@
                 android:src="@drawable/ic_add_circle" />
 
             <TextView
-                android:id="@+id/label_password_recovery"
+                android:id="@+id/label_Dialog_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/ic_dialog_add_edit"
                 android:layout_toRightOf="@+id/ic_dialog_add_edit"
-                android:text="Adding a new account"
+                android:text="@string/home_add_edit_ATitle"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse"
                 android:textSize="20sp" />
         </RelativeLayout>

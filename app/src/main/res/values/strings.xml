@@ -72,6 +72,10 @@
     <string name="home_add_edit_pwd">Password</string>
     <string name="home_add_edit_other">Other Information (Optional)</string>
 
+    <string name="home_add_edit_ATitle">Adding a new account</string>
+    <string name="home_add_edit_ETitle">Editing account</string>
+
+
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->
