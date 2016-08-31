@@ -43,12 +43,8 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View view) {
 
                     // Create the Dialog to add a new Password Account
-                    //new NewPwdAccountDialog(MainActivity.this).getDialog();
-                    //new EditPwdAccountDialog(MainActivity.this,1).getDialog();
-                    new DeletePwdAccountDialog(MainActivity.this).getDialog();
+                    new NewPwdAccountDialog(MainActivity.this).getDialog();
 
-//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
                 }
             });
 
