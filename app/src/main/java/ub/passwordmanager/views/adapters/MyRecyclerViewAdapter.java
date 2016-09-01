@@ -195,6 +195,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
+            // ToDo : Add the call for the Consult view
             Toast.makeText(v.getContext(), "Here" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
             myClickListener.onItemClick(getAdapterPosition(), v);
         }

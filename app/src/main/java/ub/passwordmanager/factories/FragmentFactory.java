@@ -9,6 +9,7 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.views.fragments.Registration.SignInPwdInfoFragment;
 import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
 import ub.passwordmanager.views.fragments.mainActivities.AboutPage;
+import ub.passwordmanager.views.fragments.mainActivities.ConsultAccount;
 import ub.passwordmanager.views.fragments.mainActivities.HomePage;
 import ub.passwordmanager.views.fragments.mainActivities.ImportExportPage;
 import ub.passwordmanager.views.fragments.mainActivities.PasswordGeneratorPage;
@@ -44,19 +45,6 @@ public class FragmentFactory {
             }
         }
         return INSTANCE;
-    }
-
-    public Fragment getPreviousFragment(Fragment targetFragment) {
-        Fragment previousFragment = null;
-
-        for (Fragment tempFragment : fragmentCache.values()) {
-            if (tempFragment.equals(targetFragment)) {
-                break;
-            }
-            previousFragment = tempFragment;
-        }
-
-        return previousFragment;
     }
 
     /**
@@ -115,6 +103,10 @@ public class FragmentFactory {
                 fragmentClass = AboutPage.class;
                 break;
 
+            case R.layout.fragment_consult_account :
+                fragmentClass = ConsultAccount.class;
+                break;
+
             default:
                 fragmentClass = HomePage.class;
         }
@@ -125,7 +117,7 @@ public class FragmentFactory {
     /**
      * This Function allow the user to get the index
      * in the menu navigator of a specific fragment
-     * Since qe know the order of the menu we return
+     * Since we know the order of the menu we return
      * the index of the menu as seen in the navigator
      * we start from 0 to 5 - a total of 6 items
      *
@@ -160,6 +152,10 @@ public class FragmentFactory {
                 temp = 5;
                 break;
 
+            case "ConsultAccount":
+                temp = 6;
+                break;
+
             default:
                 temp = 0;
         }
@@ -179,9 +175,6 @@ public class FragmentFactory {
         return getFragment(SignInPwdInfoFragment.class);
     }
 
-//    public Fragment getHomeFragment(){
-//        return getFragment(HomePage.class);
-//    }
 
 
 }

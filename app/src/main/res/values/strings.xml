@@ -77,8 +77,10 @@
     <string name="home_add_edit_DTitle">Deleting an account</string>
     <string name="home_add_edit_DMessage">You\'r about to delete the .</string>
     <string name="home_add_edit_DMessage_suite">Would you like to continue ?</string>
+    <!--******************************************************************************-->
 
-
+    <!-- Consulting an Account Fragment-->
+    <string name="Consult_Account_details">Account details</string>
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->
@@ -156,6 +158,9 @@
     <!-- Dialogs  -->
     <string name="dialog_button_save">Save</string>
     <string name="dialog_button_cancel">Cancel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--******************************************************************************-->
 
 
