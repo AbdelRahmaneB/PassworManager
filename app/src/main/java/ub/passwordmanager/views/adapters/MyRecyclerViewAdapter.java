@@ -16,6 +16,7 @@ import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
 
 /**
  * Description :
@@ -37,7 +38,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      */
     private ArrayList<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
-    private Activity mActivity;
+    protected Activity mActivity;
     /** *********************************************************************** */
 
     /**
@@ -82,7 +83,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.home_cardview_row, parent, false);
 
-        return new DataObjectHolder(view);
+        return new DataObjectHolder(view, this.mActivity);
     }
 
     /**
@@ -166,6 +167,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView hEmailAddress;
         ImageView h_bt_Delete;
         ImageView h_bt_Edit;
+        private Activity mHolderActivity;
 
         /**
          * Constructor of The DataHolder.
@@ -174,7 +176,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
          *
          * @param itemView : The current View
          */
-        public DataObjectHolder(View itemView) {
+        public DataObjectHolder(View itemView, Activity holderActivity) {
             super(itemView);
 
             // Initialise the View objects
@@ -191,12 +193,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
             // Add the listeners to our view
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+
+            mHolderActivity = holderActivity;
         }
+
 
         @Override
         public void onClick(View v) {
             // ToDo : Add the call for the Consult view
             Toast.makeText(v.getContext(), "Here" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            new ViewPwdAccountDialog(this.mHolderActivity).getDialog();
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
 

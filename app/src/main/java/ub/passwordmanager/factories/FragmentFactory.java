@@ -9,7 +9,6 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.views.fragments.Registration.SignInPwdInfoFragment;
 import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
 import ub.passwordmanager.views.fragments.mainActivities.AboutPage;
-import ub.passwordmanager.views.fragments.mainActivities.ConsultAccount;
 import ub.passwordmanager.views.fragments.mainActivities.HomePage;
 import ub.passwordmanager.views.fragments.mainActivities.ImportExportPage;
 import ub.passwordmanager.views.fragments.mainActivities.PasswordGeneratorPage;
@@ -103,10 +102,6 @@ public class FragmentFactory {
                 fragmentClass = AboutPage.class;
                 break;
 
-            case R.layout.fragment_consult_account :
-                fragmentClass = ConsultAccount.class;
-                break;
-
             default:
                 fragmentClass = HomePage.class;
         }
@@ -150,10 +145,6 @@ public class FragmentFactory {
 
             case "AboutPage":
                 temp = 5;
-                break;
-
-            case "ConsultAccount":
-                temp = 6;
                 break;
 
             default:

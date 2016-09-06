@@ -75,6 +75,7 @@
     <string name="home_add_edit_ATitle">Adding a new account</string>
     <string name="home_add_edit_ETitle">Editing account</string>
     <string name="home_add_edit_DTitle">Deleting an account</string>
+    <string name="home_add_edit_VTitle">Account details</string>
     <string name="home_add_edit_DMessage">You\'r about to delete the .</string>
     <string name="home_add_edit_DMessage_suite">Would you like to continue ?</string>
     <!--******************************************************************************-->
