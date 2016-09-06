@@ -53,8 +53,8 @@
                 android:text="@string/home_hint_email" />
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
                 android:id="@+id/bt_deleteAccount"
                 android:src="@drawable/ic_delete"
                 android:layout_below="@+id/l_LastUpdate"
@@ -65,10 +65,10 @@
                 android:layout_alignParentEnd="true" />
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
                 android:contentDescription="@string/app_name"
                 android:id="@+id/bt_editAccount"
                 android:src="@drawable/ic_edit"

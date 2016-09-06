@@ -1,5 +1,6 @@
 package ub.passwordmanager.views.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,14 @@ import java.util.ArrayList;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
 
-/** Description :
+/**
+ * Description :
  * ToDo : explain the purpose of this class
- *
+ * <p/>
  * Created by UB on 25/08/2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView
@@ -29,9 +34,11 @@ public class MyRecyclerViewAdapter extends RecyclerView
     /**
      * 1. List of DataObject that represent our CardView
      * 2. Our Adapter listener
+     * 3. The Current Activity
      */
     private ArrayList<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
+    protected Activity mActivity;
     /** *********************************************************************** */
 
     /**
@@ -54,6 +61,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
 
     /**
+     * Adding the The Data to the adapter and get the current activity
+     *
+     * @param dataSet
+     */
+    public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet, Activity activity) {
+        this.mDataSet = dataSet;
+        this.mActivity = activity;
+    }
+
+    /**
      * Creating and initialising our view of the Adapter
      *
      * @param parent
@@ -66,7 +83,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.home_cardview_row, parent, false);
 
-        return new DataObjectHolder(view);
+        return new DataObjectHolder(view, this.mActivity);
     }
 
     /**
@@ -76,10 +93,29 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * @param position : The index of our items in the "mDataSet".
      */
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(DataObjectHolder holder, final int position) {
         holder.hSiteWeb.setText(mDataSet.get(position).getWebSite());
         holder.hLastUpdate.setText(mDataSet.get(position).getLastUpdate());
         holder.hEmailAddress.setText(mDataSet.get(position).getEmail());
+
+        final Activity a = this.mActivity;
+
+        holder.h_bt_Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // ToDo : Event to delete the CardView
+                new DeletePwdAccountDialog(mActivity).getDialog();
+            }
+        });
+
+        holder.h_bt_Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // ToDo : Event to modify the CardView
+                new EditPwdAccountDialog(mActivity,0).getDialog();
+
+            }
+        });
     }
 
     /**
@@ -130,6 +166,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView hLastUpdate;
         TextView hEmailAddress;
         ImageView h_bt_Delete;
+        ImageView h_bt_Edit;
+        private Activity mHolderActivity;
 
         /**
          * Constructor of The DataHolder.
@@ -138,7 +176,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
          *
          * @param itemView : The current View
          */
-        public DataObjectHolder(View itemView) {
+        public DataObjectHolder(View itemView, Activity holderActivity) {
             super(itemView);
 
             // Initialise the View objects
@@ -146,6 +184,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
             hLastUpdate = (TextView) itemView.findViewById(R.id.l_LastUpdate);
             hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
             h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
+            h_bt_Edit = (ImageView) itemView.findViewById(R.id.bt_editAccount);
+
 
             // Log the current action
             Log.i(LOG_TAG, "Adding Listener");
@@ -153,11 +193,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
             // Add the listeners to our view
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+
+            mHolderActivity = holderActivity;
         }
+
 
         @Override
         public void onClick(View v) {
+            // ToDo : Add the call for the Consult view
             Toast.makeText(v.getContext(), "Here" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            new ViewPwdAccountDialog(this.mHolderActivity).getDialog();
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
 

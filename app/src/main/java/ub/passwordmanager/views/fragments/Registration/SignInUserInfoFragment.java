@@ -64,7 +64,6 @@ public class SignInUserInfoFragment extends Fragment {
         this.t_InputUsername = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
 
         this.mUserAccount = new UserAccountModel();
-
         // Add the textWatcher listener to  our fields
         this.tv_Username.addTextChangedListener(watchUsername);
         this.tv_Email.addTextChangedListener(watchEmail);

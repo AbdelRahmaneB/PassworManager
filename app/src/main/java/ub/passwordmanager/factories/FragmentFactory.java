@@ -46,19 +46,6 @@ public class FragmentFactory {
         return INSTANCE;
     }
 
-    public Fragment getPreviousFragment(Fragment targetFragment) {
-        Fragment previousFragment = null;
-
-        for (Fragment tempFragment : fragmentCache.values()) {
-            if (tempFragment.equals(targetFragment)) {
-                break;
-            }
-            previousFragment = tempFragment;
-        }
-
-        return previousFragment;
-    }
-
     /**
      * This function allow us to test if the instance of a fragment already exist.
      * and get it's instance
@@ -125,7 +112,7 @@ public class FragmentFactory {
     /**
      * This Function allow the user to get the index
      * in the menu navigator of a specific fragment
-     * Since qe know the order of the menu we return
+     * Since we know the order of the menu we return
      * the index of the menu as seen in the navigator
      * we start from 0 to 5 - a total of 6 items
      *
@@ -179,9 +166,6 @@ public class FragmentFactory {
         return getFragment(SignInPwdInfoFragment.class);
     }
 
-//    public Fragment getHomeFragment(){
-//        return getFragment(HomePage.class);
-//    }
 
 
 }

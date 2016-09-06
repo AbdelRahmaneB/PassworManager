@@ -27,7 +27,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/about_app_title"
-                android:src="@drawable/ic_add_circle" />
+                android:src="@drawable/ic_view_white" />
 
             <TextView
                 android:id="@+id/label_Dialog_title"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/ic_dialog_add_edit"
                 android:layout_toRightOf="@+id/ic_dialog_add_edit"
-                android:text="@string/home_add_edit_ATitle"
+                android:text="@string/home_add_edit_VTitle"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -61,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_webSite"
-                android:inputType="text" />
+                android:inputType="text"
+                android:enabled="false"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -82,7 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:enabled="false"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -92,9 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/home_ae_input_email"
-            android:layout_marginEnd="45dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
+            android:layout_marginRight="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp">
 
@@ -103,23 +105,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_pwd"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:enabled="false"/>
 
         </android.support.design.widget.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/iv_pwd_gen_prof"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/home_ae_input_email"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="30dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/password_gen"
-            android:tag="@string/hint_tagVisibility" />
 
 
         <android.support.design.widget.TextInputLayout
@@ -143,7 +132,8 @@
                 android:maxLines="10"
                 android:minLines="1"
                 android:scrollbars="vertical"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:enabled="false"/>
 
         </android.support.design.widget.TextInputLayout>
 

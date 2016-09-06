@@ -1,26 +1,23 @@
 package ub.passwordmanager.views.activities;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.views.fragments.dialogs.AddEditDialog;
+import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,12 +41,10 @@ public class MainActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO : Add the action for creation a new account (Dialog)
-//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-                    //mAddEditDialog();
-                   AddEditDialog.getInstance().getAddDialog(MainActivity.this);
-                    //alert.showDialog(MainActivity.this);
+
+                    // Create the Dialog to add a new Password Account
+                    new NewPwdAccountDialog(MainActivity.this).getDialog();
+
                 }
             });
 
