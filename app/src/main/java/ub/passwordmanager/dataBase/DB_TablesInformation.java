@@ -40,6 +40,10 @@ public class DB_TablesInformation {
                         KEY_PASSWORD + " VARCHAR NOT NULL, " +
                         KEY_LAST_CONNECTION + " VARCHAR NOT NULL )";
 
+        // This filed contain the query to Delete the current Table.
+        public static final String KEY_DELETE_TABLE =
+                "DROP TABLE IF EXISTS " + KEY_TABLE_NAME;
+
     }
 
     //-------------------------------------------------------------------------------------------
@@ -74,6 +78,10 @@ public class DB_TablesInformation {
                         KEY_PASSWORD + " VARCHAR NOT NULL, " +
                         KEY_OTHER_INFO + " VARCHAR, " +
                         KEY_LAST_UPDATE + " DATE NOT NULL )";
+
+        // This filed contain the query to Delete the current Table.
+        public static final String KEY_DELETE_TABLE =
+                "DROP TABLE IF EXISTS " + KEY_TABLE_NAME;
 
     }
 }

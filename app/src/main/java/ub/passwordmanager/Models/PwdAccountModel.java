@@ -5,6 +5,7 @@ package ub.passwordmanager.Models;
  */
 public class PwdAccountModel {
 
+    private int mId;
     private String mWebSite;
     private String mEmail;
     private String mPassword;
@@ -24,10 +25,27 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
+    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
+        this.mId = id;
+        this.mWebSite = mWebSite;
+        this.mEmail = mEmail;
+        this.mPassword = mPassword;
+        this.mLastUpdate = mLastUpdate;
+        this.mOtherInfo = otherInfo;
+    }
+
     public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mLastUpdate = mLastUpdate;
+    }
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
     }
 
     public String getWebSite() {

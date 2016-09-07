@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class UserAccountModel {
 
+    private int mId;
     private String mRef;
     private String mUsername;
     private String mEmail;
@@ -20,6 +21,14 @@ public class UserAccountModel {
     public UserAccountModel(String username, String pwd_email) {
         this.mUsername = username;
         this.mPassword = pwd_email;
+    }
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
     }
 
     public String getRef() {
