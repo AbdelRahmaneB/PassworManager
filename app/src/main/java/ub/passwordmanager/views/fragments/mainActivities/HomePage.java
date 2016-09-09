@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
@@ -106,7 +108,7 @@ public class HomePage extends Fragment {
         ArrayList<PwdAccountModel> results = new ArrayList<>();
         for (int index = 0; index < 20; index++) {
             PwdAccountModel obj = new PwdAccountModel("Some Primary Text " + index,
-                    "Secondary " + index, "Last Update : 27/08/2016");
+                    "Secondary " + index, new Date());
             results.add(index, obj);
         }
         return results;

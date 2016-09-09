@@ -77,7 +77,7 @@ public class DB_TablesInformation {
                         KEY_USERNAME + " VARCHAR NOT NULL, " +
                         KEY_PASSWORD + " VARCHAR NOT NULL, " +
                         KEY_OTHER_INFO + " VARCHAR, " +
-                        KEY_LAST_UPDATE + " DATE NOT NULL )";
+                        KEY_LAST_UPDATE + " VARCHAR NOT NULL )";
 
         // This filed contain the query to Delete the current Table.
         public static final String KEY_DELETE_TABLE =

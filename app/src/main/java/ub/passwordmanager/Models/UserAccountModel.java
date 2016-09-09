@@ -23,6 +23,15 @@ public class UserAccountModel {
         this.mPassword = pwd_email;
     }
 
+    public UserAccountModel(int mId, String mRef, String mUsername, String mEmail, String mPassword, Date mLastLogIn) {
+        this.mId = mId;
+        this.mRef = mRef;
+        this.mUsername = mUsername;
+        this.mEmail = mEmail;
+        this.mPassword = mPassword;
+        this.mLastLogIn = mLastLogIn;
+    }
+
     public int getmId() {
         return mId;
     }

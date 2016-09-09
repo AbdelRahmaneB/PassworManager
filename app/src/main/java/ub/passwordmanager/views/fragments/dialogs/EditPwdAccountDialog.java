@@ -74,7 +74,7 @@ public class EditPwdAccountDialog extends CustomDialog {
         try {
             PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString(),
                     mEmail.getText().toString(), mPwd.getText().toString(),
-                    mDateFormat.format(mCalender.getTime()), mOther.getText().toString());
+                    mCalender.getTime(), mOther.getText().toString());
 
             // ToDo : Add the code to save the changes of the object in the DataBase
 

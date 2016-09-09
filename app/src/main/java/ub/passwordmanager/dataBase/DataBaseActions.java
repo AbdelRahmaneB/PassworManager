@@ -2,8 +2,18 @@ package ub.passwordmanager.dataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import ub.passwordmanager.Models.PwdAccountModel;
+import ub.passwordmanager.Models.UserAccountModel;
 
 /**
  * This role of this class is to interact with the DataBase for :
@@ -11,8 +21,8 @@ import android.util.Log;
  * - Modifying Data.
  * - Deleting Data.
  * - Extracting Data.
- * <p>
- * Created by UB on 07/09/2016.
+ *
+ * Created by UcefBen on 07/09/2016.
  */
 public abstract class DataBaseActions {
 
@@ -28,19 +38,18 @@ public abstract class DataBaseActions {
      * @param values    : List of the values for the desired Table.
      * @return : True if the everything went fine, False otherwise.
      */
+    @SuppressWarnings("ConstantConditions")
     public static Boolean newData(Context context, String tableName, String[] columns, String[] values) {
+        SQLiteDatabase db = null;
         try {
-            // Initialise the DataBase Helper
-            DB_Helper dbh = new DB_Helper(context);
-
-            // Get The database - Writing mode
-            SQLiteDatabase db = dbh.getWritableDatabase();
+            // Get the DataBase
+            db = getDataBase(context);
 
             // Initialise the Query Adapter
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 0; i < columns.length; i++){
+            for (int i = 0; i < columns.length; i++) {
                 cv.put(columns[i], values[i]);
             }
 
@@ -51,11 +60,12 @@ public abstract class DataBaseActions {
             db.close();
 
             // Show a message in the log
-            Log.e(KEY_LOG + "newDataError:", "Data added correctly !!");
+            Log.i(KEY_LOG + "newDataError:", "Data added correctly !!");
 
             return true;
         } catch (Exception ex) {
             Log.e(KEY_LOG + "newDataError:", "[" + ex.getMessage() + "]");
+            db.close();
             return false;
         }
     }
@@ -70,36 +80,36 @@ public abstract class DataBaseActions {
      * @param values    : List of the new values for the desired Table.
      * @return : True if the everything went fine, False otherwise.
      */
+    @SuppressWarnings("ConstantConditions")
     public static Boolean editData(Context context, String tableName, String[] columns, String[] values) {
+        SQLiteDatabase db = null;
         try {
-            // Initialise the DataBase Helper
-            DB_Helper dbh = new DB_Helper(context);
-
-            // Get The database - Writing mode
-            SQLiteDatabase db = dbh.getWritableDatabase();
+            // Get the DataBase
+            db = getDataBase(context);
 
             // Initialise the Query Adapter
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 1; i < columns.length; i++){
+            for (int i = 1; i < columns.length; i++) {
                 cv.put(columns[i], values[i]);
             }
 
             // The ID of the Data to Modify
-            String[] oldValues = new String[] { String.valueOf(values[0]) };
+            String[] oldValues = new String[]{String.valueOf(values[0])};
 
             // Update the values in DataBase
-            db.update(tableName, cv, "ID = ?", oldValues);
+            db.update(tableName, cv, "Id = ?", oldValues);
 
             // Close the DataBase
             db.close();
 
             // Show a message in the log
-            Log.e(KEY_LOG + "EditData:", "Data modifications saved correctly !!");
+            Log.i(KEY_LOG + "EditData:", "Data modifications saved correctly !!");
             return true;
         } catch (Exception ex) {
             Log.e(KEY_LOG + "EdiDataError:", "[" + ex.getMessage() + "]");
+            db.close();
             return false;
         }
     }
@@ -112,29 +122,253 @@ public abstract class DataBaseActions {
      * @param id        : The ID of the desired Data in the Table.
      * @return : True if the everything went fine, False otherwise.
      */
+    @SuppressWarnings("ConstantConditions")
     public static Boolean deleteData(Context context, String tableName, int id) {
+        SQLiteDatabase db = null;
         try {
-            // Initialise the DataBase Helper
-            DB_Helper dbh = new DB_Helper(context);
-
-            // Get The database - Writing mode
-            SQLiteDatabase db = dbh.getWritableDatabase();
+            // Get the DataBase
+            db = getDataBase(context);
 
             // The ID of the Data to Modify
-            String[] selectedValues = new String[] { String.valueOf(id) };
+            String[] selectedValues = new String[]{String.valueOf(id)};
 
             // Update the values in DataBase
-            db.delete(tableName, "ID = ?", selectedValues);
+            db.delete(tableName, "Id = ?", selectedValues);
 
             // Close the DataBase
             db.close();
+
             // Show a message in the log
-            Log.e(KEY_LOG + "DeleteData:", "Data Deleted correctly !!");
+            Log.i(KEY_LOG + "DeleteData:", "Data Deleted correctly !!");
             return true;
         } catch (Exception ex) {
             Log.e(KEY_LOG + "De_DataError:", "[" + ex.getMessage() + "]");
+            db.close();
             return false;
         }
+    }
+
+    /**
+     * The role of this function is to get the Data depending on a custom query.
+     *
+     * @param context   : The Application context where the function is called.
+     * @param tableName : The desired Table name.
+     * @param columns   : List of the columns needed for the query.
+     * @param values    : List of the new values needed for the query.
+     * @return an object and can return "null" if the object not found
+     */
+    @SuppressWarnings("ConstantConditions")
+    public static Object getAccount(Context context, String tableName, String[] columns, String[] values) {
+        SQLiteDatabase db = null;
+        Cursor mCursor = null;
+        try {
+            // Get the DataBase
+            db = getDataBase(context);
+
+            // Set the string query and Create a cursor to fetch all the Data from te query
+            mCursor = db.rawQuery(buildQueryString(tableName, columns, values).toString(), null);
+            Object mTempObject = null;
+
+            // Get the data from the cursor
+            if (mCursor != null && mCursor.moveToFirst())
+                mTempObject = fillTheObject(mCursor, tableName);
+
+
+            // Close the cursor
+            mCursor.close();
+
+            // Close the DataBase
+            db.close();
+
+            // Show a message in the log
+            Log.e(KEY_LOG + "GetAccount :", "Data extraction done successfully !!");
+            return mTempObject; // Return the object
+        } catch (Exception ex) {
+            Log.e(KEY_LOG + "GetAccError:", "[" + ex.getMessage() + "]");
+            mCursor.close();
+            db.close();
+            return null;
+        }
+    }
+
+    /**
+     * The role of this function is to get all the object in the specified Table
+     *
+     * @param context   : The Application context where the function is called.
+     * @param tableName : The desired Table name.
+     * @return a list of object from the selected Table.
+     */
+    @SuppressWarnings("ConstantConditions")
+    public static List<Object> getAllAccounts(Context context, String tableName) {
+        SQLiteDatabase db = null;
+        Cursor mCursor = null;
+        try {
+            // Get the DataBase
+            db = getDataBase(context);
+
+            // Set the string query and Create a cursor to fetch all the Data from te query
+            mCursor = db.rawQuery(buildQueryString(tableName), null);
+            List<Object> mTempObject = new ArrayList<>();
+
+            // Get the data from the cursor
+            if (mCursor != null) {
+                while (mCursor.moveToFirst()) {
+                    mTempObject.add(fillTheObject(mCursor, tableName));
+                }
+
+            }
+
+            // Close the cursor
+            mCursor.close();
+
+            // Close the DataBase
+            db.close();
+
+            // Show a message in the log
+            Log.e(KEY_LOG + "GetAccount :", "Data extraction done successfully !!");
+            return mTempObject; // Return the object
+        } catch (Exception ex) {
+            Log.e(KEY_LOG + "GetAccError:", "[" + ex.getMessage() + "]");
+            mCursor.close();
+            db.close();
+            return null;
+        }
+    }
+
+
+    /* ************************** Private Methods *******************************/
+    //---------------------------------------------------------------------------/
+
+
+    /**
+     * This Function allow us to get the DataBase Instance.
+     * we create this function to avoid the reuse of those 2 lines.
+     *
+     * @param context : The application context.
+     * @return an instance of SQLiteDatabase.
+     */
+    private static SQLiteDatabase getDataBase(Context context) {
+        // Initialise the DataBase Helper
+        DB_Helper dbh = new DB_Helper(context);
+
+        // Get The database - Writing mode
+        return dbh.getWritableDatabase();
+    }
+
+    /**
+     * The purpose of this function is to create a custom query
+     * to get Data from the DataBase.
+     *
+     * @param tableName : The table from which we want to extract the data.
+     * @param columns   : the columns to use in this query.
+     * @param values    : the values to filter data in this query.
+     * @return the customise query.
+     */
+    @SuppressWarnings("ConstantConditions")
+    private static StringBuilder buildQueryString(String tableName, String[] columns,
+                                                  String[] values) {
+
+        StringBuilder query = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
+        int counter = columns.length;  // Number of line in the table
+
+        for (int i = 0; i < counter; i++) {
+            query.append(columns[i]);
+            query.append("=");
+
+            // Check if the value stored is int value or String value to add the "'"
+            if (values[i].matches("\\d+")) {
+                query.append(values[i]); // All the numbers
+            } else {
+                query.append("'");
+                query.append(values[i]);
+                query.append("'");
+            }
+
+            // Check if there is more
+            if (counter > 1) {
+                query.append(" AND ");
+            }
+
+        }
+
+        return query;
+    }
+
+
+    /**
+     * this function is the same as {@link #buildQueryString(String, String[], String[])}
+     * the only difference is that this one is used with no parameters
+     *
+     * @param tableName : The table from which we want to extract the data.
+     * @return the customise query
+     */
+    private static String buildQueryString(String tableName) {
+        return ("SELECT * FROM " + tableName);
+    }
+
+    /**
+     * Choose the model class we will use to fill the object.
+     *
+     * @param cursor    : Cursor that contain the extracted data.
+     * @param tableName : The table name to define which class to use.
+     * @return the filled object.
+     * @throws ParseException : to catch the error if there is a parsing error.
+     */
+    private static Object fillTheObject(Cursor cursor, String tableName) throws ParseException {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        switch (tableName) {
+            case "UserAccount":
+                // Return the object
+                return getUserObject(cursor, formatter);
+
+            case "PwdAccount":
+                // Return the object
+                return getPwdObject(cursor, formatter);
+
+            default:
+                // Nothing to do here
+                return null;
+        }
+    }
+
+    /**
+     * Function to fill the UserAccount Object
+     *
+     * @param cursor    : Cursor that contain the extracted data.
+     * @param formatter : Date format
+     * @return UserAccount object filled with data.
+     * @throws ParseException : to catch the error if there is a parsing error.
+     */
+    private static UserAccountModel getUserObject(Cursor cursor, SimpleDateFormat formatter) throws ParseException {
+        return new UserAccountModel(
+                Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                formatter.parse(cursor.getString(5))
+        );
+    }
+
+
+    /**
+     * Function to fill the PwdAccount Object
+     *
+     * @param cursor    : Cursor that contain the extracted data.
+     * @param formatter : Date format
+     * @return PwdAccount object filled with data.
+     * @throws ParseException : to catch the error if there is a parsing error.
+     */
+    private static PwdAccountModel getPwdObject(Cursor cursor, SimpleDateFormat formatter) throws ParseException {
+        return new PwdAccountModel(
+                Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                formatter.parse(cursor.getString(4)),
+                cursor.getString(5)
+        );
     }
 
 

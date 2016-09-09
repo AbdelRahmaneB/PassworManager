@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
@@ -56,12 +57,13 @@ public class NewPwdAccountDialog extends CustomDialog {
         DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
         Calendar mCalender = Calendar.getInstance();
 
-        // ToDo : Test on the object if there are not empty
+
+        // ToDo : Test on the object if there are not empty and the Date
         // Initialise the object so we can send it to the persistence class
         try {
             PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString(),
                     mEmail.getText().toString(), mPwd.getText().toString(),
-                    mDateFormat.format(mCalender.getTime()), mOther.getText().toString());
+                    mCalender.getTime(), mOther.getText().toString());
 
             // ToDo : Add the code to save the new object in the DataBase
 

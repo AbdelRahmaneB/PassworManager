@@ -1,5 +1,7 @@
 package ub.passwordmanager.Models;
 
+import java.util.Date;
+
 /**
  * Created by UB on 27/08/2016.
  */
@@ -9,7 +11,7 @@ public class PwdAccountModel {
     private String mWebSite;
     private String mEmail;
     private String mPassword;
-    private String mLastUpdate;
+    private Date mLastUpdate;
     private String mOtherInfo;
 
     public PwdAccountModel() {
@@ -17,7 +19,7 @@ public class PwdAccountModel {
     }
 
 
-    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, Date mLastUpdate, String otherInfo) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
@@ -25,7 +27,7 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
-    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
+    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, Date mLastUpdate, String otherInfo) {
         this.mId = id;
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
@@ -34,7 +36,7 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
-    public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {
+    public PwdAccountModel(String mWebSite, String mEmail, Date mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mLastUpdate = mLastUpdate;
@@ -72,11 +74,11 @@ public class PwdAccountModel {
         this.mPassword = mPassword;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return mLastUpdate;
     }
 
-    public void setLastUpdate(String mLastUpdate) {
+    public void setLastUpdate(Date mLastUpdate) {
         this.mLastUpdate = mLastUpdate;
     }
 
