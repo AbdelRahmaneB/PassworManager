@@ -22,7 +22,7 @@ public class DataBaseActionUnitTest {
     @Test
     public void addingData_ToDataBase_UserAccount(){
         Context context = new MockContext();
-        
+
         //DataBaseActions.newData(context,tablename,columns,values);
         assertEquals(true,true);
     }
