@@ -76,14 +76,14 @@ public class DB_TablesInformation {
 
         // List containing all the columns of our Table, may be used in
         //    the Persistence class, so that we ca unify the CRUD methods
-        public static final String[] KEY_AlL_COLUMNS = {
+        public static final List<String> KEY_AlL_COLUMNS = Arrays.asList(
                                             KEY_ID,
                                             KEY_WEB_SITE,
                                             KEY_USERNAME,
                                             KEY_PASSWORD,
                                             KEY_OTHER_INFO,
                                             KEY_LAST_UPDATE
-                                    };
+                                        );
 
         // This field contain the query to create the Password Account Table.
         public static final String KEY_CREATE_TABLE =
