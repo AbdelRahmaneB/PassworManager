@@ -14,6 +14,10 @@ public class AppConfig {
      */
     private static AppConfig Instance;
 
+    // The current Password that the uses to connect
+    private String mCurrentPassword;
+    private String mCurrentUser;
+
     // Our Regex Pattern for the validity of the Email Address
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -50,5 +54,19 @@ public class AppConfig {
         return matcher.find();
     }
 
+    public String getCurrentPassword() {
+        return mCurrentPassword;
+    }
 
+    public void setCurrentPassword(String mCurrentPassword) {
+        this.mCurrentPassword = mCurrentPassword;
+    }
+
+    public String getCurrentUser() {
+        return mCurrentUser;
+    }
+
+    public void setCurrentUser(String mCurrentUser) {
+        this.mCurrentUser = mCurrentUser;
+    }
 }

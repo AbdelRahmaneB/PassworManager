@@ -1,6 +1,7 @@
 package ub.passwordmanager.views.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,14 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
-import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
                                     .getSimpleName())
             );
         } catch (Exception ex) {
-
+            Log.e("OnCreate Activity", "[" + ex.getMessage() + "]");
         }
 
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
      * @return True or false depending if we found the desired menu
      */
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Get and switch to the chosen fragment
         switchFragment(FragmentFactory

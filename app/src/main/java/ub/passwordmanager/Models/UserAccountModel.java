@@ -3,7 +3,8 @@ package ub.passwordmanager.Models;
 import java.util.Date;
 
 /**
- * Created by UB on 28/08/2016.
+ * This Class represent the data holder for the user account information
+ * Created by UcefBen on 28/08/2016.
  */
 public class UserAccountModel {
 
@@ -32,11 +33,11 @@ public class UserAccountModel {
         this.mLastLogIn = mLastLogIn;
     }
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.mId = mId;
     }
 
@@ -80,11 +81,11 @@ public class UserAccountModel {
         this.mLastLogIn = mLastLogIn;
     }
 
-    public String getmConfirmationPwd() {
+    public String getConfirmationPwd() {
         return mConfirmationPwd;
     }
 
-    public void setmConfirmationPwd(String mConfirmationPwd) {
+    public void setConfirmationPwd(String mConfirmationPwd) {
         this.mConfirmationPwd = mConfirmationPwd;
     }
 }

@@ -21,7 +21,7 @@ import ub.passwordmanager.Models.UserAccountModel;
  * - Modifying Data.
  * - Deleting Data.
  * - Extracting Data.
- *
+ * <p/>
  * Created by UcefBen on 07/09/2016.
  */
 public abstract class DataBaseActions {
@@ -39,7 +39,7 @@ public abstract class DataBaseActions {
      * @return : True if the everything went fine, False otherwise.
      */
     @SuppressWarnings("ConstantConditions")
-    public static Boolean newData(Context context, String tableName, String[] columns, String[] values) {
+    public static Boolean newData(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         try {
             // Get the DataBase
@@ -49,8 +49,8 @@ public abstract class DataBaseActions {
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 0; i < columns.length; i++) {
-                cv.put(columns[i], values[i]);
+            for (int i = 0; i < columns.size() - 1; i++) {
+                cv.put(columns.get(i + 1), values.get(i));
             }
 
             // insert the values into the DataBase
@@ -81,7 +81,7 @@ public abstract class DataBaseActions {
      * @return : True if the everything went fine, False otherwise.
      */
     @SuppressWarnings("ConstantConditions")
-    public static Boolean editData(Context context, String tableName, String[] columns, String[] values) {
+    public static Boolean editData(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         try {
             // Get the DataBase
@@ -91,12 +91,12 @@ public abstract class DataBaseActions {
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 1; i < columns.length; i++) {
-                cv.put(columns[i], values[i]);
+            for (int i = 1; i < columns.size() - 1; i++) {
+                cv.put(columns.get(i), values.get(i));
             }
 
             // The ID of the Data to Modify
-            String[] oldValues = new String[]{String.valueOf(values[0])};
+            String[] oldValues = new String[]{String.valueOf(values.get(0))};
 
             // Update the values in DataBase
             db.update(tableName, cv, "Id = ?", oldValues);
@@ -158,7 +158,7 @@ public abstract class DataBaseActions {
      * @return an object and can return "null" if the object not found
      */
     @SuppressWarnings("ConstantConditions")
-    public static Object getAccount(Context context, String tableName, String[] columns, String[] values) {
+    public static Object getAccount(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         Cursor mCursor = null;
         try {
@@ -265,22 +265,22 @@ public abstract class DataBaseActions {
      * @return the customise query.
      */
     @SuppressWarnings("ConstantConditions")
-    private static StringBuilder buildQueryString(String tableName, String[] columns,
-                                                  String[] values) {
+    private static StringBuilder buildQueryString(String tableName, List<String> columns,
+                                                  List<String> values) {
 
         StringBuilder query = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
-        int counter = columns.length;  // Number of line in the table
+        int counter = (columns.size() - 1);  // Number of line in the table
 
         for (int i = 0; i < counter; i++) {
-            query.append(columns[i]);
+            query.append(columns.get(i));
             query.append("=");
 
             // Check if the value stored is int value or String value to add the "'"
-            if (values[i].matches("\\d+")) {
-                query.append(values[i]); // All the numbers
+            if (values.get(i).matches("\\d+")) {
+                query.append(values.get(i)); // All the numbers
             } else {
                 query.append("'");
-                query.append(values[i]);
+                query.append(values.get(i));
                 query.append("'");
             }
 
@@ -296,7 +296,7 @@ public abstract class DataBaseActions {
 
 
     /**
-     * this function is the same as {@link #buildQueryString(String, String[], String[])}
+     * this function is the same as {@link #buildQueryString(String, List, List)}
      * the only difference is that this one is used with no parameters
      *
      * @param tableName : The table from which we want to extract the data.

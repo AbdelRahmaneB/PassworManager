@@ -1,9 +1,13 @@
 package ub.passwordmanager.dataBase;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This class contain two abstract static classes,
  * that holds the tables information (ColumnName, Table creation query)
- *
+ * <p/>
  * The Existing classes are {@link DB_UserAccountTable} and {@link DB_PwdAccountTable}
  * Created by UB on 06/09/2016.
  */
@@ -27,8 +31,14 @@ public class DB_TablesInformation {
 
         // List containing all the columns of our Table, may be used in
         //    the Persistence class, so that we ca unify the CRUD methods
-        public static final String[] KEY_AlL_COLUMNS = {KEY_ID, KEY_REF, KEY_USERNAME,
-                KEY_EMAIL, KEY_PASSWORD, KEY_LAST_CONNECTION};
+        public static final List<String> KEY_AlL_COLUMNS = Arrays.asList(
+                                            KEY_ID,
+                                            KEY_REF,
+                                            KEY_USERNAME,
+                                            KEY_EMAIL,
+                                            KEY_PASSWORD,
+                                            KEY_LAST_CONNECTION
+                                        );
 
         // This field contain the query to create the User Account Table.
         public static final String KEY_CREATE_TABLE =
@@ -66,8 +76,14 @@ public class DB_TablesInformation {
 
         // List containing all the columns of our Table, may be used in
         //    the Persistence class, so that we ca unify the CRUD methods
-        public static final String[] KEY_AlL_COLUMNS = {KEY_ID, KEY_WEB_SITE, KEY_USERNAME,
-                KEY_PASSWORD, KEY_OTHER_INFO, KEY_LAST_UPDATE};
+        public static final String[] KEY_AlL_COLUMNS = {
+                                            KEY_ID,
+                                            KEY_WEB_SITE,
+                                            KEY_USERNAME,
+                                            KEY_PASSWORD,
+                                            KEY_OTHER_INFO,
+                                            KEY_LAST_UPDATE
+                                    };
 
         // This field contain the query to create the Password Account Table.
         public static final String KEY_CREATE_TABLE =
