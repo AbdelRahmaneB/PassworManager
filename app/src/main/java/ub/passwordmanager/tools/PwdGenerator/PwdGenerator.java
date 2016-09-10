@@ -13,15 +13,18 @@ public abstract class PwdGenerator {
         String loweCase = "abcdefghijklmnopqrstuvwxyz";
         String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String numbers = "1234567890";
-        String SALTCHARS = loweCase + upperCase + numbers;
+        String specialChars = "!@#$%^&*()_/-";
+
+        String SALT_CHARS = loweCase + upperCase + numbers + specialChars;
+
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
         while (salt.length() < 12) {
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
+            int index = (int) (rnd.nextFloat() * SALT_CHARS.length());
+            salt.append(SALT_CHARS.charAt(index));
         }
-        String saltStr = salt.toString();
-        return saltStr;
+
+        return salt.toString();
 
         //candidateChars.charAt(random.nextInt(candidateChars.length())); try thisone
 
