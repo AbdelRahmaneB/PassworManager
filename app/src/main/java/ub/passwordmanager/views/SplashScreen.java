@@ -32,13 +32,15 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 // Check if the username exist uin the preferences file
-                if (AppConfig.getInstance().getSavedValueFromPreferences(
+                String username = (String) AppConfig.getInstance().getSavedValueFromPreferences(
                         SplashScreen.this,
                         AppConfig.KEY_PREF_STRING,
-                        AppConfig.KEY_PREF_USERNAME
-                ) == null) {
+                        AppConfig.KEY_PREF_USERNAME);
+
+                if (username == null) {
                     startActivity(new Intent(getApplicationContext(), SignIn.class));
                 } else {
+                    AppConfig.getInstance().setCurrentUser(username);
                     startActivity(new Intent(getApplicationContext(), LogIn.class));
                 }
             }

@@ -160,7 +160,7 @@ public abstract class Service_UserAccount {
      * @return True if Account exist, False otherwise.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    public static boolean verifyAuthentificationData(Context context) throws Exception {
+    public static boolean verifyAuthenticationData(Context context) throws Exception {
 
         // Set the values to send to DataBase
         List<String> mColumns = Arrays.asList(
@@ -168,7 +168,9 @@ public abstract class Service_UserAccount {
                 DB_UserAccountTable.KEY_PASSWORD
         );
         List<String> mValues = Arrays.asList(
-                AppConfig.getInstance().getCurrentUser(),
+                DataEncryption.encryptData(
+                        AppConfig.getInstance().getCurrentPassword(),
+                        AppConfig.getInstance().getCurrentUser()),
                 DataEncryption.encryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         AppConfig.getInstance().getCurrentPassword()

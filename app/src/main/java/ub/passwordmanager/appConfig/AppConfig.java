@@ -23,6 +23,7 @@ public class AppConfig {
     // The current Password that the uses to connect
     private String mCurrentPassword;
     private String mCurrentUser;
+    private String mCurrentUserEmail;
 
     // Our Regex Pattern for the validity of the Email Address
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =

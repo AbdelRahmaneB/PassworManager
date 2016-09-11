@@ -176,6 +176,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
 
             if (userAccount != null) {
                 try {
+                    String username = userAccount.getUsername();
                     // Save the values in the DataBase
                     if (Service_UserAccount.saveNewData(getBaseContext(), userAccount)) {
 
@@ -184,7 +185,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
                                 SignIn.this,
                                 AppConfig.KEY_PREF_STRING,
                                 AppConfig.KEY_PREF_USERNAME,
-                                userAccount.getUsername()
+                                username
                         );
 
                         // Inform the user that everything is correct
