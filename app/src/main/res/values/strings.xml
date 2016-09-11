@@ -140,6 +140,12 @@
     <string name="opt_title3_desc">You can use the symbols to generate the password (,%:#;_).</string>
     <string name="opt_title5_desc">You can use the numbers to generate the password (1 &#8211; 9)</string>
     <string name="opt_title4_desc">Password length :</string>
+
+
+    <string name="opt_lower_case_value">abcdefghijklmnopqrstuvwxyz</string>
+    <string name="opt_upper_case_value">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="opt_symbols_value">!@#$%^&amp;*()_/-</string>
+    <string name="opt_numbers_value">1234567890</string>
     <!--******************************************************************************-->
 
     <!-- Settings Fragment -->
@@ -162,6 +168,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--******************************************************************************-->
+
+
+    <!-- Error, Warnings and information messages-->
+    <string name="registration_ok">The account is created correctly !!</string>
+    <string name="registration_error">There was a problem when creating a new account!!</string>
+    <string name="editing_account_error">There was a problem while saving the new data !!!!</string>
     <!--******************************************************************************-->
 
 

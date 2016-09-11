@@ -95,7 +95,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, final int position) {
         holder.hSiteWeb.setText(mDataSet.get(position).getWebSite());
-        holder.hLastUpdate.setText(mDataSet.get(position).getLastUpdate());
+        holder.hLastUpdate.setText(""+mDataSet.get(position).getLastUpdate());
         holder.hEmailAddress.setText(mDataSet.get(position).getEmail());
 
         final Activity a = this.mActivity;

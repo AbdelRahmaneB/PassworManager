@@ -1,6 +1,7 @@
 package ub.passwordmanager.views.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,14 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
-import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
+            // get the user information
+            getAccountInformation(navigationView);
+
             // Get the default Fragment to show when the user log in or changed view
             if (savedInstanceState == null)
                 activeFragment = FragmentFactory.getInstance().getFragment(-1);
@@ -81,12 +87,10 @@ public class MainActivity extends AppCompatActivity
                                     .getSimpleName())
             );
         } catch (Exception ex) {
-
+            Log.e("OnCreate Activity", "[" + ex.getMessage() + "]");
         }
 
-
     }
-
 
     /**
      * This function is derived from the "NavigationView.OnNavigationItemSelectedListener".
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity
      * @return True or false depending if we found the desired menu
      */
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // Get and switch to the chosen fragment
         switchFragment(FragmentFactory
@@ -155,7 +159,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     /**
      * Description
      * This function allow us to switch between the fragments
@@ -201,6 +204,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem item = navigationView.getMenu().getItem(index);
 
+//        getAccountInformation(navigationView);
+
         // Change the title of the action bar
         setTitle(item.getTitle());
 
@@ -214,6 +219,27 @@ public class MainActivity extends AppCompatActivity
         // set the visibility of the floating button
         FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Function to get the user information and set the title in the Menu Drawer
+     * @param navigationView : The current menu drawer
+     */
+    private void getAccountInformation(NavigationView navigationView) {
+        try {
+            View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+            UserAccountModel userAccount = Service_UserAccount.getAllAccounts(getBaseContext()).get(0);
+            TextView tv_Username = (TextView) headerView.findViewById(R.id.label_username_profile_drawer);
+            TextView tv_Email = (TextView) headerView.findViewById(R.id.label_email_profile_drawer);
+            TextView tv_LasConnection = (TextView) headerView.findViewById(R.id.textView);
+
+            tv_Username.setText(userAccount.getUsername());
+            tv_Email.setText(userAccount.getEmail());
+            tv_LasConnection.setText("Last connection : " + userAccount.getLastLogIn());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

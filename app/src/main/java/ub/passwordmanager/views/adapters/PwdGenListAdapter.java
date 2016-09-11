@@ -2,15 +2,19 @@ package ub.passwordmanager.views.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.appConfig.AppConfig;
 
 /**
  * Class Description
@@ -18,19 +22,26 @@ import ub.passwordmanager.R;
  */
 public class PwdGenListAdapter extends BaseAdapter {
 
-    private String[] mTitles;
-    private String[] mDesc;
-    private int[] mCb;
+    private List<String> mTitles;
+    private List<String> mDesc;
+    private List<Boolean> mCb;
+    private static List<CheckBox> mCheckBoxHolder;
 
     private Context context;
     private static LayoutInflater inflater = null;
+    private static Holder holder;
+    private static Activity mMainActivity;
 
-    public PwdGenListAdapter(Activity mainActivity, String[] titles, String[] desc, int[] cb) {
+    public PwdGenListAdapter(Activity mainActivity, List<String> titles, List<String> desc,
+                             List<Boolean> cb) {
         mTitles = titles;
         mDesc = desc;
         mCb = cb;
 
         context = mainActivity;
+        mMainActivity = mainActivity;
+
+        PwdGenListAdapter.mCheckBoxHolder = new ArrayList<>();
 
         inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,7 +49,7 @@ public class PwdGenListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mTitles.length;
+        return mTitles.size();
     }
 
     @Override
@@ -53,33 +64,109 @@ public class PwdGenListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        Holder holder = new Holder();
-        View view = inflater.inflate(R.layout.adapter_row_option_list, null);
+        if (convertView == null) {
+            holder = new Holder();
+            convertView = inflater.inflate(R.layout.adapter_row_option_list, null);
 
-        holder.title = (TextView) view.findViewById(R.id.l_opt_title);
-        holder.desc = (TextView) view.findViewById(R.id.l_opt_sub_item);
-        holder.cb = (CheckBox) view.findViewById(R.id.l_opt_check);
+            holder.title = (TextView) convertView.findViewById(R.id.l_opt_title);
+            holder.desc = (TextView) convertView.findViewById(R.id.l_opt_sub_item);
+            holder.cb = (CheckBox) convertView.findViewById(R.id.l_opt_check);
 
-        holder.title.setText(mTitles[position]);
-        holder.desc.setText(mDesc[position]);
-        holder.cb.setChecked(true);
+            holder.title.setText(mTitles.get(position));
+            holder.desc.setText(mDesc.get(position));
+            holder.cb.setChecked(mCb.get(position));
+            holder.cb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mCb.get(position)){
+                        mCb.set(position, false);
+                    }else{
+                        mCb.set(position, true);
+                    }
 
-        //holder.cb.setChecked(mCb[position]);
+                    // Save the change into the Preferences file
+                    changeCheckBoxState(position);
+                }
+            });
+            PwdGenListAdapter.mCheckBoxHolder.add(holder.cb);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Todo : when the item Clicked select the checkBox
-                Toast.makeText(context, "You Clicked " + mTitles[position], Toast.LENGTH_SHORT).show();
-            }
-        });
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        return view;
+                    if (PwdGenListAdapter.mCheckBoxHolder.get(position).isChecked()) { // true = UnCheck
+                        mCb.set(position, false);
+                        PwdGenListAdapter.mCheckBoxHolder.get(position).setChecked(false);
+                    } else { // false = check
+                        mCb.set(position, true);
+                        PwdGenListAdapter.mCheckBoxHolder.get(position).setChecked(true);
+                    }
+
+
+                    // Save the change into the Preferences file
+                    changeCheckBoxState(position);
+                }
+            });
+
+        }
+        return convertView;
+
+    }
+
+    /**
+     * Save the change into the Preferences file
+     */
+    private void changeCheckBoxState(int position) {
+
+        // Save the changes
+        switch (position) {
+            case 0:
+                // Lower Case
+                AppConfig.getInstance().saveValueToPreference(
+                        mMainActivity,
+                        AppConfig.KEY_PREF_BOOLEAN,
+                        AppConfig.KEY_PREF_LOWER_CASE,
+                        mCb.get(position)
+                );
+                break;
+
+            case 1:
+                // Upper Case
+                AppConfig.getInstance().saveValueToPreference(
+                        mMainActivity,
+                        AppConfig.KEY_PREF_BOOLEAN,
+                        AppConfig.KEY_PREF_UPPER_CASE,
+                        mCb.get(position)
+                );
+                break;
+
+            case 2:
+                // Symbols
+                AppConfig.getInstance().saveValueToPreference(
+                        mMainActivity,
+                        AppConfig.KEY_PREF_BOOLEAN,
+                        AppConfig.KEY_PREF_USE_SYMBOLS,
+                        mCb.get(position)
+                );
+                break;
+
+
+            case 3:
+                // Numbers
+                AppConfig.getInstance().saveValueToPreference(
+                        mMainActivity,
+                        AppConfig.KEY_PREF_BOOLEAN,
+                        AppConfig.KEY_PREF_USE_NUMBERS,
+                        mCb.get(position)
+                );
+                break;
+        }
+
     }
 
 
     /**
-     *  This Holder class allow us to set the model for our listView Adapter
+     * This Holder class allow us to set the model for our listView Adapter
      */
     private class Holder {
 
