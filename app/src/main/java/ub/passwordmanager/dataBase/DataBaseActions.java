@@ -7,10 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.Models.UserAccountModel;
@@ -60,7 +58,7 @@ public abstract class DataBaseActions {
             db.close();
 
             // Show a message in the log
-            Log.i(KEY_LOG + "newDataError:", "Data added correctly !!");
+            Log.i(KEY_LOG + "newData:", "Data added correctly !!");
 
             return true;
         } catch (Exception ex) {
@@ -207,15 +205,16 @@ public abstract class DataBaseActions {
             db = getDataBase(context);
 
             // Set the string query and Create a cursor to fetch all the Data from te query
+
             mCursor = db.rawQuery(buildQueryString(tableName), null);
             List<Object> mTempObject = new ArrayList<>();
 
             // Get the data from the cursor
             if (mCursor != null) {
-                while (mCursor.moveToFirst()) {
+                mCursor.moveToFirst();
+                do{
                     mTempObject.add(fillTheObject(mCursor, tableName));
-                }
-
+                }while (mCursor.moveToNext());
             }
 
             // Close the cursor
@@ -225,10 +224,11 @@ public abstract class DataBaseActions {
             db.close();
 
             // Show a message in the log
-            Log.e(KEY_LOG + "GetAccount :", "Data extraction done successfully !!");
+            Log.i(KEY_LOG + "GetAccounts :", "Data extraction done successfully !!");
             return mTempObject; // Return the object
         } catch (Exception ex) {
             Log.e(KEY_LOG + "GetAccError:", "[" + ex.getMessage() + "]");
+            ex.printStackTrace();
             mCursor.close();
             db.close();
             return null;
@@ -316,15 +316,14 @@ public abstract class DataBaseActions {
      */
     private static Object fillTheObject(Cursor cursor, String tableName) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         switch (tableName) {
             case "UserAccount":
                 // Return the object
-                return getUserObject(cursor, formatter);
+                return getUserObject(cursor);
 
             case "PwdAccount":
                 // Return the object
-                return getPwdObject(cursor, formatter);
+                return getPwdObject(cursor);
 
             default:
                 // Nothing to do here
@@ -336,18 +335,17 @@ public abstract class DataBaseActions {
      * Function to fill the UserAccount Object
      *
      * @param cursor    : Cursor that contain the extracted data.
-     * @param formatter : Date format
      * @return UserAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
-    private static UserAccountModel getUserObject(Cursor cursor, SimpleDateFormat formatter) throws ParseException {
+    private static UserAccountModel getUserObject(Cursor cursor) throws ParseException {
         return new UserAccountModel(
                 Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
-                formatter.parse(cursor.getString(5))
+                cursor.getString(5)
         );
     }
 
@@ -356,17 +354,16 @@ public abstract class DataBaseActions {
      * Function to fill the PwdAccount Object
      *
      * @param cursor    : Cursor that contain the extracted data.
-     * @param formatter : Date format
      * @return PwdAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
-    private static PwdAccountModel getPwdObject(Cursor cursor, SimpleDateFormat formatter) throws ParseException {
+    private static PwdAccountModel getPwdObject(Cursor cursor) throws ParseException {
         return new PwdAccountModel(
                 Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                formatter.parse(cursor.getString(4)),
+                cursor.getString(4),
                 cursor.getString(5)
         );
     }

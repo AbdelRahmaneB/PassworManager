@@ -3,6 +3,7 @@ package ub.passwordmanager.Services;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -18,7 +19,7 @@ import ub.passwordmanager.tools.dataEncryption.DataEncryption;
  * The role of this class is to handle the communication with The DataBase and the views
  * Created by UB on 10/09/2016.
  */
-public class Service_PwdAccount {
+public abstract class Service_PwdAccount {
 
     /**
      * This function Calls the persistence of new data into the DataBase.
@@ -36,7 +37,8 @@ public class Service_PwdAccount {
                 pwdAccount);
 
         // Set the date of last connexion
-        pwdAccount.setLastUpdate(Calendar.getInstance().getTime());
+        pwdAccount.setLastUpdate(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+
         pwdAccount.setId(-1); // No Id
 
         // Create the list of values to send to the DataBase
@@ -74,7 +76,7 @@ public class Service_PwdAccount {
                 pwdAccount);
 
         // Set the date of last connexion
-        pwdAccount.setLastUpdate(Calendar.getInstance().getTime());
+        pwdAccount.setLastUpdate(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 
         // Create the list of values to send to the DataBase
         List<String> values = Arrays.asList(

@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.factories.FragmentFactory;
 import ub.passwordmanager.views.fragments.OnDataPass;
@@ -21,8 +24,14 @@ import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
 
 public class SignIn extends AppCompatActivity implements OnDataPass {
 
+    // The log Key
+    private final String LOG_KEY = "SignIn - ";
+
     // This field will contain the active fragment
     private Fragment activeFragment = null;
+
+    // This fields will contain the Data from both views
+    private UserAccountModel userAccount;
 
     // The view fields
     private Button bt_next = null;
@@ -157,14 +166,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
             // Switch the active fragment to "Password information fragment"
             switchFragment(FragmentFactory.getInstance().getSignInPwdInfoFragment(), true);
 
-            try {
-                // Send the  data to the next fragment
-                Bundle args = new Bundle();
-                args.putString("myMessage", "It worked"); // TODO : Replace the Values with the user Object
-                activeFragment.setArguments(args);
-            } catch (Exception ex) {
-            }
-
             // Change The visibility, button text and the activity title.
             bt_previous.setVisibility(View.VISIBLE);
             bt_next.setVisibility(View.INVISIBLE);
@@ -172,17 +173,40 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
             setTitle(R.string.sign_in_part2);
 
         } else {
-            // TODO : Text is "Register" : Call for saving Data and move to login page
-            /** Steps :
-             * 1) Get the information from the previews fragment.
-             * 2) Create a user Object and send it to the data base.
-             * 3) move to the login activity
-             * 4) Clear the cache so this page can't be access by a back press (See splashScreen)
-             */
-            //Bundle bundle = activeFragment.getArguments();
-            //Toast.makeText(getBaseContext(), "Info" + bundle.get("myMessage"), Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(getApplicationContext(), LogIn.class));
+            if (userAccount != null) {
+                try {
+                    // Save the values in the DataBase
+                    if (Service_UserAccount.saveNewData(getBaseContext(), userAccount)) {
+
+                        // Adding the username to the preferences file
+                        AppConfig.getInstance().saveValueToPreference(
+                                SignIn.this,
+                                AppConfig.KEY_PREF_STRING,
+                                AppConfig.KEY_PREF_USERNAME,
+                                userAccount.getUsername()
+                        );
+
+                        // Inform the user that everything is correct
+                        Toast.makeText(getBaseContext(),
+                                getResources().getString(R.string.registration_ok),
+                                Toast.LENGTH_SHORT).show();
+
+                        // Go to the next Activity
+                        startActivity(new Intent(getApplicationContext(), LogIn.class));
+
+                    } else {
+                        // Warn the user that there was a problem
+                        Toast.makeText(getBaseContext(),
+                                getResources().getString(R.string.registration_error),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception ex) {
+                    Log.e(LOG_KEY + "Register", "[" + ex.getMessage() + "]");
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 
@@ -203,7 +227,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
 
 
     /**
-     * This function is user to link between the fragments and their activity
+     * This function is used to link between the fragments and their activity
      *
      * @param data : The {@link UserAccountModel} as DataHolder
      */
@@ -216,6 +240,8 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
             if (isEmailValid(mUserAccount.getEmail())
                     & isUsernameValid(mUserAccount.getUsername())) {
                 bt_next.setVisibility(View.VISIBLE);
+                this.userAccount = mUserAccount; // To Set the user Account
+                AppConfig.getInstance().setCurrentUser(mUserAccount.getUsername());
             } else {
                 bt_next.setVisibility(View.INVISIBLE);
             }
@@ -225,8 +251,11 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
 
                 String pwd = mUserAccount.getPassword();
                 if (isPwdValid(pwd) &&
-                        isCofPwdValid(pwd, mUserAccount.getmConfirmationPwd())) {
+                        isCofPwdValid(pwd, mUserAccount.getConfirmationPwd())) {
                     bt_next.setVisibility(View.VISIBLE);
+                    this.userAccount.setPassword(mUserAccount.getPassword()); // To Set the user Account
+                    this.userAccount.setConfirmationPwd(mUserAccount.getConfirmationPwd());
+                    AppConfig.getInstance().setCurrentPassword(mUserAccount.getPassword());
                 } else {
                     bt_next.setVisibility(View.INVISIBLE);
                 }
@@ -389,6 +418,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
      * @return True or False.
      */
     private Boolean isPwdValid(String pwd) {
+        // ToDo : test the length of the password
         if (TextUtils.isEmpty(pwd)) {
             setErrorMessage(3); // Password Empty
             return false;

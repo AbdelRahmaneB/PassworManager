@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,7 +109,8 @@ public class HomePage extends Fragment {
         ArrayList<PwdAccountModel> results = new ArrayList<>();
         for (int index = 0; index < 20; index++) {
             PwdAccountModel obj = new PwdAccountModel("Some Primary Text " + index,
-                    "Secondary " + index, new Date());
+                    "Secondary " + index,
+                    new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
             results.add(index, obj);
         }
         return results;

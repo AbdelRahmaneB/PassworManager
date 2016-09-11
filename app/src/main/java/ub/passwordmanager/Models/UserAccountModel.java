@@ -14,7 +14,7 @@ public class UserAccountModel {
     private String mEmail;
     private String mPassword;
     private String mConfirmationPwd;
-    private Date mLastLogIn;
+    private String mLastLogIn;
 
     public UserAccountModel() {
     }
@@ -24,7 +24,7 @@ public class UserAccountModel {
         this.mPassword = pwd_email;
     }
 
-    public UserAccountModel(int mId, String mRef, String mUsername, String mEmail, String mPassword, Date mLastLogIn) {
+    public UserAccountModel(int mId, String mRef, String mUsername, String mEmail, String mPassword, String mLastLogIn) {
         this.mId = mId;
         this.mRef = mRef;
         this.mUsername = mUsername;
@@ -73,11 +73,11 @@ public class UserAccountModel {
         this.mPassword = mPassword;
     }
 
-    public Date getLastLogIn() {
+    public String getLastLogIn() {
         return mLastLogIn;
     }
 
-    public void setLastLogIn(Date mLastLogIn) {
+    public void setLastLogIn(String mLastLogIn) {
         this.mLastLogIn = mLastLogIn;
     }
 

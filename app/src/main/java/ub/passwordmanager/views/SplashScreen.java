@@ -1,13 +1,16 @@
 package ub.passwordmanager.views;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.appConfig.AppConfig;
+import ub.passwordmanager.dataBase.DB_Helper;
+import ub.passwordmanager.views.activities.LogIn;
 import ub.passwordmanager.views.activities.MainActivity;
 import ub.passwordmanager.views.activities.SignIn;
 
@@ -28,8 +31,16 @@ public class SplashScreen extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-//                startActivity(new Intent(getApplicationContext(), SignIn.class));
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                // Check if the username exist uin the preferences file
+                if (AppConfig.getInstance().getSavedValueFromPreferences(
+                        SplashScreen.this,
+                        AppConfig.KEY_PREF_STRING,
+                        AppConfig.KEY_PREF_USERNAME
+                ) == null) {
+                    startActivity(new Intent(getApplicationContext(), SignIn.class));
+                } else {
+                    startActivity(new Intent(getApplicationContext(), LogIn.class));
+                }
             }
         }, 2000);
     }

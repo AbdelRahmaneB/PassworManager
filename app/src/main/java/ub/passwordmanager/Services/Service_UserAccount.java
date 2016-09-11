@@ -3,6 +3,7 @@ package ub.passwordmanager.Services;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public abstract class Service_UserAccount {
                 userAccount);
 
         // Set the date of last connexion
-        userAccount.setLastLogIn(Calendar.getInstance().getTime());
+        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
         userAccount.setId(-1); // No Id
 
         // Create the list of values to send to the DataBase
@@ -45,7 +46,7 @@ public abstract class Service_UserAccount {
                 userAccount.getUsername(),
                 userAccount.getEmail(),
                 userAccount.getPassword(),
-                "" + userAccount.getLastLogIn()
+                userAccount.getLastLogIn()
         );
 
         // Send the information to the DataBase
@@ -74,7 +75,7 @@ public abstract class Service_UserAccount {
                 userAccount);
 
         // Set the date of last connexion
-        userAccount.setLastLogIn(Calendar.getInstance().getTime());
+        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 
         // Create the list of values to send to the DataBase
         List<String> values = Arrays.asList(
@@ -83,7 +84,7 @@ public abstract class Service_UserAccount {
                 userAccount.getUsername(),
                 userAccount.getEmail(),
                 userAccount.getPassword(),
-                "" + userAccount.getLastLogIn()
+                userAccount.getLastLogIn()
         );
 
         // ToDo : Decrypt and Encrypt All the Data in the PwdAccountTable in DataBase.
@@ -129,6 +130,9 @@ public abstract class Service_UserAccount {
 
         // Get All the UserAccount Object from DataBase
         mEncryptedList = DataBaseActions.getAllAccounts(context, DB_UserAccountTable.KEY_TABLE_NAME);
+
+        if (mEncryptedList == null)
+            return null;
 
 
         // Loop on the list of object that we get from the DataBase
@@ -270,12 +274,6 @@ public abstract class Service_UserAccount {
      */
     private static UserAccountModel mDecryptObject(UserAccountModel userAccount) throws Exception {
 
-        // Decrypt the Ref
-        userAccount.setRef(
-                DataEncryption.decryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
-                        userAccount.getRef())
-        );
 
         // Decrypt the Username
         userAccount.setUsername(

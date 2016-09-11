@@ -165,4 +165,10 @@
     <!--******************************************************************************-->
 
 
+    <!-- Error, Warnings and information messages-->
+    <string name="registration_ok">The account is created correctly !!</string>
+    <string name="registration_error">There was a problem when creating a new account!!</string>
+    <!--******************************************************************************-->
+
+
 </resources>

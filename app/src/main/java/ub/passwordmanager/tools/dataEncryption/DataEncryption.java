@@ -89,7 +89,7 @@ public abstract class DataEncryption {
      */
     private static byte[] getEncryptKey(byte[] key) throws Exception {
         KeyGenerator kGen = KeyGenerator.getInstance("AES");
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG","Crypto");
         sr.setSeed(key);
         kGen.init(128, sr); // 192 and 256 bits may not be available
         SecretKey sKey = kGen.generateKey();
@@ -106,7 +106,7 @@ public abstract class DataEncryption {
      */
     private static byte[] mEncryptToByte(byte[] key, byte[] value) throws Exception {
         SecretKeySpec sKeySpec = new SecretKeySpec(key, "AES");
-        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
         cipher.init(Cipher.ENCRYPT_MODE, sKeySpec);
         return cipher.doFinal(value);
     }
@@ -121,7 +121,7 @@ public abstract class DataEncryption {
      */
     private static byte[] mDecryptToByte(byte[] key, byte[] encryptedValue) throws Exception {
         SecretKeySpec sKeySpec = new SecretKeySpec(key, "AES");
-        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
         cipher.init(Cipher.DECRYPT_MODE, sKeySpec);
         return cipher.doFinal(encryptedValue);
     }

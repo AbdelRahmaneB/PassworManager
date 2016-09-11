@@ -63,7 +63,8 @@ public class NewPwdAccountDialog extends CustomDialog {
         try {
             PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString(),
                     mEmail.getText().toString(), mPwd.getText().toString(),
-                    mCalender.getTime(), mOther.getText().toString());
+                    new SimpleDateFormat("dd/MM/yyyy").format(mCalender.getTime()),
+                    mOther.getText().toString());
 
             // ToDo : Add the code to save the new object in the DataBase
 

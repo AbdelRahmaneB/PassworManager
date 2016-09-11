@@ -12,7 +12,7 @@ public class PwdAccountModel {
     private String mWebSite;
     private String mEmail;
     private String mPassword;
-    private Date mLastUpdate;
+    private String mLastUpdate;
     private String mOtherInfo;
 
     public PwdAccountModel() {
@@ -20,7 +20,7 @@ public class PwdAccountModel {
     }
 
 
-    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, Date mLastUpdate, String otherInfo) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
@@ -28,7 +28,7 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
-    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, Date mLastUpdate, String otherInfo) {
+    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
         this.mId = id;
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
@@ -37,7 +37,7 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
-    public PwdAccountModel(String mWebSite, String mEmail, Date mLastUpdate) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mLastUpdate = mLastUpdate;
@@ -75,11 +75,11 @@ public class PwdAccountModel {
         this.mPassword = mPassword;
     }
 
-    public Date getLastUpdate() {
+    public String getLastUpdate() {
         return mLastUpdate;
     }
 
-    public void setLastUpdate(Date mLastUpdate) {
+    public void setLastUpdate(String mLastUpdate) {
         this.mLastUpdate = mLastUpdate;
     }
 

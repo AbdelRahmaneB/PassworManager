@@ -144,7 +144,7 @@ public class SignInPwdInfoFragment extends Fragment {
     public void passData() {
         // Fill the object before passing it to the Activity
         this.mUserAccount.setPassword(tv_Password.getText().toString());
-        this.mUserAccount.setmConfirmationPwd(tv_Confirmation.getText().toString());
+        this.mUserAccount.setConfirmationPwd(tv_Confirmation.getText().toString());
 
         // Notify the listener that the data changed so he can notify the activity
         dataPasser.onDataPass(this.mUserAccount);
