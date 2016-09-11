@@ -2,6 +2,7 @@ package ub.passwordmanager.Services;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -228,8 +229,10 @@ public abstract class Service_UserAccount {
 
         // Get the values that are not empty.
         if (userAccount.getId() > 0) {
-            value.add(Integer.toString(userAccount.getId()));
-            columns.add(DB_UserAccountTable.KEY_ID);
+            if (value != null && columns != null) {
+                value.add(Integer.toString(userAccount.getId()));
+                columns.add(DB_UserAccountTable.KEY_ID);
+            }
         }
 
         // Encrypt the Ref Value

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
@@ -36,9 +38,10 @@ public class LogIn extends AppCompatActivity {
                     AppConfig.getInstance().setCurrentPassword(tv_pwd.getText().toString());
 
                     try {
+
                         if (Service_UserAccount.verifyAuthenticationData(getBaseContext())) {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }else {
+                        } else {
                             Toast.makeText(getBaseContext(),
                                     "Password incorrect !!",
                                     Toast.LENGTH_SHORT).show();
