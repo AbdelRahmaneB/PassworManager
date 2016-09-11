@@ -30,6 +30,11 @@ public class AppConfig {
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     public static final String KEY_PREF_USERNAME = "Username";
+    public static final String KEY_PREF_LOWER_CASE = "LowerCase";
+    public static final String KEY_PREF_UPPER_CASE = "UpperCase";
+    public static final String KEY_PREF_USE_SYMBOLS = "Symbols";
+    public static final String KEY_PREF_USE_NUMBERS= "Numbers";
+
     public static final String KEY_PREF_STRING = "String";
     public static final String KEY_PREF_BOOLEAN = "Boolean";
     public static final String KEY_PREF_INT = "int";
@@ -116,21 +121,27 @@ public class AppConfig {
      * @return the value of the object depending on the given key.
      */
     public Object getSavedValueFromPreferences(Activity activity, String valueType, String preferencesKey) {
-        SharedPreferences PrefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
+        SharedPreferences prefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
         switch (valueType) {
             case "String":
-                return PrefSettings.getString(preferencesKey, null);
+                return prefSettings.getString(preferencesKey, null);
 
             case "Boolean":
-                return PrefSettings.getBoolean(preferencesKey, false);
+                return prefSettings.getBoolean(preferencesKey, false);
 
             case "int":
-                return PrefSettings.getInt(preferencesKey, -1);
+                return prefSettings.getInt(preferencesKey, -1);
 
             default:
                 Log.e("Saving to preferences", "No match for value type");
                 return null;
         }
+    }
+
+
+    public Boolean isKeyExist(Activity activity, String key){
+        SharedPreferences prefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
+        return prefSettings.contains(key);
     }
 
 

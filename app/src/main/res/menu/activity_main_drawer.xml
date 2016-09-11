@@ -20,7 +20,7 @@
 
         <item
             android:id="@+id/nav_password_generator"
-            android:icon="@drawable/ic_pwd_gen"
+            android:icon="@drawable/password_gen"
             android:title="@string/nav_label_pwd_gen" />
 
 

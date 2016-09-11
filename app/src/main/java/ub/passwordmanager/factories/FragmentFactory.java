@@ -74,7 +74,7 @@ public class FragmentFactory {
      * @return Fragment : instance of the requested fragment
      */
     public Fragment getFragment(int itemId) {
-        Class fragmentClass = null;
+        Class fragmentClass;
 
         // get the requested fragment class
         switch (itemId) {

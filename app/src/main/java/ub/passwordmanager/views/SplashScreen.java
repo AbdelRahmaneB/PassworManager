@@ -3,6 +3,7 @@ package ub.passwordmanager.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,20 +32,76 @@ public class SplashScreen extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                // Check if the username exist uin the preferences file
-                String username = (String) AppConfig.getInstance().getSavedValueFromPreferences(
-                        SplashScreen.this,
-                        AppConfig.KEY_PREF_STRING,
-                        AppConfig.KEY_PREF_USERNAME);
 
-                if (username == null) {
-                    startActivity(new Intent(getApplicationContext(), SignIn.class));
-                } else {
-                    AppConfig.getInstance().setCurrentUser(username);
-                    startActivity(new Intent(getApplicationContext(), LogIn.class));
-                }
+                // set The parameters for the Password Generator
+                setPwdGeneratorPreferences();
+
+                // Check if the username exist uin the preferences file
+                checkIfAccountExists();
+
             }
         }, 2000);
+    }
+
+    /**
+     * Function check if the preferences for the Password Generator exists,
+     * Otherwise it Create and init the Preferences file.
+     */
+    private void setPwdGeneratorPreferences(){
+        if (!AppConfig.getInstance().isKeyExist(
+                SplashScreen.this,
+                AppConfig.KEY_PREF_LOWER_CASE)){
+
+            // Lower Case
+            AppConfig.getInstance().saveValueToPreference(
+                    SplashScreen.this,
+                    AppConfig.KEY_PREF_BOOLEAN,
+                    AppConfig.KEY_PREF_LOWER_CASE,
+                    true
+            );
+
+            // Upper Case
+            AppConfig.getInstance().saveValueToPreference(
+                    SplashScreen.this,
+                    AppConfig.KEY_PREF_BOOLEAN,
+                    AppConfig.KEY_PREF_UPPER_CASE,
+                    true
+            );
+
+            // Symbols Case
+            AppConfig.getInstance().saveValueToPreference(
+                    SplashScreen.this,
+                    AppConfig.KEY_PREF_BOOLEAN,
+                    AppConfig.KEY_PREF_USE_SYMBOLS,
+                    true
+            );
+
+            // Numbers Case
+            AppConfig.getInstance().saveValueToPreference(
+                    SplashScreen.this,
+                    AppConfig.KEY_PREF_BOOLEAN,
+                    AppConfig.KEY_PREF_USE_NUMBERS,
+                    true
+            );
+        }
+    }
+
+    /**
+     * Function that checks if the a UserAccount already exists in the DataBase,
+     * and redirect the user to the proper Activity.
+     */
+    private void checkIfAccountExists(){
+        String username = (String) AppConfig.getInstance().getSavedValueFromPreferences(
+                SplashScreen.this,
+                AppConfig.KEY_PREF_STRING,
+                AppConfig.KEY_PREF_USERNAME);
+
+        if (username == null) {
+            startActivity(new Intent(getApplicationContext(), SignIn.class));
+        } else {
+            AppConfig.getInstance().setCurrentUser(username);
+            startActivity(new Intent(getApplicationContext(), LogIn.class));
+        }
     }
 
 

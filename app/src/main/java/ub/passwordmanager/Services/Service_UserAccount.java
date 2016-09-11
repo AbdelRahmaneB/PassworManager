@@ -67,7 +67,7 @@ public abstract class Service_UserAccount {
      * @param userAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveModifiedData(Context context, UserAccountModel userAccount) throws Exception {
+    public static Boolean saveModifiedData(Context context, UserAccountModel userAccount, Boolean reEncryptTheData) throws Exception {
 
         // Encrypt all the Data before sending it to the DataBase
         mEncryptValues(
@@ -88,8 +88,11 @@ public abstract class Service_UserAccount {
                 userAccount.getLastLogIn()
         );
 
-        // ToDo : Decrypt and Encrypt All the Data in the PwdAccountTable in DataBase.
-        // ToDo : Restart the Application and initialise all the Data.
+        if (reEncryptTheData){
+            // ToDo : Decrypt and Encrypt All the Data in the PwdAccountTable in DataBase.
+            // ToDo : Restart the Application and initialise all the Data.
+        }
+
 
         // Send the information to the DataBase
         return DataBaseActions.editData(
