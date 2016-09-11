@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
@@ -26,6 +27,7 @@ import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
+import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 import ub.passwordmanager.views.activities.LogIn;
 import ub.passwordmanager.views.activities.MainActivity;
 
@@ -72,6 +74,7 @@ public class ProfilePage extends Fragment {
         final Button bt_saveProfile = (Button) view.findViewById(R.id.bt_saveProfile);
         bt_saveProfile.setOnClickListener(mButtonListener);
 
+
         // Deactivate the Floating button
         FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         mFab.setVisibility(View.INVISIBLE);
@@ -116,6 +119,17 @@ public class ProfilePage extends Fragment {
 
         mShowHidePwd = (ImageView) view.findViewById(R.id.iv_my_visibility_prof);
         mShowHidePwd.setOnClickListener(mShowHideListener);
+
+        final ImageView generatePwd =(ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
+        generatePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String generatedPwd = PwdGenerator.generatePassword(getActivity());
+                mNewPwd.setText(generatedPwd);
+                mConfirmPwd.setText(generatedPwd);
+                Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

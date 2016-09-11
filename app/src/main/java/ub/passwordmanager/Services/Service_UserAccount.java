@@ -88,7 +88,7 @@ public abstract class Service_UserAccount {
                 userAccount.getLastLogIn()
         );
 
-        if (reEncryptTheData){
+        if (reEncryptTheData) {
             // ToDo : Decrypt and Encrypt All the Data in the PwdAccountTable in DataBase.
             // ToDo : Restart the Application and initialise all the Data.
         }
@@ -188,8 +188,21 @@ public abstract class Service_UserAccount {
     }
 
 
+    public static String recoverPassword(Context context, String key) throws Exception {
+        String mRef = getRef(context);
+        return DataEncryption.decryptData(
+                key,
+                mRef);
+    }
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
+
+    private static String getRef(Context context){
+        return ((UserAccountModel) DataBaseActions.getAllAccounts(
+                context,
+                DB_UserAccountTable.KEY_TABLE_NAME
+        ).get(0)).getRef();
+    }
 
     /**
      * Generic function to Encrypt and add Data into a list with the corresponding Column.

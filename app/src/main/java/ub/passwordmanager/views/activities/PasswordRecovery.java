@@ -8,11 +8,18 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 
+import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
+import ub.passwordmanager.views.fragments.mainActivities.PasswordGeneratorPage;
 
 public class PasswordRecovery extends AppCompatActivity {
 
@@ -27,8 +34,18 @@ public class PasswordRecovery extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
+                final String mPwd = null;
                 TextInputLayout in_email = (TextInputLayout) findViewById(R.id.input_email_recovery);
                 EditText tv_email = (EditText) findViewById(R.id.t_email_recovery);
+                final TextView tv_password_recovery = (TextView) findViewById(R.id.password_recovery);
+                tv_password_recovery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AppConfig.copyToClipBoard(PasswordRecovery.this,
+                                mPwd);
+                        startActivity(new Intent(getApplicationContext(), LogIn.class));
+                    }
+                });
 
                 if (TextUtils.isEmpty(tv_email.getText().toString())) {
                     in_email.setError(getResources().getString(R.string.empty_email_error_signIn));
@@ -37,15 +54,45 @@ public class PasswordRecovery extends AppCompatActivity {
 
                 if (AppConfig.getInstance().isEmailValid(tv_email.getText().toString())) {
                     // TODO : Do the actions to recovery the password
-
-
-                    startActivity(new Intent(getApplicationContext(), LogIn.class));
+                    recoverPassword(tv_password_recovery, tv_email, mPwd);
                 } else {
                     in_email.setError(getResources().getString(R.string.invalid_email_error_signIn));
                 }
 
             }
         });
+    }
+
+    /**
+     * Function to get and show the information of the user in the fields of the view.
+     */
+    private void recoverPassword(TextView mText, EditText tv_email, String mPwd) {
+        try {
+            mPwd = Service_UserAccount.recoverPassword(
+                    getBaseContext(),
+                    tv_email.getText().toString()
+            );
+            mText.setText(
+                    "Your Password is : " +
+                            mPwd
+            );
+            mText.setVisibility(View.VISIBLE);
+
+            AppConfig.copyToClipBoard(PasswordRecovery.this,
+                    mPwd);
+
+            // Set the timer for 2 sec
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(getApplicationContext(), LogIn.class));
+                }
+            }, 2000);
+
+        } catch (Exception e) {
+            Toast.makeText(PasswordRecovery.this, "Email incorrect !!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     @Override

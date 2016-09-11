@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 import ub.passwordmanager.views.adapters.PwdGenListAdapter;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
@@ -52,7 +53,7 @@ public class PasswordGeneratorPage extends Fragment {
         mGeneratedPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                copyToClipBoard(mGeneratedPwd.getText().toString());
+               AppConfig.copyToClipBoard(getActivity(),mGeneratedPwd.getText().toString());
             }
         });
 
@@ -109,13 +110,6 @@ public class PasswordGeneratorPage extends Fragment {
     }
 
 
-    private void copyToClipBoard(String value) {
 
-        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        android.content.ClipData clip = android.content.ClipData.newPlainText("DataKey", value);
-        clipboard.setPrimaryClip(clip);
-
-        Toast.makeText(getContext(), "Data copied !!", Toast.LENGTH_SHORT).show();
-    }
 
 }

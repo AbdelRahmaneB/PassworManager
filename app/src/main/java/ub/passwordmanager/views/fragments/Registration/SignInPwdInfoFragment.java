@@ -11,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 import ub.passwordmanager.views.fragments.OnDataPass;
 
 
@@ -59,6 +62,17 @@ public class SignInPwdInfoFragment extends Fragment {
         this.t_InputConfirmation = (TextInputLayout) view.findViewById(R.id.input_confirmPwd_signIn);
 
         this.mUserAccount = new UserAccountModel();
+
+        final ImageView generatePwd =(ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
+        generatePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String generatedPwd = PwdGenerator.generatePassword(getActivity());
+                tv_Password.setText(generatedPwd);
+                tv_Confirmation.setText(generatedPwd);
+                Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Add the textWatcher listener to  our fields
         this.tv_Password.addTextChangedListener(watchPwd);

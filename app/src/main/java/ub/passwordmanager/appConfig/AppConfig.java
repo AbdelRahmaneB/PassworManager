@@ -1,8 +1,10 @@
 package ub.passwordmanager.appConfig;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -138,10 +140,25 @@ public class AppConfig {
         }
     }
 
-
+    /**
+     * Function to test if a key exists in the preferences file
+     */
     public Boolean isKeyExist(Activity activity, String key){
         SharedPreferences prefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
         return prefSettings.contains(key);
+    }
+
+    /**
+     * Function to copy Data into clipboard
+     * @param value : To save into Clipboard.
+     */
+    public static void copyToClipBoard( Activity activity, String value) {
+
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("DataKey", value);
+        clipboard.setPrimaryClip(clip);
+
+        Toast.makeText(activity, "Data copied !!", Toast.LENGTH_SHORT).show();
     }
 
 
