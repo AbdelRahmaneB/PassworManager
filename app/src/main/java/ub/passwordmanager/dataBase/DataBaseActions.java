@@ -210,8 +210,7 @@ public abstract class DataBaseActions {
             List<Object> mTempObject = new ArrayList<>();
 
             // Get the data from the cursor
-            if (mCursor != null) {
-                mCursor.moveToFirst();
+            if (mCursor.moveToFirst()) {
                 do{
                     mTempObject.add(fillTheObject(mCursor, tableName));
                 }while (mCursor.moveToNext());

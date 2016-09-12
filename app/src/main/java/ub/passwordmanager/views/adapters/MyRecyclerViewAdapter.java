@@ -44,17 +44,17 @@ public class MyRecyclerViewAdapter extends RecyclerView
     /**
      * Adding the AdapterListener
      *
-     * @param myClickListener : Instance of the listener
+     * @param mClickListener : Instance of the listener
      */
-    public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
+    public void setOnItemClickListener(MyClickListener mClickListener) {
+        myClickListener = mClickListener;
     }
 
 
     /**
      * Adding the The Data to the adapter
      *
-     * @param dataSet
+     * @param dataSet : List of data.
      */
     public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet) {
         this.mDataSet = dataSet;
@@ -63,7 +63,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     /**
      * Adding the The Data to the adapter and get the current activity
      *
-     * @param dataSet
+     * @param dataSet : List of data.
      */
     public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet, Activity activity) {
         this.mDataSet = dataSet;
@@ -73,8 +73,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
     /**
      * Creating and initialising our view of the Adapter
      *
-     * @param parent
-     * @param viewType
+     * @param parent   : parent
+     * @param viewType : the type of the view
      * @return a DataObjectHolder
      */
     @Override
@@ -95,10 +95,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, final int position) {
         holder.hSiteWeb.setText(mDataSet.get(position).getWebSite());
-        holder.hLastUpdate.setText(""+mDataSet.get(position).getLastUpdate());
+        holder.hLastUpdate.setText(mDataSet.get(position).getLastUpdate());
         holder.hEmailAddress.setText(mDataSet.get(position).getEmail());
-
-        final Activity a = this.mActivity;
 
         holder.h_bt_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +110,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             @Override
             public void onClick(View view) {
                 // ToDo : Event to modify the CardView
-                new EditPwdAccountDialog(mActivity,0).getDialog();
+                new EditPwdAccountDialog(mActivity, 0).getDialog();
 
             }
         });

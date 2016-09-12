@@ -109,8 +109,10 @@
 
     <string name="l_export_xml_message_done">The data has been exported !!</string>
     <string name="l_import_xml_message_done">The data has been imported !!</string>
-    <string name="l_export_xml_message_error">A a problem occurred while exporting the data !!</string>
-    <string name="l_import_xml_message_error">A a problem occurred while importing the data !!</string>
+    <string name="l_export_xml_message_error">A problem occurred while exporting the data !!</string>
+    <string name="l_import_xml_message_error">A problem occurred while importing the data !!</string>
+
+    <string name="l_import_export_problem">A problem occurred while creating the BackUp folder !!</string>
 
 
 

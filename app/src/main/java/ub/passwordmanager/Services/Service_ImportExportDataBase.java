@@ -51,10 +51,13 @@ public abstract class Service_ImportExportDataBase {
      *
      * @param context : the activity context.
      */
-    public static void exportBaseDonnées(Context context) {
+    public static void exportDataBase(Context context) {
         // Test if the folder exist otherwise show a message to the user
         if (!setBackUpFolder()) {
             // Add an error message "Problem when creating the folder"
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.l_import_export_problem),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -97,7 +100,7 @@ public abstract class Service_ImportExportDataBase {
      *
      * @param context : the application context.
      */
-    public static boolean importBaseDonnées(Context context) {
+    public static Boolean importDataBase(Context context) {
         if (isDataBaseFileExist()) {
             try {
                 // get the DataBase path
@@ -146,6 +149,9 @@ public abstract class Service_ImportExportDataBase {
         // Test if the folder exist otherwise show a message to the user
         if (!setBackUpFolder()) {
             // Add an error message "Problem when creating the folder"
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.l_import_export_problem),
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -175,26 +181,38 @@ public abstract class Service_ImportExportDataBase {
      *
      * @param context : the application context.
      */
-    public static Boolean importFromXml(Context context) throws Exception {
-        if (isXmlDataFileExist()) {
+    public static Boolean importFromXml(Context context) {
+        try {
+            if (isXmlDataFileExist()) {
 
-            // Read and save the data
-            readXmlFile(context);
+                // Read and save the data
+                readXmlFile(context);
 
-            // Show a message that everything went correctly
+                // Show a message that everything went correctly
+                Toast.makeText(context,
+                        context.getResources().getString(R.string.l_import_database_message_done),
+                        Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            } else {
+                // Show a message that no file found
+                Toast.makeText(context,
+                        context.getResources().getString(R.string.l_export_import_noData_file),
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }catch(Exception ex){
+            // Show a message that there is a problem
             Toast.makeText(context,
-                    context.getResources().getString(R.string.l_import_database_message_done),
+                    context.getResources().getString(R.string.l_export_database_message_error),
                     Toast.LENGTH_SHORT).show();
 
-            return true;
-
-        } else {
-            // Show a message that no file found
-            Toast.makeText(context,
-                    context.getResources().getString(R.string.l_export_import_noData_file),
-                    Toast.LENGTH_SHORT).show();
-            return false;
+            Log.e("Error Import XML", "[" + ex.getMessage() + "]");
+            ex.printStackTrace();
+            return null;
         }
+
     }
 
 

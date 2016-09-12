@@ -390,30 +390,6 @@ public class ProfilePage extends Fragment {
      */
 
     /**
-     * Check if the Confirmation : !isEmpty, isMatchPwd
-     *
-     * @return True or False.
-     */
-    private boolean isCofPwdValid() {
-        String str = mConfirmPwd.getText().toString();
-        if (TextUtils.isEmpty(str)) {
-            // Show Error Message
-            tConfirmPwd.setError(getResources().getString(R.string.empty_confirmation_error_signIn));
-            return false;
-        } else {
-            if (!isMatchPwd(mNewPwd.getText().toString(), str)) {
-                // Show Error Message
-                tConfirmPwd.setError(getResources().getString(R.string.diff_error_signIn));
-                return false;
-            }
-
-            // Hide Error Message
-            tConfirmPwd.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    /**
      * Verify if the Old password match's the one in the DataBase.
      *
      * @param pwd : The password that we want to check.
@@ -432,17 +408,6 @@ public class ProfilePage extends Fragment {
         String newPwd = mNewPwd.getText().toString();
         String confPwd = mConfirmPwd.getText().toString();
         return (TextUtils.isEmpty(newPwd)) && (TextUtils.isEmpty(confPwd));
-    }
-
-    /**
-     * Verify if the new Password match it's Confirmation.
-     *
-     * @param pwd     : The new Password.
-     * @param confirm : The Password Confirmation.
-     * @return True or False.
-     */
-    private Boolean isMatchPwd(String pwd, String confirm) {
-        return pwd.equals(confirm);
     }
 
     /**
