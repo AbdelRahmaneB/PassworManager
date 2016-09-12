@@ -126,6 +126,8 @@ public class SignInPwdInfoFragment extends Fragment {
      * Method to define the Error Message of our Password TextView
      */
     public void setPwdErrorMessage(String message) {
+        if(message == null)
+            t_InputPwd.setErrorEnabled(false);
         t_InputPwd.setError(message);
     }
 
@@ -133,6 +135,8 @@ public class SignInPwdInfoFragment extends Fragment {
      * Method to define the Error Message of our Confirmation TextView
      */
     public void setConfirmErrorMessage(String message) {
+        if(message == null)
+            t_InputConfirmation.setErrorEnabled(false);
         t_InputConfirmation.setError(message);
     }
 

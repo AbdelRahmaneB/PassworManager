@@ -6,12 +6,12 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import ub.passwordmanager.Models.UserAccountModel;
@@ -28,8 +27,7 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
-import ub.passwordmanager.views.activities.LogIn;
-import ub.passwordmanager.views.activities.MainActivity;
+import ub.passwordmanager.views.SplashScreen;
 
 public class ProfilePage extends Fragment {
 
@@ -38,6 +36,8 @@ public class ProfilePage extends Fragment {
     private EditText mOldPwd;
     private EditText mNewPwd;
     private EditText mConfirmPwd;
+
+    private Button bt_saveProfile;
 
     private TextInputLayout tUsername;
     private TextInputLayout tEmail;
@@ -48,7 +48,9 @@ public class ProfilePage extends Fragment {
     private ImageView mShowHidePwd;
 
     private View mProgressView;
-    private View mProfilFormView;
+    private View mProfileFormView;
+
+    private UserAccountModel mUserAccountModel;
 
 
     public ProfilePage() {
@@ -67,60 +69,64 @@ public class ProfilePage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profil_page, container, false);
 
-        // Initialise the fields
-        initialiseTheView(view);
-
         // Set the listener for our Save button
-        final Button bt_saveProfile = (Button) view.findViewById(R.id.bt_saveProfile);
+        bt_saveProfile = (Button) view.findViewById(R.id.bt_saveProfile);
         bt_saveProfile.setOnClickListener(mButtonListener);
+
+        // Initialise the fields
+        this.initialiseTheView(view);
+
+        // Set the user information.
+        this.getUserAccountInformation();
 
 
         // Deactivate the Floating button
         FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         mFab.setVisibility(View.INVISIBLE);
 
-        // Set the user information.
-        getUserAccountInformation();
 
         return view;
     }
 
     /**
-     * Function to get and show the information of the user in the fields of the view.
+     * Init the Fields from the view
+     *
+     * @param view : The user view in our case "ProfileView"
      */
-    private void getUserAccountInformation() {
-        try {
-            UserAccountModel userAccount = Service_UserAccount.getAllAccounts(getContext()).get(0);
-            mUsername.setTag(userAccount.getId());
-            mUsername.setText(userAccount.getUsername());
-            mEmail.setText(userAccount.getEmail());
-            mOldPwd.setText(userAccount.getPassword());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initialiseTheView(View view){
+    private void initialiseTheView(View view) {
+        // For the EditText
         mUsername = (EditText) view.findViewById(R.id.t_prof_username_signIn);
-        mEmail = (EditText) view.findViewById(R.id.t_prof_email);
-        mOldPwd = (EditText) view.findViewById(R.id.t_password_prof);
-        mNewPwd = (EditText) view.findViewById(R.id.t_password_new_prof);
-        mConfirmPwd = (EditText) view.findViewById(R.id.t_confirmPwd_prof);
+        mUsername.addTextChangedListener(tw_Username);
 
+        mEmail = (EditText) view.findViewById(R.id.t_prof_email);
+        mEmail.addTextChangedListener(tw_Email);
+
+        mOldPwd = (EditText) view.findViewById(R.id.t_password_prof);
+        mOldPwd.addTextChangedListener(tw_OldPwd);
+
+        mNewPwd = (EditText) view.findViewById(R.id.t_password_new_prof);
+        mNewPwd.addTextChangedListener(tw_NewPwd);
+
+        mConfirmPwd = (EditText) view.findViewById(R.id.t_confirmPwd_prof);
+        mConfirmPwd.addTextChangedListener(tw_ConfirmPwd);
+
+        // For the TextInputLayout
         tUsername = (TextInputLayout) view.findViewById(R.id.input_prof_username);
         tEmail = (TextInputLayout) view.findViewById(R.id.input_prof_email);
         tOldPwd = (TextInputLayout) view.findViewById(R.id.input_prof_old_pwd);
         tNewPwd = (TextInputLayout) view.findViewById(R.id.input_prof_pwd_new_prof);
         tConfirmPwd = (TextInputLayout) view.findViewById(R.id.input_prof_confirmPwd_prof);
 
-        mProfilFormView = view.findViewById(R.id.profile_form);
+        // For the views
+        mProfileFormView = view.findViewById(R.id.profile_form);
         mProgressView = view.findViewById(R.id.login_progress);
 
+        // Hide/Show Password
         mShowHidePwd = (ImageView) view.findViewById(R.id.iv_my_visibility_prof);
         mShowHidePwd.setOnClickListener(mShowHideListener);
 
-        final ImageView generatePwd =(ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
+        // For the Password generator
+        final ImageView generatePwd = (ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
         generatePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,29 +139,21 @@ public class ProfilePage extends Fragment {
     }
 
     /**
-     * The Listener for the Save button
+     * Function to get and show the information of the user in the fields of the view.
      */
-    View.OnClickListener mButtonListener = new View.OnClickListener() {
+    private void getUserAccountInformation() {
+        try {
+            mUserAccountModel = Service_UserAccount.getAllAccounts(getContext()).get(0);
+            mUsername.setTag(mUserAccountModel.getId());
+            mUsername.setText(mUserAccountModel.getUsername());
+            mEmail.setText(mUserAccountModel.getEmail());
+            mOldPwd.setText(mUserAccountModel.getPassword());
 
-        @Override
-        public void onClick(View view) {
-            showProgress(true);
-            if (saveTheUserAccount()) {
-                // alert the user that everything is correct
-                Toast.makeText(getContext(), "Data saved correctly !!", Toast.LENGTH_SHORT).show();
-
-                //Restart the application to apply the changes
-                getActivity().finish();
-                startActivity(new Intent(getContext(), LogIn.class));
-            } else {
-                // alert the user that everything is correct
-                Toast.makeText(getContext(), getResources().getString(R.string.editing_account_error)
-                        , Toast.LENGTH_SHORT).show();
-                showProgress(false);
-            }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    };
+    }
+
 
     /**
      * The Listener for the Show/Hide Password
@@ -185,6 +183,206 @@ public class ProfilePage extends Fragment {
         }
     };
 
+    /**
+     * The Listener for the Save button
+     */
+    View.OnClickListener mButtonListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            saveProfile();
+        }
+    };
+
+
+    /**
+     * TextWatcher for the username
+     */
+    TextWatcher tw_Username = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String username = mUsername.getText().toString();
+            if (TextUtils.isEmpty(username)) {
+                // Show Message Error
+                tUsername.setError(getResources().getString(R.string.empty_username_error_signIn));
+                bt_saveProfile.setEnabled(false);
+                return;
+            }
+
+            // Hide Message Error
+            tUsername.setErrorEnabled(false);
+            bt_saveProfile.setEnabled(true);
+            mUserAccountModel.setUsername(username);
+        }
+    };
+
+    /**
+     * TextWatcher for the Email
+     */
+    TextWatcher tw_Email = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String str = mEmail.getText().toString();
+            if (TextUtils.isEmpty(str)) {
+                // Show Error message
+                tEmail.setError(getResources().getString(R.string.empty_email_error_signIn));
+                bt_saveProfile.setEnabled(false);
+            } else {
+                if (!AppConfig.getInstance().isEmailValid(str)) {
+                    // Show Message Error
+                    tEmail.setError(getResources().getString(R.string.invalid_email_error_signIn));
+                    bt_saveProfile.setEnabled(false);
+                    return;
+                }
+
+                // Hide Error Message
+                tEmail.setErrorEnabled(false);
+                bt_saveProfile.setEnabled(true);
+                mUserAccountModel.setEmail(str);
+            }
+        }
+    };
+
+    /**
+     * TextWatcher for the OldPassword
+     */
+    TextWatcher tw_OldPwd = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String str = mOldPwd.getText().toString();
+            if (TextUtils.isEmpty(str)) {
+                // Show Error Message
+                tOldPwd.setError(getResources().getString(R.string.empty_password_error_signIn));
+                bt_saveProfile.setEnabled(false);
+            } else {
+                if (!isOldPwdCorrect(str)) {
+                    // Show Error Message
+                    tOldPwd.setError(getResources().getString(R.string.not_correct_password_error_signIn));
+                    bt_saveProfile.setEnabled(false);
+                    return;
+                }
+
+                // Hide Error Message
+                tOldPwd.setErrorEnabled(false);
+                bt_saveProfile.setEnabled(true);
+                mUserAccountModel.setPassword(str);
+            }
+        }
+    };
+
+    /**
+     * TextWatcher for the New Password
+     */
+    TextWatcher tw_NewPwd = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (mNewPwd.getText().length() > 0 && mConfirmPwd.getText().length() <= 0){
+                // Show a message that the confirmation is required
+                tConfirmPwd.setError(getResources().getString(R.string.empty_confirmation_error_signIn));
+
+                //deactivate the button
+                bt_saveProfile.setEnabled(false);
+            }else{
+                // Test if the new Pwd and confirmation matches
+                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())){
+                    // Show a message to notify that the password's doesn't match
+                    tConfirmPwd.setError(getResources().getString(R.string.diff_error_signIn));
+
+                    //deactivate the button
+                    bt_saveProfile.setEnabled(false);
+                }else {
+                    // Hide the message
+                    tConfirmPwd.setErrorEnabled(false);
+                    tNewPwd.setErrorEnabled(false);
+
+
+                    //Activate the button
+                    bt_saveProfile.setEnabled(true);
+                }
+            }
+        }
+
+    };
+
+    /**
+     * TextWatcher for the Password confirmation
+     */
+    TextWatcher tw_ConfirmPwd = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (mConfirmPwd.getText().length() > 0 && mNewPwd.getText().length() <= 0){
+                // Show a message that the New password is required
+                tNewPwd.setError(getResources().getString(R.string.empty_confirmation_error_signIn));
+
+                //deactivate the button
+                bt_saveProfile.setEnabled(false);
+            }else{
+                // Test if the new Pwd and confirmation matches
+                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())){
+                    // Show a message to notify that the password's doesn't match
+                    tConfirmPwd.setError(getResources().getString(R.string.diff_error_signIn));
+
+                    //deactivate the button
+                    bt_saveProfile.setEnabled(false);
+                }else {
+                    // Hide the message
+                    tConfirmPwd.setErrorEnabled(false);
+                    tNewPwd.setErrorEnabled(false);
+
+                    //Activate the button
+                    bt_saveProfile.setEnabled(true);
+                }
+            }
+
+
+        }
+    };
+
+
+    //************************************************************************************************
+
 
     /**
      * This part is for the fields test
@@ -192,100 +390,11 @@ public class ProfilePage extends Fragment {
      */
 
     /**
-     * checks if the Username : !isEmpty
-     *
-     * @return True or False
-     */
-    private boolean isUsernameValid(UserAccountModel userAccountModel) {
-        String username = mUsername.getText().toString();
-        if (TextUtils.isEmpty(username)) {
-            // Show Message Error
-            tUsername.setError(getResources().getString(R.string.empty_username_error_signIn));
-            return false;
-        }
-
-        // Hide Message Error
-        tUsername.setError(null);
-        userAccountModel.setUsername(username);
-        return true;
-    }
-
-    /**
-     * Checks if the Email : !isEmpty, isValid
-     * <p/>
-     * Uses the {@link AppConfig#isEmailValid(String)}
-     *
-     * @return True or False.
-     */
-    private boolean isEmailValid(UserAccountModel userAccountModel) {
-        String str = mEmail.getText().toString();
-        if (TextUtils.isEmpty(str)) {
-            // Show Error message
-            tEmail.setError(getResources().getString(R.string.empty_email_error_signIn));
-            return false;
-        } else {
-            if (!AppConfig.getInstance().isEmailValid(str)) {
-                // Show Message Error
-                tEmail.setError(getResources().getString(R.string.invalid_email_error_signIn));
-                return false;
-            }
-
-            // Hide Error Message
-            tEmail.setError(null);
-            userAccountModel.setEmail(str);
-            return true;
-
-        }
-    }
-
-    /**
-     * Check if the Old Password : !isEmpty, isCorrect
-     *
-     * @return True or False.
-     */
-    private Boolean isOldPwdValid() {
-        String str = mOldPwd.getText().toString();
-        if (TextUtils.isEmpty(str)) {
-            // Show Error Message
-            tOldPwd.setError(getResources().getString(R.string.empty_password_error_signIn));
-            return false;
-        } else {
-            if (!isPwdCorrect(str)) {
-                // Show Error Message
-                tOldPwd.setError(getResources().getString(R.string.not_correct_password_error_signIn));
-                return false;
-            }
-
-            // Hide Error Message
-            tOldPwd.setError(null);
-            return true;
-        }
-    }
-
-    /**
-     * Check for the New Password : !isEmpty
-     *
-     * @return true or False
-     */
-    private Boolean isNewPwdValid() {
-        String str = mNewPwd.getText().toString();
-        if (TextUtils.isEmpty(str)) {
-            // Show Error Message
-            tNewPwd.setError(getResources().getString(R.string.empty_password_error_signIn));
-            return false;
-        }
-
-        // Hide Error Messages
-        tNewPwd.setError(null);
-        return true;
-    }
-
-    /**
      * Check if the Confirmation : !isEmpty, isMatchPwd
      *
      * @return True or False.
      */
-    private boolean isCofPwdValid(UserAccountModel userAccountModel) {
+    private boolean isCofPwdValid() {
         String str = mConfirmPwd.getText().toString();
         if (TextUtils.isEmpty(str)) {
             // Show Error Message
@@ -299,8 +408,7 @@ public class ProfilePage extends Fragment {
             }
 
             // Hide Error Message
-            tConfirmPwd.setError(null);
-            userAccountModel.setPassword(str);
+            tConfirmPwd.setErrorEnabled(false);
             return true;
         }
     }
@@ -311,12 +419,12 @@ public class ProfilePage extends Fragment {
      * @param pwd : The password that we want to check.
      * @return True or False.
      */
-    private Boolean isPwdCorrect(String pwd) {
+    private Boolean isOldPwdCorrect(String pwd) {
         return pwd.equals(AppConfig.getInstance().getCurrentPassword());
     }
 
     /**
-     * Test if the password changed or not
+     * Test if the user changed the password
      *
      * @return True or False.
      */
@@ -338,72 +446,13 @@ public class ProfilePage extends Fragment {
     }
 
     /**
-     * Test If the fields are correctly filled
-     *
-     * @param mUserAccountModel : the object holder
-     * @return True if everything correct or false otherwise;
-     */
-    private boolean isTheFieldsCorrect(UserAccountModel mUserAccountModel) {
-        return (isUsernameValid(mUserAccountModel) & isEmailValid(mUserAccountModel)
-                & isOldPwdValid());
-    }
-
-    /**
-     * The role of this function is to Test and save the object into the DataBase
-     *
-     * @return True if everything Correct, False otherwise.
-     */
-    private Boolean saveTheUserAccount() {
-
-        // Create our DataHolder
-        UserAccountModel mUserAccountModel = new UserAccountModel();
-
-        Boolean reEncryptTheData = false;
-
-        // Test if the fields are correctly filled
-        if (isTheFieldsCorrect(mUserAccountModel)) {
-
-            // Test if the Password changed
-            switch (verifyPassword(mUserAccountModel)) {
-                case -1:
-                    return false;
-
-                case 1:
-                    reEncryptTheData = true;
-                    break;
-
-                default:
-                    // value = 0 Do Nothing
-                    break;
-            }
-
-            // Set the ID
-            mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
-
-            try {
-                // Save the object into DataBase
-                return saveObject(mUserAccountModel, reEncryptTheData);
-
-            } catch (Exception ex) {
-                Log.e("SaveTheUserAccount", "[" + ex.getMessage() + "]");
-                ex.printStackTrace();
-                return false;
-            }
-
-        }
-
-        // There was a problem
-        return false;
-    }
-
-    /**
      * The function that actually send the information to the DataBase
+     *
      * @param mUserAccountModel : The object to save.
-     * @param reEncryptTheData : Mention if we need to re-Encrypt the PwdAccount Data.
-     * @return true or false.
+     * @param reEncryptTheData  : Mention if we need to re-Encrypt the PwdAccount Data.
      * @throws Exception
      */
-    private Boolean saveObject(UserAccountModel mUserAccountModel, Boolean reEncryptTheData) throws Exception {
+    private void saveTheObject(UserAccountModel mUserAccountModel, Boolean reEncryptTheData) throws Exception {
         if (Service_UserAccount.saveModifiedData(getContext(), mUserAccountModel, reEncryptTheData)) {
 
             // Refresh the Current Username
@@ -422,40 +471,61 @@ public class ProfilePage extends Fragment {
             mNewPwd.setText(null);
             mConfirmPwd.setText(null);
 
-            return true;
+            Toast.makeText(getContext(), "Data saved correctly !!", Toast.LENGTH_SHORT).show();
         } else
-            return false;
+            showProgress(false);
     }
 
     /**
-     * Function to test the validity of the password.
-     * -1 : There was a problem.
-     * 0 : Password didn't change.
-     * 1 : Password changed.
-     *
-     * @param mUserAccountModel : the object holder.
-     * @return True or False.
+     * The role of this function to define witch password to use (Old Or new)
+     * and also set the data before sending it to the DataBase
      */
-    private int verifyPassword(UserAccountModel mUserAccountModel) {
+    private void saveProfile() {
+        try {
+            Boolean reEncryptTheData = false;
 
-        // Test if the Password changed
-        if (!isNewAndPwdConfirmationEmpty()) {
-            // The fields are not empty then we should test
-            if (!isNewPwdValid() & !isCofPwdValid(mUserAccountModel)) {
-                return -1; // the password and the confirmation doesn't match
+            // Show the progress bar
+            showProgress(true);
+
+            if (isNewAndPwdConfirmationEmpty()) {
+                // Set the ID
+                mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
+
+                // Set the password
+                mUserAccountModel.setPassword(mOldPwd.getText().toString());
+
+            } else {
+
+                // password changed
+                reEncryptTheData = true;
+
+                // Set the ID
+                mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
+
+                // Set the password
+                mUserAccountModel.setPassword(mNewPwd.getText().toString());
+
+                // Change the current password
+                AppConfig.getInstance().setCurrentPassword(
+                        mNewPwd.getText().toString()
+                );
+
             }
 
-            // Save the new Password
-            AppConfig.getInstance().setCurrentPassword(
-                    mNewPwd.getText().toString()
-            );
-            return 1;
-        } else {
-            mUserAccountModel.setPassword(AppConfig.getInstance().getCurrentPassword());
-            return 0;
+            // Save the object
+            saveTheObject(mUserAccountModel, reEncryptTheData);
+
+            //Restart the application to apply the changes
+            getActivity().finish();
+            getActivity().getSupportFragmentManager().popBackStack();
+            startActivity(new Intent(getContext(), SplashScreen.class));
+
+        } catch (Exception ex) {
+            showProgress(false);
+            Log.e("**** Saving Data *****", "[" + ex.getMessage() + "]");
+            ex.printStackTrace();
         }
     }
-
 
     /**
      * Shows the progress UI and hides the login form.
@@ -468,12 +538,12 @@ public class ProfilePage extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mProfilFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mProfilFormView.animate().setDuration(shortAnimTime).alpha(
+            mProfileFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mProfileFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mProfilFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mProfileFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -489,9 +559,8 @@ public class ProfilePage extends Fragment {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProfilFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mProfileFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
 
 }
