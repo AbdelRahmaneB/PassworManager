@@ -12,7 +12,7 @@ import ub.passwordmanager.dataBase.DB_TablesInformation.*;
 /**
  * This class offer a multitude of features to manipulate the Database.
  * Also this class extend from the {@link SQLiteOpenHelper} class.
- *
+ * <p/>
  * {@link #DB_Helper(Context)} : Constructor for the class to initialise the DataBase.
  * {@link #onCreate(SQLiteDatabase)} : Function to create the tables in the DataBase.
  * {@link #onUpgrade(SQLiteDatabase, int, int)} : Function to update the DataBase.
@@ -109,5 +109,13 @@ public class DB_Helper extends SQLiteOpenHelper {
         dataBase.execSQL(DB_PwdAccountTable.KEY_DELETE_TABLE);
     }
 
-
+    /**
+     * Function that returns the path DataBase
+     *
+     * @param dbh : instance of DB_helper.
+     * @return the path of the DataBase.
+     */
+    public static String GetDataBasePath(DB_Helper dbh) {
+        return dbh.getWritableDatabase().getPath();
+    }
 }

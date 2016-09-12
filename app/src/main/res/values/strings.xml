@@ -99,6 +99,20 @@
     <string name="l_imports_title">Data import :</string>
     <string name="l_export_title">Data export :</string>
 
+    <string name="l_export_import_noData_file">No data file found in the external storage !!</string>
+
+    <string name="l_export_database_message_done">The database has been exported !!</string>
+    <string name="l_import_database_message_done">The database has been imported !!</string>
+
+    <string name="l_export_database_message_error">A a problem occurred while exporting the database !!</string>
+    <string name="l_import_database_message_error">A a problem occurred while importing the database !!</string>
+
+    <string name="l_export_xml_message_done">The data has been exported !!</string>
+    <string name="l_import_xml_message_done">The data has been imported !!</string>
+    <string name="l_export_xml_message_error">A a problem occurred while exporting the data !!</string>
+    <string name="l_import_xml_message_error">A a problem occurred while importing the data !!</string>
+
+
 
     <string name="ie_title1">Export the dataBase</string>
     <string name="ie_title2">Import the dataBase</string>

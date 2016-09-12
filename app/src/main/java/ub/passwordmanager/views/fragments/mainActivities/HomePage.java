@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
@@ -105,7 +106,7 @@ public class HomePage extends Fragment {
         for (int index = 0; index < 20; index++) {
             PwdAccountModel obj = new PwdAccountModel("Some Primary Text " + index,
                     "Secondary " + index,
-                    new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+                    new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()));
             results.add(index, obj);
         }
         return results;
