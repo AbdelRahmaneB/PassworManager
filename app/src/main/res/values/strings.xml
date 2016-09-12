@@ -48,6 +48,8 @@
         logged in. This operation may take a few minutes.
     </string>
     <string name="button_recover">Recover password</string>
+    <string name="message_recover">Your password is : </string>
+
     <!--******************************************************************************-->
 
     <!-- Menu Drawer -->
@@ -166,8 +168,6 @@
     <string name="dialog_button_save">Save</string>
     <string name="dialog_button_cancel">Cancel</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--******************************************************************************-->
 
 
