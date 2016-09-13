@@ -60,6 +60,8 @@ public abstract class CustomDialog {
         builder.setView(this.mDialogLayout);
 
         // Set the action for the Save and Cancel button of the dialog
+
+        //save button
         builder.setPositiveButton(this.mCurrentActivity
                 .getResources().getText(R.string.dialog_button_save)
                 .toString(), new DialogInterface.OnClickListener() {
@@ -71,17 +73,36 @@ public abstract class CustomDialog {
                  * pass a handler the button doesn't get instantiated.
                  * http://stackoverflow.com/questions/27345584/how-to-prevent-alertdialog-to-close
                  */
-                //setDialogAction();
             }
         });
 
+        // cancel button
         builder.setNegativeButton(this.mCurrentActivity
                         .getResources().getText(R.string.dialog_button_cancel),
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        // User Cancelling action depending on the used Sub-Class
-                        dialog.cancel();
+                        /**
+                         * Do nothing here because we override this button later to change the close behaviour.
+                         * However, we still need this because on older versions of Android unless we
+                         * pass a handler the button doesn't get instantiated.
+                         * http://stackoverflow.com/questions/27345584/how-to-prevent-alertdialog-to-close
+                         */
+                    }
+                });
+
+        // Neutral button
+        builder.setNeutralButton(this.mCurrentActivity
+                        .getResources().getText(R.string.dialog_button_delete),
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        /**
+                         * Do nothing here because we override this button later to change the close behaviour.
+                         * However, we still need this because on older versions of Android unless we
+                         * pass a handler the button doesn't get instantiated.
+                         * http://stackoverflow.com/questions/27345584/how-to-prevent-alertdialog-to-close
+                         */
                     }
                 });
 

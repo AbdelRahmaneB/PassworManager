@@ -2,7 +2,10 @@ package ub.passwordmanager.views.fragments.dialogs;
 
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,32 +58,37 @@ public class ViewPwdAccountDialog extends CustomDialog {
         mPwd.setText(mPwdAccount.getPassword());
         mOther.setText(mPwdAccount.getOtherInfo());
 
-        // ToDo : Add action to copy the text
         mWebSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfig.copyToClipBoard(getCurrentActivity(),mWebSite.getText().toString());
+                AppConfig.copyToClipBoard(getCurrentActivity(), mWebSite.getText().toString());
             }
         });
 
         mEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfig.copyToClipBoard(getCurrentActivity(),mEmail.getText().toString());
+                AppConfig.copyToClipBoard(getCurrentActivity(), mEmail.getText().toString());
             }
         });
 
         mPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfig.copyToClipBoard(getCurrentActivity(),mPwd.getText().toString());
+                AppConfig.copyToClipBoard(getCurrentActivity(), mPwd.getText().toString());
+            }
+        });
+        mPwd.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                return true;
             }
         });
 
         mOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfig.copyToClipBoard(getCurrentActivity(),mOther.getText().toString());
+                AppConfig.copyToClipBoard(getCurrentActivity(), mOther.getText().toString());
             }
         });
 
@@ -93,33 +101,6 @@ public class ViewPwdAccountDialog extends CustomDialog {
      */
     @Override
     public Boolean setDialogAction() {
-        // Initialise the fields in the current dialog
-        final EditText mWebSite = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_siteWeb);
-        final EditText mEmail = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_email);
-        final EditText mPwd = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_password);
-        final EditText mOther = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_otherInfo);
-
-        // Get the current Date
-        DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
-        Calendar mCalender = Calendar.getInstance();
-
-        // ToDo : Test on the object if there are not empty
-        // Initialise the object so we can send it to the persistence class
-        try {
-            PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString(),
-                    mEmail.getText().toString(), mPwd.getText().toString(),
-                    new SimpleDateFormat("dd/MM/yyyy").format(mCalender.getTime()),
-                    mOther.getText().toString());
-
-            // ToDo : Add the code to save the new object in the DataBase
-
-        } catch (NullPointerException ex) {
-            Log.e("ViewAccountPwd : ", ex.getStackTrace().toString());
-        }
-
-        // Notify the user that everything is good :)
-        Toast.makeText(getCurrentActivity(), "View Dialog : " + mDateFormat.format(mCalender.getTime()), Toast.LENGTH_SHORT).show();
-
         return false;
     }
 }

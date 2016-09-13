@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     });
+                    // Hide the delete button
+                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
 
                 }
             });

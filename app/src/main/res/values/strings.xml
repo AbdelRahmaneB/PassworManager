@@ -187,6 +187,8 @@
 
     <!-- Dialogs  -->
     <string name="dialog_button_save">Save</string>
+    <string name="dialog_button_edit">Edit</string>
+    <string name="dialog_button_delete">Delete</string>
     <string name="dialog_button_cancel">Cancel</string>
 
     <!--******************************************************************************-->

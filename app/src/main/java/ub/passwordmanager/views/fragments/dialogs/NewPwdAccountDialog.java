@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -19,6 +20,7 @@ import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_ImportExportDataBase;
 import ub.passwordmanager.Services.Service_PwdAccount;
+import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 
 /**
  * This class is used to create a new Password Account.
@@ -45,12 +47,21 @@ public class NewPwdAccountDialog extends CustomDialog {
      */
     @Override
     public AlertDialog getDialog() {
-        return super.createDialog();
+        super.createDialog();
+        final EditText mPwd = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_password);
+        final ImageView mPwdGen = (ImageView) getCurrentDialog().findViewById(R.id.iv_pwd_gen_account);
+        mPwdGen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPwd.setText(PwdGenerator.generatePassword(getCurrentActivity()));
+            }
+        });
+        return getCurrentDialog();
     }
 
 
     /**
-     * Set the Action to do when the "Save Button" is clicked
+     * Set the Action when the "Save Button" is clicked
      */
     @Override
     public Boolean setDialogAction() {
@@ -59,6 +70,8 @@ public class NewPwdAccountDialog extends CustomDialog {
         final EditText mEmail = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_email);
         final EditText mPwd = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_password);
         final EditText mOther = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_otherInfo);
+
+
 
         if (isWebSiteEmpty(mWebSite.getText().toString())
                 & isUsernameEmpty(mEmail.getText().toString())

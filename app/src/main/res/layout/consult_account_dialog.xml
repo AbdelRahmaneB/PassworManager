@@ -61,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_webSite"
-                android:inputType="text"
-                android:enabled="false"/>
+                android:inputType="none"
+                android:textIsSelectable="true"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -83,8 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_email"
-                android:inputType="textEmailAddress"
-                android:enabled="false"/>
+                android:inputType="none"
+                android:textIsSelectable="true"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -105,8 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/home_add_edit_pwd"
-                android:inputType="textPassword"
-                android:enabled="false"/>
+                android:inputType="none|textPassword"
+                android:textIsSelectable="true"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -128,12 +128,12 @@
                 android:layout_height="70dp"
                 android:gravity="start|top"
                 android:hint="@string/home_add_edit_other"
-                android:inputType="textMultiLine"
                 android:maxLines="10"
                 android:minLines="1"
                 android:scrollbars="vertical"
                 android:textSize="12sp"
-                android:enabled="false"/>
+                android:inputType="none"
+                android:textIsSelectable="true"/>
 
         </android.support.design.widget.TextInputLayout>
 

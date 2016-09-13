@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ub.passwordmanager.dataBase.DB_TablesInformation.*;
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.Models.UserAccountModel;
 
@@ -205,8 +206,11 @@ public abstract class DataBaseActions {
             db = getDataBase(context);
 
             // Set the string query and Create a cursor to fetch all the Data from te query
+            if (DB_UserAccountTable.KEY_TABLE_NAME.equals(tableName))
+                mCursor = db.rawQuery(buildQueryString(tableName, DB_UserAccountTable.KEY_LAST_CONNECTION), null);
+            else
+                mCursor = db.rawQuery(buildQueryString(tableName, DB_PwdAccountTable.KEY_LAST_UPDATE), null);
 
-            mCursor = db.rawQuery(buildQueryString(tableName), null);
             List<Object> mTempObject = new ArrayList<>();
 
             // Get the data from the cursor
@@ -301,9 +305,10 @@ public abstract class DataBaseActions {
      * @param tableName : The table from which we want to extract the data.
      * @return the customise query
      */
-    private static String buildQueryString(String tableName) {
-        return ("SELECT * FROM " + tableName);
+    private static String buildQueryString(String tableName, String dateColumnName) {
+        return ("SELECT * FROM " + tableName + " order  by "+ dateColumnName + " DESC");
     }
+
 
     /**
      * Choose the model class we will use to fill the object.

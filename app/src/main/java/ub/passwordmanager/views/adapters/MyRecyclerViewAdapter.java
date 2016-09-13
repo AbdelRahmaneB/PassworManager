@@ -1,12 +1,16 @@
 package ub.passwordmanager.views.adapters;
 
 import android.app.Activity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.LayoutDirection;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +19,7 @@ import java.util.List;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
@@ -196,7 +201,45 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            new ViewPwdAccountDialog(this.mHolderActivity, mDataSet.get(getAdapterPosition())).getDialog();
+            // Create and show the Dialog to view the data
+            final CustomDialog myDialog = new ViewPwdAccountDialog(this.mHolderActivity, mDataSet.get(getAdapterPosition()));
+            final AlertDialog dialog = myDialog.getDialog();
+
+            // Set the text and the new action for the positive button
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(mHolderActivity
+                    .getResources().getText(R.string.dialog_button_edit));
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Close the current Dialog
+                    dialog.dismiss();
+
+                    // Open the Editing Dialog
+                    new EditPwdAccountDialog(mHolderActivity, 0).getDialog();
+                }
+            });
+
+            // Center the negative button
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 180, 0);
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(params);
+
+
+            // Override the Neutral Button
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Close the current Dialog
+                    dialog.dismiss();
+
+                    // Open the Editing Dialog
+                    new DeletePwdAccountDialog(mHolderActivity).getDialog();
+                }
+            });
+
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
 
