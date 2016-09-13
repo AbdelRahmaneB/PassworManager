@@ -1,6 +1,7 @@
 package ub.passwordmanager.views.fragments.dialogs;
 
 import android.app.Activity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,7 +49,7 @@ public class EditPwdAccountDialog extends CustomDialog {
      * - {@link #fillTheFields()} : to fill the dialog with the data of the selected item
      */
     @Override
-    public void getDialog() {
+    public AlertDialog getDialog() {
         super.createDialog();
 
         // initialise fields
@@ -56,6 +57,8 @@ public class EditPwdAccountDialog extends CustomDialog {
 
         // fill the fields
         fillTheFields();
+
+        return getCurrentDialog();
     }
 
 
@@ -63,7 +66,7 @@ public class EditPwdAccountDialog extends CustomDialog {
      * Set the Action to do when the "Save Button" is clicked - Edit
      */
     @Override
-    protected void setDialogAction() {
+    public Boolean setDialogAction() {
 
         // Get the current Date
         DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
@@ -86,6 +89,7 @@ public class EditPwdAccountDialog extends CustomDialog {
 
         // Notify the user that everything is good :)
         Toast.makeText(getCurrentActivity(), "Edit Dialog : " + mDateFormat.format(mCalender.getTime()), Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     /**

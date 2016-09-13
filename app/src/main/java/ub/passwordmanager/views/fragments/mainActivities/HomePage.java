@@ -15,18 +15,20 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_ImportExportDataBase;
+import ub.passwordmanager.Services.Service_PwdAccount;
 import ub.passwordmanager.views.adapters.MyRecyclerViewAdapter;
 
 
 public class HomePage extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private  View mCurrentView;
 
     public HomePage() {
         // Required empty public constructor
@@ -53,13 +55,14 @@ public class HomePage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         view.setTag(getResources().getString(R.string.nav_label_home));
 
+        mCurrentView = view;
 
         // Initialise the CardView and his ad
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter(getDataSet(),getActivity());
+        mAdapter = new MyRecyclerViewAdapter(getDataSet(view), getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -72,18 +75,14 @@ public class HomePage extends Fragment {
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                ArrayList<PwdAccountModel> mDataSet = getDataSet();
-                Log.i("***", " Clicked on Item " + mDataSet.get(position).getWebSite());
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
-                ArrayList<PwdAccountModel> mDataSet = getDataSet();
                 ImageView bt_delete = (ImageView) v.findViewById(R.id.bt_deleteAccount);
                 ImageView bt_edit = (ImageView) v.findViewById(R.id.bt_editAccount);
                 bt_delete.setVisibility(View.VISIBLE);
                 bt_edit.setVisibility(View.VISIBLE);
-                Toast.makeText(v.getContext(), "LongPress" + mDataSet.get(position).getWebSite(), Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -101,18 +100,39 @@ public class HomePage extends Fragment {
         super.onDetach();
     }
 
-    private ArrayList<PwdAccountModel> getDataSet() {
-        ArrayList<PwdAccountModel> results = new ArrayList<>();
-        for (int index = 0; index < 20; index++) {
-            PwdAccountModel obj = new PwdAccountModel("Some Primary Text " + index,
-                    "Secondary " + index,
-                    new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()));
-            results.add(index, obj);
+    /**
+     * Function that get the Data from DataBase
+     *
+     * @param view : The used view.
+     * @return a list of the PwdAccounts.
+     */
+    private List<PwdAccountModel> getDataSet(View view) {
+        try {
+            List<PwdAccountModel> results = Service_PwdAccount.getAllAccounts(getActivity().getBaseContext());
+            if (results.size() <= 0) {
+                hideShowMessage(view, View.VISIBLE, View.INVISIBLE);
+                return results;
+            } else {
+                hideShowMessage(view, View.INVISIBLE, View.VISIBLE);
+                return results;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
-        return results;
     }
 
-
+    /**
+     * Hide the cardView if there is no Data
+     *
+     * @param view        : The used view
+     * @param visibility1 : Visibility for the message if there is no Data.
+     * @param visibility2 : visibility for the CardView.
+     */
+    private void hideShowMessage(View view, int visibility1, int visibility2) {
+        view.findViewById(R.id.home_no_record).setVisibility(visibility1);
+        view.findViewById(R.id.my_recycler_view).setVisibility(visibility2);
+    }
 
 
 }

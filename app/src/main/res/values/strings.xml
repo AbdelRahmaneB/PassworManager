@@ -80,6 +80,13 @@
     <string name="home_add_edit_VTitle">Account details</string>
     <string name="home_add_edit_DMessage">You\'r about to delete the .</string>
     <string name="home_add_edit_DMessage_suite">Would you like to continue ?</string>
+
+    <string name="home_no_data">Sorry, we didn\'t find any record.</string>
+
+    <string name="empty_email_error_home">Required email.</string>
+    <string name="empty_website_error_home">Required website.</string>
+    <string name="empty_username_error_home">Required username or email.</string>
+    <string name="empty_password_error_home">Required password.</string>
     <!--******************************************************************************-->
 
     <!-- Consulting an Account Fragment-->
@@ -113,8 +120,6 @@
     <string name="l_import_xml_message_error">A problem occurred while importing the data !!</string>
 
     <string name="l_import_export_problem">A problem occurred while creating the BackUp folder !!</string>
-
-
 
     <string name="ie_title1">Export the dataBase</string>
     <string name="ie_title2">Import the dataBase</string>

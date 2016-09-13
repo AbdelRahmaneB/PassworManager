@@ -8,18 +8,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.factories.FragmentFactory;
+import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -46,7 +54,20 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View view) {
 
                     // Create the Dialog to add a new Password Account
-                    new NewPwdAccountDialog(MainActivity.this).getDialog();
+                    final CustomDialog myDialog = new NewPwdAccountDialog(MainActivity.this);
+                    final AlertDialog dialog = myDialog.getDialog();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (myDialog.setDialogAction()) {
+                                dialog.dismiss();
+                                getSupportFragmentManager().beginTransaction()
+                                        .detach(activeFragment)
+                                        .attach(activeFragment)
+                                        .commit();
+                            }
+                        }
+                    });
 
                 }
             });
@@ -223,6 +244,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Function to get the user information and set the title in the Menu Drawer
+     *
      * @param navigationView : The current menu drawer
      */
     private void getAccountInformation(NavigationView navigationView) {

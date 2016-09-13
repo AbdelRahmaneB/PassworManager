@@ -211,9 +211,9 @@ public abstract class DataBaseActions {
 
             // Get the data from the cursor
             if (mCursor.moveToFirst()) {
-                do{
+                do {
                     mTempObject.add(fillTheObject(mCursor, tableName));
-                }while (mCursor.moveToNext());
+                } while (mCursor.moveToNext());
             }
 
             // Close the cursor
@@ -333,7 +333,7 @@ public abstract class DataBaseActions {
     /**
      * Function to fill the UserAccount Object
      *
-     * @param cursor    : Cursor that contain the extracted data.
+     * @param cursor : Cursor that contain the extracted data.
      * @return UserAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
@@ -352,7 +352,7 @@ public abstract class DataBaseActions {
     /**
      * Function to fill the PwdAccount Object
      *
-     * @param cursor    : Cursor that contain the extracted data.
+     * @param cursor : Cursor that contain the extracted data.
      * @return PwdAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
@@ -362,9 +362,11 @@ public abstract class DataBaseActions {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4),
+                (cursor.getString(4) == null) ? "" : cursor.getString(4),
                 cursor.getString(5)
         );
+
+
     }
 
 

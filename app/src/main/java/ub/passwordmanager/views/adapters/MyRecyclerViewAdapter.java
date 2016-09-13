@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
@@ -36,7 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * 2. Our Adapter listener
      * 3. The Current Activity
      */
-    private ArrayList<PwdAccountModel> mDataSet;
+    private static List<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
     protected Activity mActivity;
     /** *********************************************************************** */
@@ -57,7 +58,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * @param dataSet : List of data.
      */
     public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet) {
-        this.mDataSet = dataSet;
+        mDataSet = dataSet;
     }
 
     /**
@@ -65,9 +66,9 @@ public class MyRecyclerViewAdapter extends RecyclerView
      *
      * @param dataSet : List of data.
      */
-    public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet, Activity activity) {
-        this.mDataSet = dataSet;
-        this.mActivity = activity;
+    public MyRecyclerViewAdapter(List<PwdAccountModel> dataSet, Activity activity) {
+        mDataSet = dataSet;
+        mActivity = activity;
     }
 
     /**
@@ -85,6 +86,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         return new DataObjectHolder(view, this.mActivity);
     }
+
 
     /**
      * Binding between the DataHolder and the view
@@ -142,7 +144,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      */
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return (mDataSet != null) ? mDataSet.size() : -1;
     }
 
     /** *********************************************************************** */
@@ -184,10 +186,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
             h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
             h_bt_Edit = (ImageView) itemView.findViewById(R.id.bt_editAccount);
 
-
-            // Log the current action
-            Log.i(LOG_TAG, "Adding Listener");
-
             // Add the listeners to our view
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -198,9 +196,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            // ToDo : Add the call for the Consult view
-            Toast.makeText(v.getContext(), "Here" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            new ViewPwdAccountDialog(this.mHolderActivity).getDialog();
+            new ViewPwdAccountDialog(this.mHolderActivity, mDataSet.get(getAdapterPosition())).getDialog();
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
 

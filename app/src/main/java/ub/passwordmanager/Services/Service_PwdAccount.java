@@ -2,6 +2,7 @@ package ub.passwordmanager.Services;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,9 +37,6 @@ public abstract class Service_PwdAccount {
                 null,
                 pwdAccount);
 
-        // Set the date of last connexion
-        pwdAccount.setLastUpdate(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
-
         pwdAccount.setId(-1); // No Id
 
         // Create the list of values to send to the DataBase
@@ -47,7 +45,7 @@ public abstract class Service_PwdAccount {
                 pwdAccount.getEmail(),
                 pwdAccount.getPassword(),
                 pwdAccount.getOtherInfo(),
-                "" + pwdAccount.getLastUpdate()
+                pwdAccount.getLastUpdate()
         );
 
         // Send the information to the DataBase
@@ -241,7 +239,7 @@ public abstract class Service_PwdAccount {
                 value,
                 columns,
                 DB_PwdAccountTable.KEY_OTHER_INFO,
-                pwdAccount.getPassword());
+                pwdAccount.getOtherInfo());
         pwdAccount.setOtherInfo(fieldValue);
 
     }
@@ -271,11 +269,15 @@ public abstract class Service_PwdAccount {
         );
 
         // Decrypt the Other Information
-        pwdAccount.setOtherInfo(
-                DataEncryption.decryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
-                        pwdAccount.getOtherInfo())
-        );
+        if(!pwdAccount.getOtherInfo().equals("")){
+            pwdAccount.setOtherInfo(
+                    DataEncryption.decryptData(
+                            AppConfig.getInstance().getCurrentPassword(),
+                            pwdAccount.getOtherInfo())
+            );
+        }
+
+
 
         return pwdAccount;
     }

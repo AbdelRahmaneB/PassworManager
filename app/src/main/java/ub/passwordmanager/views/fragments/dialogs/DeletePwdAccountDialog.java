@@ -1,6 +1,7 @@
 package ub.passwordmanager.views.fragments.dialogs;
 
 import android.app.Activity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class DeletePwdAccountDialog extends CustomDialog {
      * Create and show the dialog depending on the parameters
      */
     @Override
-    public void getDialog() {
+    public AlertDialog getDialog() {
         super.createDialog();
 
         // Initialise the fields in the current dialog
@@ -49,6 +50,8 @@ public class DeletePwdAccountDialog extends CustomDialog {
                 + getCurrentActivity().getResources().getString(R.string.home_add_edit_DMessage_suite);
 
         mMessageTitle.setText(str);
+
+        return getCurrentDialog();
     }
 
 
@@ -56,7 +59,7 @@ public class DeletePwdAccountDialog extends CustomDialog {
      * Set the Action to do when the "Save Button" is clicked
      */
     @Override
-    protected void setDialogAction() {
+    public Boolean setDialogAction() {
 
 
         // ToDo : Test on the object if there are not empty
@@ -74,6 +77,7 @@ public class DeletePwdAccountDialog extends CustomDialog {
 
         // Notify the user that everything is good :)
         Toast.makeText(getCurrentActivity(), "Delete Dialog : ", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
 }

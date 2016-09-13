@@ -15,10 +15,10 @@ import ub.passwordmanager.R;
  * - Dialog for Consulting the selected Password Account.
  * - Dialog for Choosing a new Theme.
  * - Dialog for Choosing a new language.
- *
+ * <p/>
  * This class have two Methods that needs to be implemented by the
  * sub-classes : {@link #getDialog()} and {@link #setDialogAction()}
- *
+ * <p/>
  * Created by UB on 30/08/2016.
  */
 public abstract class CustomDialog {
@@ -51,7 +51,7 @@ public abstract class CustomDialog {
      * different parameters (Activity, Layout),
      * and uses the function {@link #setDialogAction()}
      */
-    protected void createDialog() {
+    protected AlertDialog createDialog() {
 
         // Create the instance of the AlertDialog builder
         final AlertDialog.Builder builder = new AlertDialog.Builder(this.mCurrentActivity);
@@ -63,10 +63,15 @@ public abstract class CustomDialog {
         builder.setPositiveButton(this.mCurrentActivity
                 .getResources().getText(R.string.dialog_button_save)
                 .toString(), new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int id) {
-                // User Positive action depending on the used Sub-Class
-                setDialogAction();
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /**
+                 * Do nothing here because we override this button later to change the close behaviour.
+                 * However, we still need this because on older versions of Android unless we
+                 * pass a handler the button doesn't get instantiated.
+                 * http://stackoverflow.com/questions/27345584/how-to-prevent-alertdialog-to-close
+                 */
+                //setDialogAction();
             }
         });
 
@@ -94,6 +99,8 @@ public abstract class CustomDialog {
 
         // Finally show the dialog to the user
         this.mCurrentDialog.show();
+
+        return this.mCurrentDialog;
     }
 
     /**
@@ -101,13 +108,13 @@ public abstract class CustomDialog {
      * Depending on the Sub-Class, it will initialise the {@link #createDialog()}
      * with the desired parameters.
      */
-    public abstract void getDialog();
+    public abstract AlertDialog getDialog();
 
     /**
      * This abstract method will allow to implement the action to do depending on
      * the calling Sub-Class.
      */
-    protected abstract void setDialogAction();
+    public abstract Boolean setDialogAction();
 
     /**
      * @return The current used activity. Mostly used in the Sub-Classes
@@ -119,7 +126,7 @@ public abstract class CustomDialog {
     /**
      * @return The instance of the current Dialog
      */
-    protected AlertDialog getCurrentDialog(){
+    protected AlertDialog getCurrentDialog() {
         return this.mCurrentDialog;
     }
 }
