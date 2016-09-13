@@ -90,7 +90,7 @@ public abstract class DataBaseActions {
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 1; i < columns.size() - 1; i++) {
+            for (int i = 1; i < columns.size(); i++) {
                 cv.put(columns.get(i), values.get(i));
             }
 

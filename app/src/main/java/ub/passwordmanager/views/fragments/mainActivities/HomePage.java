@@ -62,7 +62,13 @@ public class HomePage extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter(getDataSet(view), getActivity());
+        mAdapter = new MyRecyclerViewAdapter( getActivity());
+        if (mAdapter.getItemCount() <= 0) {
+            hideShowMessage(view, View.VISIBLE, View.INVISIBLE);
+        } else {
+            hideShowMessage(view, View.INVISIBLE, View.VISIBLE);
+        }
+        mAdapter.getItemCount();
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -98,28 +104,6 @@ public class HomePage extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    /**
-     * Function that get the Data from DataBase
-     *
-     * @param view : The used view.
-     * @return a list of the PwdAccounts.
-     */
-    private List<PwdAccountModel> getDataSet(View view) {
-        try {
-            List<PwdAccountModel> results = Service_PwdAccount.getAllAccounts(getActivity().getBaseContext());
-            if (results.size() <= 0) {
-                hideShowMessage(view, View.VISIBLE, View.INVISIBLE);
-                return results;
-            } else {
-                hideShowMessage(view, View.INVISIBLE, View.VISIBLE);
-                return results;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
     }
 
     /**

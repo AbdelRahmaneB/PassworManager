@@ -33,8 +33,8 @@ public class PwdAccountModel {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
-        this.mLastUpdate = mLastUpdate;
         this.mOtherInfo = otherInfo;
+        this.mLastUpdate = mLastUpdate;
     }
 
     public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.appConfig.AppConfig;
@@ -72,9 +73,6 @@ public abstract class Service_PwdAccount {
                 null,
                 null,
                 pwdAccount);
-
-        // Set the date of last connexion
-        pwdAccount.setLastUpdate(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 
         // Create the list of values to send to the DataBase
         List<String> values = Arrays.asList(
@@ -213,8 +211,10 @@ public abstract class Service_PwdAccount {
 
         // Get the values that are not empty.
         if (pwdAccount.getId() > 0) {
-            value.add(Integer.toString(pwdAccount.getId()));
-            columns.add(DB_PwdAccountTable.KEY_ID);
+            if(!(value == null) && !(columns == null)){
+                value.add(Integer.toString(pwdAccount.getId()));
+                columns.add(DB_PwdAccountTable.KEY_ID);
+            }
         }
 
 

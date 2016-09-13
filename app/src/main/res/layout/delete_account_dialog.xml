@@ -37,7 +37,7 @@
                 android:layout_gravity="start"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="13dp"
                 android:layout_toEndOf="@+id/ic_dialog_add_edit"
                 android:layout_toRightOf="@+id/ic_dialog_add_edit"
                 android:text="@string/home_add_edit_DTitle"
@@ -58,7 +58,37 @@
             android:layout_centerInParent="true"
             android:text="@string/home_add_edit_DMessage"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/label_account_to_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/label_Warning_delete"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/label_delete_confirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/label_account_to_delete"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:text="@string/home_add_edit_DMessage_suite"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="18sp" />
 
 
 

@@ -19,6 +19,7 @@ import java.util.List;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_PwdAccount;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
@@ -44,7 +45,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      */
     private static List<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
-    protected Activity mActivity;
+    protected static Activity mActivity;
     /** *********************************************************************** */
 
     /**
@@ -56,24 +57,12 @@ public class MyRecyclerViewAdapter extends RecyclerView
         myClickListener = mClickListener;
     }
 
-
-    /**
-     * Adding the The Data to the adapter
-     *
-     * @param dataSet : List of data.
-     */
-    public MyRecyclerViewAdapter(ArrayList<PwdAccountModel> dataSet) {
-        mDataSet = dataSet;
-    }
-
     /**
      * Adding the The Data to the adapter and get the current activity
-     *
-     * @param dataSet : List of data.
      */
-    public MyRecyclerViewAdapter(List<PwdAccountModel> dataSet, Activity activity) {
-        mDataSet = dataSet;
+    public MyRecyclerViewAdapter(Activity activity) {
         mActivity = activity;
+        refreshDataSet();
     }
 
     /**
@@ -92,6 +81,19 @@ public class MyRecyclerViewAdapter extends RecyclerView
         return new DataObjectHolder(view, this.mActivity);
     }
 
+    /**
+     * Function that get the Data from DataBase
+     *
+     * @return a list of the PwdAccounts.
+     */
+    private static void refreshDataSet() {
+        try {
+            mDataSet = Service_PwdAccount.getAllAccounts(mActivity.getBaseContext());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     /**
      * Binding between the DataHolder and the view
@@ -100,7 +102,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * @param position : The index of our items in the "mDataSet".
      */
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, final int position) {
+    public void onBindViewHolder(final DataObjectHolder holder, int position) {
         holder.hSiteWeb.setText(mDataSet.get(position).getWebSite());
         holder.hLastUpdate.setText(mDataSet.get(position).getLastUpdate());
         holder.hEmailAddress.setText(mDataSet.get(position).getEmail());
@@ -108,16 +110,15 @@ public class MyRecyclerViewAdapter extends RecyclerView
         holder.h_bt_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // ToDo : Event to delete the CardView
-                new DeletePwdAccountDialog(mActivity).getDialog();
+                // Open the deleting Dialog
+                configureDeleteDialog(mActivity, holder);
             }
         });
 
         holder.h_bt_Edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // ToDo : Event to modify the CardView
-                new EditPwdAccountDialog(mActivity, 0).getDialog();
+                configureEditDialog(mActivity, holder);
 
             }
         });
@@ -159,7 +160,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * Our DataHolder for the Adapter
      * In this class we add all the required listener that we want to use
      */
-    public static class DataObjectHolder extends RecyclerView.ViewHolder
+    public class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener,
             View.OnLongClickListener {
@@ -201,45 +202,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            // Create and show the Dialog to view the data
-            final CustomDialog myDialog = new ViewPwdAccountDialog(this.mHolderActivity, mDataSet.get(getAdapterPosition()));
-            final AlertDialog dialog = myDialog.getDialog();
-
-            // Set the text and the new action for the positive button
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(mHolderActivity
-                    .getResources().getText(R.string.dialog_button_edit));
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Close the current Dialog
-                    dialog.dismiss();
-
-                    // Open the Editing Dialog
-                    new EditPwdAccountDialog(mHolderActivity, 0).getDialog();
-                }
-            });
-
-            // Center the negative button
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(0, 0, 180, 0);
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(params);
-
-
-            // Override the Neutral Button
-            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Close the current Dialog
-                    dialog.dismiss();
-
-                    // Open the Editing Dialog
-                    new DeletePwdAccountDialog(mHolderActivity).getDialog();
-                }
-            });
-
+            configureViewDialog(mHolderActivity, this);
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
 
@@ -249,6 +212,112 @@ public class MyRecyclerViewAdapter extends RecyclerView
             myClickListener.onItemLongClick(getAdapterPosition(), view);
             return true;
         }
+    }
+
+
+    /**
+     * Function to configure the View Data Dialog
+     */
+    private void configureViewDialog(final Activity holderActivity, final DataObjectHolder holder) {
+
+        // Create and show the Dialog to view the data
+        final CustomDialog myDialog = new ViewPwdAccountDialog(holderActivity,
+                mDataSet.get(holder.getAdapterPosition()));
+        final AlertDialog dialog = myDialog.getDialog();
+
+        // Set the text and the new action for the positive button
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(holderActivity
+                .getResources().getText(R.string.dialog_button_edit));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the current Dialog
+                dialog.dismiss();
+
+                // Open the Editing Dialog
+                configureEditDialog(holderActivity, holder);
+            }
+        });
+
+        // Center the negative button
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 0, 180, 0);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(params);
+
+
+        // Override the Neutral Button
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the current Dialog
+                dialog.dismiss();
+
+                // Open the deleting Dialog
+                configureDeleteDialog(holderActivity, holder);
+            }
+        });
+    }
+
+    /**
+     * Function to configure the Editing Dialog
+     */
+    private void configureEditDialog(final Activity holderActivity, final DataObjectHolder holder) {
+
+        // Create and show the Dialog to view the data
+        final CustomDialog myDialog = new EditPwdAccountDialog(holderActivity,
+                mDataSet.get(holder.getAdapterPosition()));
+        final AlertDialog dialog = myDialog.getDialog();
+
+        // Set the text and the new action for the positive button
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(holderActivity
+                .getResources().getText(R.string.dialog_button_save));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the changes into DataBase
+                if (myDialog.setDialogAction()) {
+                    refreshDataSet();
+                    bindViewHolder(holder, holder.getAdapterPosition());
+                    dialog.dismiss(); // Close the current Dialog
+                }
+            }
+        });
+
+        // Override the Neutral Button
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+    }
+
+    /**
+     * Function to configure the Deleting Dialog
+     */
+    private void configureDeleteDialog(final Activity holderActivity, final DataObjectHolder holder) {
+
+        // Create and show the Dialog to view the data
+        final CustomDialog myDialog = new DeletePwdAccountDialog(holderActivity,
+                mDataSet.get(holder.getAdapterPosition()));
+        final AlertDialog dialog = myDialog.getDialog();
+
+        // Set the text and the new action for the positive button
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(holderActivity
+                .getResources().getText(R.string.dialog_button_delete));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the changes into DataBase
+                if (myDialog.setDialogAction()) {
+                    refreshDataSet();
+                    bindViewHolder(holder, holder.getAdapterPosition());
+                    dialog.dismiss(); // Close the current Dialog
+                }
+            }
+        });
+
+        // Override the Neutral Button
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+
     }
 
     /**

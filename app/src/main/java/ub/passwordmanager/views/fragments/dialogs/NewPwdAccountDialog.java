@@ -105,7 +105,6 @@ public class NewPwdAccountDialog extends CustomDialog {
         }
     }
 
-
     private Boolean isWebSiteEmpty(String value) {
         TextInputLayout mWebSite = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_siteWeb);
         if (TextUtils.isEmpty(value)) {
@@ -117,7 +116,6 @@ public class NewPwdAccountDialog extends CustomDialog {
             return true;
         }
     }
-
 
     private Boolean isUsernameEmpty(String value) {
         TextInputLayout mUsername = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_email);

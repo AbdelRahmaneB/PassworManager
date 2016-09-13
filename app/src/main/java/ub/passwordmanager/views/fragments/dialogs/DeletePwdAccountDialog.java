@@ -26,14 +26,16 @@ import ub.passwordmanager.R;
  */
 public class DeletePwdAccountDialog extends CustomDialog {
 
+    private PwdAccountModel mPwdAccount;
 
     /**
      * Constructor of this class and initialise the "super class".
      *
      * @param activity : the current activity where the dialog will be created.
      */
-    public DeletePwdAccountDialog(Activity activity) {
+    public DeletePwdAccountDialog(Activity activity, PwdAccountModel pwdAccount) {
         super(activity, R.layout.delete_account_dialog);
+        this.mPwdAccount = pwdAccount;
     }
 
     /**
@@ -44,10 +46,8 @@ public class DeletePwdAccountDialog extends CustomDialog {
         super.createDialog();
 
         // Initialise the fields in the current dialog
-        final TextView mMessageTitle = (TextView) getCurrentDialog().findViewById(R.id.label_Warning_delete);
-        String str = getCurrentActivity().getResources().getString(R.string.home_add_edit_DMessage)
-                + "[UserNameAccount]"
-                + getCurrentActivity().getResources().getString(R.string.home_add_edit_DMessage_suite);
+        final TextView mMessageTitle = (TextView) getCurrentDialog().findViewById(R.id.label_account_to_delete );
+        String str = "[" + mPwdAccount.getWebSite()  + "]";
 
         mMessageTitle.setText(str);
 

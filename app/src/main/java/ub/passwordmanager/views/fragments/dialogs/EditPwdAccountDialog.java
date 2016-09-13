@@ -1,8 +1,11 @@
 package ub.passwordmanager.views.fragments.dialogs;
 
 import android.app.Activity;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,9 +14,12 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_PwdAccount;
+import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 
 /**
  * This class is used to edit am existing Password Account.
@@ -30,16 +36,16 @@ public class EditPwdAccountDialog extends CustomDialog {
     private EditText mEmail;
     private EditText mPwd;
     private EditText mOther;
-    private int mSelectedItem;
+    private PwdAccountModel mPwdAccount;
 
     /**
      * Constructor of this class and initialise the "super class".
      *
      * @param activity : the current activity where the dialog will be created.
      */
-    public EditPwdAccountDialog(Activity activity, int selectedItem) {
+    public EditPwdAccountDialog(Activity activity, PwdAccountModel pwdAccount) {
         super(activity, R.layout.add_edit_dialog);
-        this.mSelectedItem = selectedItem;
+        this.mPwdAccount = pwdAccount;
     }
 
     /**
@@ -58,6 +64,14 @@ public class EditPwdAccountDialog extends CustomDialog {
         // fill the fields
         fillTheFields();
 
+        final ImageView mPwdGen = (ImageView) getCurrentDialog().findViewById(R.id.iv_pwd_gen_account);
+        mPwdGen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPwd.setText(PwdGenerator.generatePassword(getCurrentActivity()));
+            }
+        });
+
         return getCurrentDialog();
     }
 
@@ -67,29 +81,37 @@ public class EditPwdAccountDialog extends CustomDialog {
      */
     @Override
     public Boolean setDialogAction() {
+        if (isWebSiteEmpty(mWebSite.getText().toString())
+                & isUsernameEmpty(mEmail.getText().toString())
+                & isPasswordEmpty(mPwd.getText().toString())
+                ) {
 
-        // Get the current Date
-        DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
-        Calendar mCalender = Calendar.getInstance();
+            // Create object
+            String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    .format(Calendar.getInstance().getTime());
 
-        // ToDo : Test on the object if there are not empty
-        // Initialise the object so we can send it to the persistence class
-        try {
-            PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString(),
-                    mEmail.getText().toString(), mPwd.getText().toString(),
-                    new SimpleDateFormat("dd/MM/yyyy").format(mCalender.getTime()),
-                    mOther.getText().toString());
+            String otherInfo = "" + mOther.getText().toString();
 
+            PwdAccountModel mPwdAccount = new PwdAccountModel(
+                   Integer.parseInt(mWebSite.getTag().toString()),
+                    mWebSite.getText().toString(),
+                    mEmail.getText().toString(),
+                    mPwd.getText().toString(),
+                    otherInfo,
+                    date
+            );
 
-            // ToDo : Add the code to save the changes of the object in the DataBase
+            // save into database
+            try {
+                return Service_PwdAccount.saveModifiedData(getCurrentActivity(), mPwdAccount);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        } catch (NullPointerException ex) {
-            Log.e("EditAccountPwd : ", ex.getStackTrace().toString());
+            return true;
+        } else {
+            return false;
         }
-
-        // Notify the user that everything is good :)
-        Toast.makeText(getCurrentActivity(), "Edit Dialog : " + mDateFormat.format(mCalender.getTime()), Toast.LENGTH_SHORT).show();
-        return false;
     }
 
     /**
@@ -114,9 +136,68 @@ public class EditPwdAccountDialog extends CustomDialog {
      * Fill the fields of the edit Dialog
      */
     private void fillTheFields() {
-        // ToDo : get the data from the DataBase
-        this.mWebSite.setText("MyWebSite");
 
-        // ToDo : Affect the data to the fields
+        // Website
+        this.mWebSite.setText(mPwdAccount.getWebSite());
+
+        // Id
+        this.mWebSite.setTag(mPwdAccount.getId());
+
+        // Username/Email
+        this.mEmail.setText(mPwdAccount.getEmail());
+
+        // Password
+        this.mPwd.setText(mPwdAccount.getPassword());
+
+        // OtherInfo
+        this.mOther.setText(mPwdAccount.getOtherInfo());
+
     }
+
+
+    /**
+     * Test the Website field
+     */
+    private Boolean isWebSiteEmpty(String value) {
+        TextInputLayout mWebSite = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_siteWeb);
+        if (TextUtils.isEmpty(value)) {
+            mWebSite.setError(getCurrentActivity()
+                    .getResources().getString(R.string.empty_website_error_home));
+            return false;
+        } else {
+            mWebSite.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    /**
+     * Test the username/email field
+     */
+    private Boolean isUsernameEmpty(String value) {
+        TextInputLayout mUsername = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_email);
+        if (TextUtils.isEmpty(value)) {
+            mUsername.setError(getCurrentActivity()
+                    .getResources().getString(R.string.empty_username_error_home));
+            return false;
+        } else {
+            mUsername.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    /**
+     * Test the password field
+     */
+    private Boolean isPasswordEmpty(String value) {
+        TextInputLayout mPassword = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_password);
+        if (TextUtils.isEmpty(value)) {
+            mPassword.setError(getCurrentActivity()
+                    .getResources().getString(R.string.empty_password_error_home));
+            return false;
+        } else {
+            mPassword.setErrorEnabled(false);
+            return true;
+        }
+    }
+
 }
