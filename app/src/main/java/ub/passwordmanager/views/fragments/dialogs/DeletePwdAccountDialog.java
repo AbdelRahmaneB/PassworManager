@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_PwdAccount;
 
 /**
  * This class is used to Delete a Password Account.
@@ -46,8 +47,8 @@ public class DeletePwdAccountDialog extends CustomDialog {
         super.createDialog();
 
         // Initialise the fields in the current dialog
-        final TextView mMessageTitle = (TextView) getCurrentDialog().findViewById(R.id.label_account_to_delete );
-        String str = "[" + mPwdAccount.getWebSite()  + "]";
+        final TextView mMessageTitle = (TextView) getCurrentDialog().findViewById(R.id.label_account_to_delete);
+        String str = "[" + mPwdAccount.getWebSite() + "]";
 
         mMessageTitle.setText(str);
 
@@ -60,24 +61,14 @@ public class DeletePwdAccountDialog extends CustomDialog {
      */
     @Override
     public Boolean setDialogAction() {
-
-
-        // ToDo : Test on the object if there are not empty
-        // Initialise the object so we can send it to the persistence class
+        // Delete from DataBase
         try {
-
-            //Set the ID of the object to delete
-//            PwdAccountModel mPwdAcc = new PwdAccountModel(mWebSite.getText().toString());
-
-            // ToDo : Add the code to save the new object in the DataBase
-
-        } catch (NullPointerException ex) {
-            Log.e("DeleteAccountPwd : ", ex.getStackTrace().toString());
+            return Service_PwdAccount.deleteData(getCurrentActivity(), mPwdAccount);
+        } catch (Exception e) {
+            Log.e("*Deleting Account*", "[" + e.getMessage() + "]");
+            e.printStackTrace();
+            return false;
         }
-
-        // Notify the user that everything is good :)
-        Toast.makeText(getCurrentActivity(), "Delete Dialog : ", Toast.LENGTH_SHORT).show();
-        return false;
     }
 
 }

@@ -78,16 +78,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.home_cardview_row, parent, false);
 
-        return new DataObjectHolder(view, this.mActivity);
+        return new DataObjectHolder(view, mActivity);
     }
 
     /**
      * Function that get the Data from DataBase
-     *
-     * @return a list of the PwdAccounts.
      */
     private static void refreshDataSet() {
         try {
+            if (mDataSet != null)
+                mDataSet.clear();
             mDataSet = Service_PwdAccount.getAllAccounts(mActivity.getBaseContext());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -295,7 +295,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
      */
     private void configureDeleteDialog(final Activity holderActivity, final DataObjectHolder holder) {
 
-        // Create and show the Dialog to view the data
+        // Create and show the Dialog to delete the data
         final CustomDialog myDialog = new DeletePwdAccountDialog(holderActivity,
                 mDataSet.get(holder.getAdapterPosition()));
         final AlertDialog dialog = myDialog.getDialog();
@@ -317,7 +317,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
         // Override the Neutral Button
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
-
     }
 
     /**
