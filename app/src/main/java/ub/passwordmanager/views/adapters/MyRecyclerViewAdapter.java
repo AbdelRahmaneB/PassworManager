@@ -20,6 +20,7 @@ import java.util.List;
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_PwdAccount;
+import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
@@ -88,7 +89,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
         try {
             if (mDataSet != null)
                 mDataSet.clear();
-            mDataSet = Service_PwdAccount.getAllAccounts(mActivity.getBaseContext());
+            mDataSet = Service_PwdAccount.getAllAccounts(mActivity.getBaseContext(),
+                    AppConfig.getInstance().getCurrentPassword());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

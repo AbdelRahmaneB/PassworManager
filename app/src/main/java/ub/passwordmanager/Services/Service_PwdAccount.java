@@ -117,7 +117,7 @@ public abstract class Service_PwdAccount {
      * @param context : The Application context where the function is called.
      * @return true if everything correct, or false otherwise.
      */
-    public static List<PwdAccountModel> getAllAccounts(Context context) throws Exception {
+    public static List<PwdAccountModel> getAllAccounts(Context context , String oldPwdToDecryptWith) throws Exception {
         List<Object> mEncryptedList;
         List<PwdAccountModel> mDecryptedList = new ArrayList<>();
 
@@ -130,7 +130,8 @@ public abstract class Service_PwdAccount {
             PwdAccountModel tempDecryptedObject;
 
             // Decrypt All the fields of an object
-            tempDecryptedObject = mDecryptObject((PwdAccountModel) account);
+            tempDecryptedObject = mDecryptObject(oldPwdToDecryptWith,
+                    (PwdAccountModel) account);
 
             // Add the object into a temporary list of User Account
             if (tempDecryptedObject != null) {
@@ -151,7 +152,6 @@ public abstract class Service_PwdAccount {
      */
     public static PwdAccountModel getAccountById(Context context, String id) throws Exception {
         Object mEncryptedList;
-        PwdAccountModel mDecryptedList;
 
         // Set The list of Columns and values to send to DataBase
         List<String> columns = Arrays.asList(
@@ -164,9 +164,35 @@ public abstract class Service_PwdAccount {
                 , columns, values);
 
         // Return the temporary list
-        return mDecryptObject((PwdAccountModel) mEncryptedList);
+        return mDecryptObject(AppConfig.getInstance().getCurrentPassword(),
+                (PwdAccountModel) mEncryptedList);
     }
 
+
+    /**
+     * Function that decrypt and reEncrypt the PwdAccount
+     * with the new password ans save it into the database.
+     *
+     * @param context : Application context.
+     * @param oldPwdToDecryptWith : The old password, used to decrypt Data
+     * @return : True or False.
+     * @throws Exception
+     */
+    public static Boolean reEncryptData(Context context, String oldPwdToDecryptWith) throws Exception {
+        // bool to test is the reEncrypting went ok
+        boolean isEverythingGood = false;
+
+        // Get the list of all the accounts int the database
+        List<PwdAccountModel> mListPwdAccounts = getAllAccounts(context, oldPwdToDecryptWith);
+
+        // Loop on the Data
+        for (PwdAccountModel mPwdAccount : mListPwdAccounts) {
+            // Save the changes in the data base
+            isEverythingGood = saveModifiedData(context, mPwdAccount);
+        }
+
+        return isEverythingGood;
+    }
 
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
@@ -211,7 +237,7 @@ public abstract class Service_PwdAccount {
 
         // Get the values that are not empty.
         if (pwdAccount.getId() > 0) {
-            if(!(value == null) && !(columns == null)){
+            if (!(value == null) && !(columns == null)) {
                 value.add(Integer.toString(pwdAccount.getId()));
                 columns.add(DB_PwdAccountTable.KEY_ID);
             }
@@ -252,32 +278,29 @@ public abstract class Service_PwdAccount {
      * @return a Decrypted object
      * @throws Exception is case if an error occur in the Decryption process
      */
-    private static PwdAccountModel mDecryptObject(PwdAccountModel pwdAccount) throws Exception {
-
+    private static PwdAccountModel mDecryptObject(String mUsedPassword, PwdAccountModel pwdAccount) throws Exception {
         // Decrypt the Email/Username
         pwdAccount.setEmail(
                 DataEncryption.decryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
+                        mUsedPassword,
                         pwdAccount.getEmail())
         );
 
         // Decrypt the Password
         pwdAccount.setPassword(
                 DataEncryption.decryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
+                        mUsedPassword,
                         pwdAccount.getPassword())
         );
 
         // Decrypt the Other Information
-        if(!pwdAccount.getOtherInfo().equals("")){
+        if (!pwdAccount.getOtherInfo().equals("")) {
             pwdAccount.setOtherInfo(
                     DataEncryption.decryptData(
-                            AppConfig.getInstance().getCurrentPassword(),
+                            mUsedPassword,
                             pwdAccount.getOtherInfo())
             );
         }
-
-
 
         return pwdAccount;
     }

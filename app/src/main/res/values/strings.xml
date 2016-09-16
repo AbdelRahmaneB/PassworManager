@@ -81,7 +81,7 @@
     <string name="home_add_edit_DMessage">You\'r about to delete the following account :</string>
     <string name="home_add_edit_DMessage_suite">Would you like to continue ?</string>
 
-    <string name="home_no_data">Sorry, we didn\'t find any record.</string>
+    <string name="home_no_data">Sorry, no records found !!</string>
 
     <string name="empty_email_error_home">Required email.</string>
     <string name="empty_website_error_home">Required website.</string>

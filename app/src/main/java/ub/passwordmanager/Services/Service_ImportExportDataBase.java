@@ -238,7 +238,8 @@ public abstract class Service_ImportExportDataBase {
                 );
         doc.appendChild(rootElement);
 
-        List<PwdAccountModel> mListAccounts = Service_PwdAccount.getAllAccounts(context);
+        List<PwdAccountModel> mListAccounts = Service_PwdAccount.getAllAccounts(context,
+                AppConfig.getInstance().getCurrentPassword());
 
         for (PwdAccountModel mPwdAccount : mListAccounts) {
 

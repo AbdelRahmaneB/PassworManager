@@ -418,7 +418,10 @@ public class ProfilePage extends Fragment {
      * @throws Exception
      */
     private void saveTheObject(UserAccountModel mUserAccountModel, Boolean reEncryptTheData) throws Exception {
-        if (Service_UserAccount.saveModifiedData(getContext(), mUserAccountModel, reEncryptTheData)) {
+        Log.e("SAve profile *********","" + mOldPwd.getText().toString());
+
+        if (Service_UserAccount.saveModifiedData(getContext(),mOldPwd.getText().toString(),
+                mUserAccountModel, reEncryptTheData)) {
 
             // Refresh the Current Username
             AppConfig.getInstance().setCurrentUser(
@@ -453,8 +456,6 @@ public class ProfilePage extends Fragment {
             showProgress(true);
 
             if (isNewAndPwdConfirmationEmpty()) {
-                // Set the ID
-                mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
 
                 // Set the password
                 mUserAccountModel.setPassword(mOldPwd.getText().toString());
@@ -463,9 +464,6 @@ public class ProfilePage extends Fragment {
 
                 // password changed
                 reEncryptTheData = true;
-
-                // Set the ID
-                mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
 
                 // Set the password
                 mUserAccountModel.setPassword(mNewPwd.getText().toString());
@@ -476,6 +474,9 @@ public class ProfilePage extends Fragment {
                 );
 
             }
+
+            // Set the ID
+            mUserAccountModel.setId(Integer.parseInt(mUsername.getTag().toString()));
 
             // Save the object
             saveTheObject(mUserAccountModel, reEncryptTheData);
