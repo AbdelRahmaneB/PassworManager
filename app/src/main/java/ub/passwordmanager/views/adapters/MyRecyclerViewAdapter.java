@@ -36,9 +36,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
         .Adapter<MyRecyclerViewAdapter
         .DataObjectHolder> {
 
-    // Use this as a reference in the log window
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
-
     /**
      * 1. List of DataObject that represent our CardView
      * 2. Our Adapter listener
@@ -130,11 +127,14 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * Function to add a new object to the CardView in a specific position
      *
      * @param dataObj : The data information "DataObject" for the CardView
-     * @param index   : The position where we want to add the new CardView
      */
-    public void addItem(PwdAccountModel dataObj, int index) {
-        mDataSet.add(index, dataObj);
-        notifyItemInserted(index);
+    public void addItem(PwdAccountModel dataObj) {
+        mDataSet.add(getItemCount(), dataObj);
+        notifyItemInserted(getItemCount());
+    }
+
+    public void itemChanged(int index){
+        notifyItemChanged(index);
     }
 
     /**
@@ -282,7 +282,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
                 // Save the changes into DataBase
                 if (myDialog.setDialogAction()) {
                     refreshDataSet();
-                    bindViewHolder(holder, holder.getAdapterPosition());
+                    itemChanged(holder.getAdapterPosition());
                     dialog.dismiss(); // Close the current Dialog
                 }
             }
@@ -310,8 +310,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
             public void onClick(View v) {
                 // Save the changes into DataBase
                 if (myDialog.setDialogAction()) {
-                    refreshDataSet();
-                    bindViewHolder(holder, holder.getAdapterPosition());
+                    deleteItem(holder.getAdapterPosition());
+                    //refreshDataSet();
                     dialog.dismiss(); // Close the current Dialog
                 }
             }
