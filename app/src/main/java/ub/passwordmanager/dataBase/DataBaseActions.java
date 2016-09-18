@@ -10,9 +10,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ub.passwordmanager.dataBase.DB_TablesInformation.*;
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.Models.UserAccountModel;
+import ub.passwordmanager.dataBase.DB_TablesInformation.DB_PwdAccountTable;
+import ub.passwordmanager.dataBase.DB_TablesInformation.DB_UserAccountTable;
 
 /**
  * This role of this class is to interact with the DataBase for :
@@ -23,10 +24,31 @@ import ub.passwordmanager.Models.UserAccountModel;
  * <p/>
  * Created by UcefBen on 07/09/2016.
  */
-public abstract class DataBaseActions {
+public class DataBaseActions {
 
     //Logger Key fo this class
     private static final String KEY_LOG = "DBActions-";
+
+    // the class instance
+    private static DataBaseActions INSTANCE;
+
+    private DataBaseActions() {
+        // Do nothing
+    }
+
+    /**
+     * This method allow us to be sure that there will be only one instance of this class
+     *
+     * @return the instance of this class
+     */
+    public static DataBaseActions getInstance() {
+        if (INSTANCE == null) {
+            synchronized (DataBaseActions.class) {
+                INSTANCE = new DataBaseActions();
+            }
+        }
+        return INSTANCE;
+    }
 
     /**
      * This function handles the persistence of new data into the DataBase.
@@ -38,7 +60,7 @@ public abstract class DataBaseActions {
      * @return : True if the everything went fine, False otherwise.
      */
     @SuppressWarnings("ConstantConditions")
-    public static Boolean newData(Context context, String tableName, List<String> columns, List<String> values) {
+    public Boolean newData(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         try {
             // Get the DataBase
@@ -80,7 +102,7 @@ public abstract class DataBaseActions {
      * @return : True if the everything went fine, False otherwise.
      */
     @SuppressWarnings("ConstantConditions")
-    public static Boolean editData(Context context, String tableName, List<String> columns, List<String> values) {
+    public Boolean editData(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         try {
             // Get the DataBase
@@ -122,7 +144,7 @@ public abstract class DataBaseActions {
      * @return : True if the everything went fine, False otherwise.
      */
     @SuppressWarnings("ConstantConditions")
-    public static Boolean deleteData(Context context, String tableName, int id) {
+    public Boolean deleteData(Context context, String tableName, int id) {
         SQLiteDatabase db = null;
         try {
             // Get the DataBase
@@ -157,7 +179,7 @@ public abstract class DataBaseActions {
      * @return an object and can return "null" if the object not found
      */
     @SuppressWarnings("ConstantConditions")
-    public static Object getAccount(Context context, String tableName, List<String> columns, List<String> values) {
+    public Object getAccount(Context context, String tableName, List<String> columns, List<String> values) {
         SQLiteDatabase db = null;
         Cursor mCursor = null;
         try {
@@ -198,7 +220,7 @@ public abstract class DataBaseActions {
      * @return a list of object from the selected Table.
      */
     @SuppressWarnings("ConstantConditions")
-    public static List<Object> getAllAccounts(Context context, String tableName) {
+    public List<Object> getAllAccounts(Context context, String tableName) {
         SQLiteDatabase db = null;
         Cursor mCursor = null;
         try {
@@ -250,7 +272,7 @@ public abstract class DataBaseActions {
      * @param context : The application context.
      * @return an instance of SQLiteDatabase.
      */
-    private static SQLiteDatabase getDataBase(Context context) {
+    private SQLiteDatabase getDataBase(Context context) {
         // Initialise the DataBase Helper
         DB_Helper dbh = new DB_Helper(context);
 
@@ -268,8 +290,8 @@ public abstract class DataBaseActions {
      * @return the customise query.
      */
     @SuppressWarnings("ConstantConditions")
-    private static StringBuilder buildQueryString(String tableName, List<String> columns,
-                                                  List<String> values) {
+    private StringBuilder buildQueryString(String tableName, List<String> columns,
+                                           List<String> values) {
 
         StringBuilder query = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         int counter = (columns.size() - 1);  // Number of line in the table
@@ -305,8 +327,8 @@ public abstract class DataBaseActions {
      * @param tableName : The table from which we want to extract the data.
      * @return the customise query
      */
-    private static String buildQueryString(String tableName, String dateColumnName) {
-        return ("SELECT * FROM " + tableName + " order  by "+ dateColumnName + " DESC");
+    private String buildQueryString(String tableName, String dateColumnName) {
+        return ("SELECT * FROM " + tableName + " order  by " + dateColumnName + " DESC");
     }
 
 
@@ -318,7 +340,7 @@ public abstract class DataBaseActions {
      * @return the filled object.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
-    private static Object fillTheObject(Cursor cursor, String tableName) throws ParseException {
+    private Object fillTheObject(Cursor cursor, String tableName) throws ParseException {
 
         switch (tableName) {
             case "UserAccount":
@@ -342,7 +364,7 @@ public abstract class DataBaseActions {
      * @return UserAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
-    private static UserAccountModel getUserObject(Cursor cursor) throws ParseException {
+    private UserAccountModel getUserObject(Cursor cursor) throws ParseException {
         return new UserAccountModel(
                 Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
@@ -361,7 +383,7 @@ public abstract class DataBaseActions {
      * @return PwdAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
-    private static PwdAccountModel getPwdObject(Cursor cursor) throws ParseException {
+    private PwdAccountModel getPwdObject(Cursor cursor) throws ParseException {
         return new PwdAccountModel(
                 Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),

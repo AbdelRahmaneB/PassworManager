@@ -21,7 +21,29 @@ import ub.passwordmanager.tools.dataEncryption.DataEncryption;
  * The role of this class is to handle the communication with The DataBase and the views
  * Created by UB on 10/09/2016.
  */
-public abstract class Service_UserAccount {
+public class Service_UserAccount {
+
+    // Instance of the class
+    private static Service_UserAccount INSTANCE;
+
+    private Service_UserAccount() {
+        // Do nothing
+    }
+
+    /**
+     * This method allow us to be sure that there will be only one instance of this class
+     *
+     * @return the instance of this class
+     */
+    public static Service_UserAccount getInstance() {
+        if (INSTANCE == null) {
+            synchronized (Service_UserAccount.class) {
+                INSTANCE = new Service_UserAccount();
+            }
+        }
+        return INSTANCE;
+    }
+
 
     /**
      * This function Calls the persistence of new data into the DataBase.
@@ -30,7 +52,7 @@ public abstract class Service_UserAccount {
      * @param userAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveNewData(Context context, UserAccountModel userAccount) throws Exception {
+    public Boolean saveNewData(Context context, UserAccountModel userAccount) throws Exception {
 
         // Encrypt all the Data before sending it to the DataBase
         mEncryptValues(
@@ -52,7 +74,7 @@ public abstract class Service_UserAccount {
         );
 
         // Send the information to the DataBase
-        return DataBaseActions.newData(
+        return DataBaseActions.getInstance().newData(
                 context,
                 DB_UserAccountTable.KEY_TABLE_NAME,
                 DB_UserAccountTable.KEY_AlL_COLUMNS,
@@ -68,11 +90,11 @@ public abstract class Service_UserAccount {
      * @param userAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveModifiedData(Context context,String oldPwd, UserAccountModel userAccount, Boolean reEncryptTheData) throws Exception {
+    public Boolean saveModifiedData(Context context, String oldPwd, UserAccountModel userAccount, Boolean reEncryptTheData) throws Exception {
 
         if (reEncryptTheData) {
 
-            Service_PwdAccount.reEncryptData(context,oldPwd);
+            Service_PwdAccount.getInstance().reEncryptData(context, oldPwd);
         }
 
         // Encrypt all the Data before sending it to the DataBase
@@ -96,7 +118,7 @@ public abstract class Service_UserAccount {
 
 
         // Send the information to the DataBase
-        return DataBaseActions.editData(
+        return DataBaseActions.getInstance().editData(
                 context,
                 DB_UserAccountTable.KEY_TABLE_NAME,
                 DB_UserAccountTable.KEY_AlL_COLUMNS,
@@ -113,9 +135,9 @@ public abstract class Service_UserAccount {
      * @param userAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean deleteData(Context context, UserAccountModel userAccount) {
+    public Boolean deleteData(Context context, UserAccountModel userAccount) {
         // Send the information to the DataBase.
-        return DataBaseActions.deleteData(
+        return DataBaseActions.getInstance().deleteData(
                 context,
                 DB_UserAccountTable.KEY_TABLE_NAME,
                 userAccount.getId()
@@ -129,12 +151,12 @@ public abstract class Service_UserAccount {
      * @param context : The Application context where the function is called.
      * @return true if everything correct, or false otherwise.
      */
-    public static List<UserAccountModel> getAllAccounts(Context context) throws Exception {
+    public List<UserAccountModel> getAllAccounts(Context context) throws Exception {
         List<Object> mEncryptedList;
         List<UserAccountModel> mDecryptedList = new ArrayList<>();
 
         // Get All the UserAccount Object from DataBase
-        mEncryptedList = DataBaseActions.getAllAccounts(context, DB_UserAccountTable.KEY_TABLE_NAME);
+        mEncryptedList = DataBaseActions.getInstance().getAllAccounts(context, DB_UserAccountTable.KEY_TABLE_NAME);
 
         if (mEncryptedList == null)
             return null;
@@ -165,7 +187,7 @@ public abstract class Service_UserAccount {
      * @return True if Account exist, False otherwise.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    public static boolean verifyAuthenticationData(Context context) throws Exception {
+    public boolean verifyAuthenticationData(Context context) throws Exception {
 
         // Set the values to send to DataBase
         List<String> mColumns = Arrays.asList(
@@ -173,33 +195,33 @@ public abstract class Service_UserAccount {
                 DB_UserAccountTable.KEY_PASSWORD
         );
         List<String> mValues = Arrays.asList(
-                DataEncryption.encryptData(
+                DataEncryption.getInstance().encryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         AppConfig.getInstance().getCurrentUser()),
-                DataEncryption.encryptData(
+                DataEncryption.getInstance().encryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         AppConfig.getInstance().getCurrentPassword()
                 )
         );
 
         // Get the object from DataBase and test if it's Null or not
-        return (DataBaseActions.getAccount(context, DB_UserAccountTable.KEY_TABLE_NAME,
+        return (DataBaseActions.getInstance().getAccount(context, DB_UserAccountTable.KEY_TABLE_NAME,
                 mColumns, mValues)
                 != null);
     }
 
 
-    public static String recoverPassword(Context context, String key) throws Exception {
+    public String recoverPassword(Context context, String key) throws Exception {
         String mRef = getRef(context);
-        return DataEncryption.decryptData(
+        return DataEncryption.getInstance().decryptData(
                 key,
                 mRef);
     }
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
 
-    private static String getRef(Context context){
-        return ((UserAccountModel) DataBaseActions.getAllAccounts(
+    private String getRef(Context context) {
+        return ((UserAccountModel) DataBaseActions.getInstance().getAllAccounts(
                 context,
                 DB_UserAccountTable.KEY_TABLE_NAME
         ).get(0)).getRef();
@@ -216,10 +238,10 @@ public abstract class Service_UserAccount {
      * @param isRef  : If True means to encrypt the Data with The Email, False use Password.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    private static String mEncryptValue(List<String> LValue, List<String> LCols,
-                                        String KeyCol, String value, Boolean isRef) throws Exception {
+    private String mEncryptValue(List<String> LValue, List<String> LCols,
+                                 String KeyCol, String value, Boolean isRef) throws Exception {
         if (!TextUtils.isEmpty(value)) {
-            value = DataEncryption.encryptData(
+            value = DataEncryption.getInstance().encryptData(
                     (isRef) ? value : AppConfig.getInstance().getCurrentPassword(),
                     (isRef) ? AppConfig.getInstance().getCurrentPassword() : value);
             if (LValue != null && LCols != null) {
@@ -240,8 +262,8 @@ public abstract class Service_UserAccount {
      * @param userAccount : the User Account Object that contain the Data.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    private static void mEncryptValues(List<String> value, List<String> columns,
-                                       UserAccountModel userAccount) throws Exception {
+    private void mEncryptValues(List<String> value, List<String> columns,
+                                UserAccountModel userAccount) throws Exception {
         String fieldValue;
 
         // Get the values that are not empty.
@@ -294,26 +316,26 @@ public abstract class Service_UserAccount {
      * @return a Decrypted object
      * @throws Exception is case if an error occur in the Decryption process
      */
-    private static UserAccountModel mDecryptObject(UserAccountModel userAccount) throws Exception {
+    private UserAccountModel mDecryptObject(UserAccountModel userAccount) throws Exception {
 
 
         // Decrypt the Username
         userAccount.setUsername(
-                DataEncryption.decryptData(
+                DataEncryption.getInstance().decryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         userAccount.getUsername())
         );
 
         // Decrypt the Email
         userAccount.setEmail(
-                DataEncryption.decryptData(
+                DataEncryption.getInstance().decryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         userAccount.getEmail())
         );
 
         // Decrypt the Password
         userAccount.setPassword(
-                DataEncryption.decryptData(
+                DataEncryption.getInstance().decryptData(
                         AppConfig.getInstance().getCurrentPassword(),
                         userAccount.getPassword())
         );

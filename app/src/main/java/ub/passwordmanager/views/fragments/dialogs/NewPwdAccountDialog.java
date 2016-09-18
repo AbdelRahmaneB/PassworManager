@@ -55,7 +55,7 @@ public class NewPwdAccountDialog extends CustomDialog {
         mPwdGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPwd.setText(PwdGenerator.generatePassword(getCurrentActivity()));
+                mPwd.setText(PwdGenerator.getInstance().generatePassword(getCurrentActivity()));
             }
         });
         return getCurrentDialog();
@@ -103,7 +103,7 @@ public class NewPwdAccountDialog extends CustomDialog {
 
             // save into database
             try {
-                return Service_PwdAccount.saveNewData(getCurrentActivity(), mPwdAccount);
+                return Service_PwdAccount.getInstance().saveNewData(getCurrentActivity(), mPwdAccount);
             } catch (Exception e) {
                 e.printStackTrace();
             }

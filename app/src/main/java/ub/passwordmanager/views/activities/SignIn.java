@@ -10,9 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
@@ -24,9 +21,6 @@ import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
 
 public class SignIn extends AppCompatActivity implements OnDataPass {
 
-    // The log Key
-    private final String LOG_KEY = "SignIn - ";
-
     // This field will contain the active fragment
     private Fragment activeFragment = null;
 
@@ -37,16 +31,14 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
     private Button bt_next = null;
     private Button bt_previous = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-
+        // Initialise the buttons
         bt_next = (Button) findViewById(R.id.bt_next);
         bt_previous = (Button) findViewById(R.id.bt_previous);
-
 
         // Affect the active fragment to the Fragment Container
         if (savedInstanceState == null) {
@@ -64,7 +56,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
             }
         }
 
-
+        // Set the action for the next button
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +64,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
             }
         });
 
+        // Set the action for the previous button
         bt_previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,12 +73,10 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
         });
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the state of the Activity
         getSupportFragmentManager().putFragment(savedInstanceState, "activeFragment", activeFragment);
-
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
@@ -94,9 +85,9 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
     @Override
     public void onBackPressed() {
         if (activeFragment == FragmentFactory.getInstance().getSignInUserInfoFragment()) {
-            super.onBackPressed();
+            super.onBackPressed(); // use the default BackPressed
         } else
-            actionsOfTheButtons(R.id.bt_previous);
+            actionsOfTheButtons(R.id.bt_previous); // use our button to define the next step
     }
 
     /**
@@ -121,9 +112,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
                 break;
         }
     }
-
-
-    // TODO : find a solution to not duplication this part of the code
 
     /**
      * Description
@@ -162,53 +150,66 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
     private void ActionForButtonNext() {
 
         if (getResources().getString(R.string.bt_text_next).equals(bt_next.getText().toString())) {
-
-            // Switch the active fragment to "Password information fragment"
-            switchFragment(FragmentFactory.getInstance().getSignInPwdInfoFragment(), true);
-
-            // Change The visibility, button text and the activity title.
-            bt_previous.setVisibility(View.VISIBLE);
-            bt_next.setVisibility(View.INVISIBLE);
-            bt_next.setText(getResources().getString(R.string.bt_text_register));
-            setTitle(R.string.sign_in_part2);
+            // go to the password information fragment
+            goToNextFragment();
 
         } else {
+            saveNewUserAccount();
+        }
+    }
 
-            if (userAccount != null) {
-                try {
-                    String username = userAccount.getUsername();
-                    // Save the values in the DataBase
-                    if (Service_UserAccount.saveNewData(getBaseContext(), userAccount)) {
+    /**
+     * The role of the function is to save the new Account into the database
+     */
+    private void saveNewUserAccount() {
+        if (userAccount != null) {
+            try {
+                String username = userAccount.getUsername();
+                // Save the values in the DataBase
+                if (Service_UserAccount.getInstance().saveNewData(getBaseContext(), userAccount)) {
 
-                        // Adding the username to the preferences file
-                        AppConfig.getInstance().saveValueToPreference(
-                                SignIn.this,
-                                AppConfig.KEY_PREF_STRING,
-                                AppConfig.KEY_PREF_USERNAME,
-                                username
-                        );
+                    // Adding the username to the preferences file
+                    AppConfig.getInstance().saveValueToPreference(
+                            SignIn.this,
+                            AppConfig.KEY_PREF_STRING,
+                            AppConfig.KEY_PREF_USERNAME,
+                            username
+                    );
 
-                        // Inform the user that everything is correct
-                        Toast.makeText(getBaseContext(),
-                                getResources().getString(R.string.registration_ok),
-                                Toast.LENGTH_SHORT).show();
+                    // Inform the user that everything is correct
+                    Toast.makeText(getBaseContext(),
+                            getResources().getString(R.string.registration_ok),
+                            Toast.LENGTH_SHORT).show();
 
-                        // Go to the next Activity
-                        startActivity(new Intent(getApplicationContext(), LogIn.class));
+                    // Go to the next Activity
+                    startActivity(new Intent(getApplicationContext(), LogIn.class));
 
-                    } else {
-                        // Warn the user that there was a problem
-                        Toast.makeText(getBaseContext(),
-                                getResources().getString(R.string.registration_error),
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (Exception ex) {
-                    Log.e(LOG_KEY + "Register", "[" + ex.getMessage() + "]");
-                    ex.printStackTrace();
+                } else {
+                    // Warn the user that there was a problem
+                    Toast.makeText(getBaseContext(),
+                            getResources().getString(R.string.registration_error),
+                            Toast.LENGTH_SHORT).show();
                 }
+
+            } catch (Exception ex) {
+                Log.e("Register", "[" + ex.getMessage() + "]");
+                ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Switch and configure the activity to hold the new fragment
+     */
+    private void goToNextFragment() {
+        // Switch the active fragment to "Password information fragment"
+        switchFragment(FragmentFactory.getInstance().getSignInPwdInfoFragment(), true);
+
+        // Change The visibility, button text and the activity title.
+        bt_previous.setVisibility(View.VISIBLE);
+        bt_next.setVisibility(View.INVISIBLE);
+        bt_next.setText(getResources().getString(R.string.bt_text_register));
+        setTitle(R.string.sign_in_part2);
     }
 
     /**
@@ -383,9 +384,7 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
         if (TextUtils.isEmpty(username)) {
             setErrorMessage(0); // Username Empty
             return false;
-
         }
-
         setErrorMessage(-1); // Username valid
         return true;
     }
@@ -401,7 +400,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
         if (TextUtils.isEmpty(email)) {
             setErrorMessage(1); // Email Empty
             return false;
-
         } else {
             if (!AppConfig.getInstance().isEmailValid(email)) {
                 setErrorMessage(2); // Email Invalid
@@ -419,7 +417,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
      * @return True or False.
      */
     private Boolean isPwdValid(String pwd) {
-        // ToDo : test the length of the password
         if (TextUtils.isEmpty(pwd)) {
             setErrorMessage(3); // Password Empty
             return false;
@@ -449,7 +446,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
         setErrorMessage(-2); // Pwd == Conf
         return true;
     }
-
 
 }
 

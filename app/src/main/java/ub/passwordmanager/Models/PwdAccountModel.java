@@ -1,10 +1,8 @@
 package ub.passwordmanager.Models;
 
-import java.util.Date;
-
 /**
  * This Class represent the data holder for the Password account information.
- * Created by UB on 27/08/2016.
+ * Created by UcefBen on 27/08/2016.
  */
 public class PwdAccountModel {
 
@@ -18,7 +16,6 @@ public class PwdAccountModel {
     public PwdAccountModel() {
         // leave this empty
     }
-
 
     public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String otherInfo, String mLastUpdate) {
         this.mWebSite = mWebSite;
@@ -77,10 +74,6 @@ public class PwdAccountModel {
 
     public String getLastUpdate() {
         return mLastUpdate;
-    }
-
-    public void setLastUpdate(String mLastUpdate) {
-        this.mLastUpdate = mLastUpdate;
     }
 
     public String getOtherInfo() {

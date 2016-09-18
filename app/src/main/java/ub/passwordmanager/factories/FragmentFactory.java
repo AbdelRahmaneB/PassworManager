@@ -15,18 +15,23 @@ import ub.passwordmanager.views.fragments.mainActivities.PasswordGeneratorPage;
 import ub.passwordmanager.views.fragments.mainActivities.ProfilePage;
 import ub.passwordmanager.views.fragments.mainActivities.SettingPage;
 
+/**
+ * This class represent a factory for our fragment.
+ * It allow us to get the instance of the desired fragment,
+ * this way we reduce dependency between the fragment and the activity
+ * Created by UcefBen on 25/08/2016.
+ */
 public class FragmentFactory {
-
-    /**
-     * Our Instance for the factory using Singleton
-     */
-    private static FragmentFactory INSTANCE = new FragmentFactory();
 
     /**
      * List to contain our used Fragments for optimisation purpose
      */
     private HashMap<String, Fragment> fragmentCache = new HashMap<>();
 
+    /**
+     * Our Instance for the factory using Singleton
+     */
+    private static FragmentFactory INSTANCE;
 
     private FragmentFactory() {
         // Required empty public constructor
@@ -165,7 +170,6 @@ public class FragmentFactory {
     public Fragment getSignInPwdInfoFragment() {
         return getFragment(SignInPwdInfoFragment.class);
     }
-
 
 
 }

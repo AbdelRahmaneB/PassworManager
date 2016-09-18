@@ -124,7 +124,7 @@ public class ProfilePage extends Fragment {
         generatePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String generatedPwd = PwdGenerator.generatePassword(getActivity());
+                String generatedPwd = PwdGenerator.getInstance().generatePassword(getActivity());
                 mNewPwd.setText(generatedPwd);
                 mConfirmPwd.setText(generatedPwd);
                 Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class ProfilePage extends Fragment {
      */
     private void getUserAccountInformation() {
         try {
-            mUserAccountModel = Service_UserAccount.getAllAccounts(getContext()).get(0);
+            mUserAccountModel = Service_UserAccount.getInstance().getAllAccounts(getContext()).get(0);
             mUsername.setTag(mUserAccountModel.getId());
             mUsername.setText(mUserAccountModel.getUsername());
             mEmail.setText(mUserAccountModel.getEmail());
@@ -302,21 +302,21 @@ public class ProfilePage extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (mNewPwd.getText().length() > 0 && mConfirmPwd.getText().length() <= 0){
+            if (mNewPwd.getText().length() > 0 && mConfirmPwd.getText().length() <= 0) {
                 // Show a message that the confirmation is required
                 tConfirmPwd.setError(getResources().getString(R.string.empty_confirmation_error_signIn));
 
                 //deactivate the button
                 bt_saveProfile.setEnabled(false);
-            }else{
+            } else {
                 // Test if the new Pwd and confirmation matches
-                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())){
+                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())) {
                     // Show a message to notify that the password's doesn't match
                     tConfirmPwd.setError(getResources().getString(R.string.diff_error_signIn));
 
                     //deactivate the button
                     bt_saveProfile.setEnabled(false);
-                }else {
+                } else {
                     // Hide the message
                     tConfirmPwd.setErrorEnabled(false);
                     tNewPwd.setErrorEnabled(false);
@@ -346,21 +346,21 @@ public class ProfilePage extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (mConfirmPwd.getText().length() > 0 && mNewPwd.getText().length() <= 0){
+            if (mConfirmPwd.getText().length() > 0 && mNewPwd.getText().length() <= 0) {
                 // Show a message that the New password is required
                 tNewPwd.setError(getResources().getString(R.string.empty_confirmation_error_signIn));
 
                 //deactivate the button
                 bt_saveProfile.setEnabled(false);
-            }else{
+            } else {
                 // Test if the new Pwd and confirmation matches
-                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())){
+                if (!mNewPwd.getText().toString().equals(mConfirmPwd.getText().toString())) {
                     // Show a message to notify that the password's doesn't match
                     tConfirmPwd.setError(getResources().getString(R.string.diff_error_signIn));
 
                     //deactivate the button
                     bt_saveProfile.setEnabled(false);
-                }else {
+                } else {
                     // Hide the message
                     tConfirmPwd.setErrorEnabled(false);
                     tNewPwd.setErrorEnabled(false);
@@ -412,9 +412,7 @@ public class ProfilePage extends Fragment {
      * @throws Exception
      */
     private void saveTheObject(UserAccountModel mUserAccountModel, Boolean reEncryptTheData) throws Exception {
-        Log.e("SAve profile *********","" + mOldPwd.getText().toString());
-
-        if (Service_UserAccount.saveModifiedData(getContext(),mOldPwd.getText().toString(),
+        if (Service_UserAccount.getInstance().saveModifiedData(getContext(), mOldPwd.getText().toString(),
                 mUserAccountModel, reEncryptTheData)) {
 
             // Refresh the Current Username

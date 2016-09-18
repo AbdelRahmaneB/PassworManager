@@ -12,9 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * ToDo : Description :
- * <p/>
- * Created by UB on 29/08/2016.
+ * Description :
+ * This class holds the most used functions and static variables for
+ * the preferences file and other use.
+ * Created by UcefBen on 29/08/2016.
  */
 public class AppConfig {
 
@@ -41,7 +42,6 @@ public class AppConfig {
 
     public static final String KEY_PREF_STRING = "String";
     public static final String KEY_PREF_BOOLEAN = "Boolean";
-    public static final String KEY_PREF_INT = "int";
 
 
     private AppConfig() {
@@ -164,8 +164,9 @@ public class AppConfig {
         Toast.makeText(activity, "Data copied !!", Toast.LENGTH_SHORT).show();
     }
 
-
-    // Function to change the language within the application
+    /**
+     * Function to change the language within the application
+     */
     public void setAppLanguage(Activity activity, String lang) {
 
         Locale myLocale = new Locale(lang);

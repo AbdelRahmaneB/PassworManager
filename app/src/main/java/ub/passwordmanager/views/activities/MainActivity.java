@@ -2,13 +2,11 @@ package ub.passwordmanager.views.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,8 +19,6 @@ import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.factories.FragmentFactory;
-import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
-import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,33 +36,6 @@ public class MainActivity extends AppCompatActivity
             // Add the customized action bar
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-
-//            // Add the even handler for the floating button
-//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//            fab.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    // Create the Dialog to add a new Password Account
-//                    final CustomDialog myDialog = new NewPwdAccountDialog(MainActivity.this);
-//                    final AlertDialog dialog = myDialog.getDialog();
-//                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            if (myDialog.setDialogAction()) {
-//                                dialog.dismiss();
-//                                getSupportFragmentManager().beginTransaction()
-//                                        .detach(activeFragment)
-//                                        .attach(activeFragment)
-//                                        .commit();
-//                            }
-//                        }
-//                    });
-//                    // Hide the delete button
-//                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
-//
-//                }
-//            });
 
             // Add the navigation menu drawer to the view
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -221,8 +190,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem item = navigationView.getMenu().getItem(index);
 
-//        getAccountInformation(navigationView);
-
         // Change the title of the action bar
         setTitle(item.getTitle());
 
@@ -243,7 +210,7 @@ public class MainActivity extends AppCompatActivity
     private void getAccountInformation(NavigationView navigationView) {
         try {
             View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
-            UserAccountModel userAccount = Service_UserAccount.getAllAccounts(getBaseContext()).get(0);
+            UserAccountModel userAccount = Service_UserAccount.getInstance().getAllAccounts(getBaseContext()).get(0);
             TextView tv_Username = (TextView) headerView.findViewById(R.id.label_username_profile_drawer);
             TextView tv_Email = (TextView) headerView.findViewById(R.id.label_email_profile_drawer);
             TextView tv_LasConnection = (TextView) headerView.findViewById(R.id.textView);
@@ -258,7 +225,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     /**
      * Close the application if it's paused
      */
@@ -267,4 +233,5 @@ public class MainActivity extends AppCompatActivity
         finish();
         super.onUserLeaveHint();
     }
+
 }

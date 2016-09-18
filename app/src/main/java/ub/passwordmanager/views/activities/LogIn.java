@@ -1,20 +1,16 @@
 package ub.passwordmanager.views.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
@@ -36,28 +32,7 @@ public class LogIn extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!TextUtils.isEmpty(tv_pwd.getText().toString())) {
-                    AppConfig.getInstance().setCurrentPassword(tv_pwd.getText().toString());
-
-                    try {
-
-                        if (Service_UserAccount.verifyAuthenticationData(getBaseContext())) {
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
-                            Toast.makeText(getBaseContext(),
-                                    "Password incorrect !!",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                } else {
-                    TextInputLayout pwd = (TextInputLayout) findViewById(R.id.input_pwd_login);
-                    pwd.setError(getResources().getString(R.string.logIn_empty_password));
-                }
-
+                checkTheLogIn();
             }
         });
 
@@ -71,4 +46,44 @@ public class LogIn extends AppCompatActivity {
 
 
     }
+
+    /**
+     * The role of this function is to check if the field are correct
+     */
+    private void checkTheLogIn() {
+        if (!TextUtils.isEmpty(tv_pwd.getText().toString())) {
+
+            // check the login in the database
+            checkLogInInformation();
+
+        } else {
+            TextInputLayout pwd = (TextInputLayout) findViewById(R.id.input_pwd_login);
+            pwd.setError(getResources().getString(R.string.logIn_empty_password));
+        }
+    }
+
+    /**
+     * The role of this function is to test if the login
+     * exist in the database and then redirect the user accordingly
+     */
+    private void checkLogInInformation() {
+        try {
+            // set the global password for the app
+            // (It's initialised here because generate an error when trying to decrypt)
+            AppConfig.getInstance().setCurrentPassword(tv_pwd.getText().toString());
+
+            if (Service_UserAccount.getInstance().verifyAuthenticationData(getBaseContext())) {
+
+                // Start the MainActivity
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            } else {
+                Toast.makeText(getBaseContext(),
+                        "Password incorrect !!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

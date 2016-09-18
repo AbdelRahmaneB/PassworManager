@@ -63,7 +63,7 @@ public class DeletePwdAccountDialog extends CustomDialog {
     public Boolean setDialogAction() {
         // Delete from DataBase
         try {
-            return Service_PwdAccount.deleteData(getCurrentActivity(), mPwdAccount);
+            return Service_PwdAccount.getInstance().deleteData(getCurrentActivity(), mPwdAccount);
         } catch (Exception e) {
             Log.e("*Deleting Account*", "[" + e.getMessage() + "]");
             e.printStackTrace();

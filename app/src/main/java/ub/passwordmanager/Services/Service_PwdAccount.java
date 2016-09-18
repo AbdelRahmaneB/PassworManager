@@ -21,7 +21,29 @@ import ub.passwordmanager.tools.dataEncryption.DataEncryption;
  * The role of this class is to handle the communication with The DataBase and the views
  * Created by UB on 10/09/2016.
  */
-public abstract class Service_PwdAccount {
+public class Service_PwdAccount {
+
+    // Instance of the class
+    private static Service_PwdAccount INSTANCE;
+
+    private Service_PwdAccount() {
+        // Do nothing
+    }
+
+    /**
+     * This method allow us to be sure that there will be only one instance of this class
+     *
+     * @return the instance of this class
+     */
+    public static Service_PwdAccount getInstance() {
+        if (INSTANCE == null) {
+            synchronized (Service_PwdAccount.class) {
+                INSTANCE = new Service_PwdAccount();
+            }
+        }
+        return INSTANCE;
+    }
+
 
     /**
      * This function Calls the persistence of new data into the DataBase.
@@ -30,7 +52,7 @@ public abstract class Service_PwdAccount {
      * @param pwdAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveNewData(Context context, PwdAccountModel pwdAccount) throws Exception {
+    public Boolean saveNewData(Context context, PwdAccountModel pwdAccount) throws Exception {
 
         // Encrypt all the Data before sending it to the DataBase
         mEncryptObject(
@@ -50,7 +72,7 @@ public abstract class Service_PwdAccount {
         );
 
         // Send the information to the DataBase
-        return DataBaseActions.newData(
+        return DataBaseActions.getInstance().newData(
                 context,
                 DB_PwdAccountTable.KEY_TABLE_NAME,
                 DB_PwdAccountTable.KEY_AlL_COLUMNS,
@@ -66,7 +88,7 @@ public abstract class Service_PwdAccount {
      * @param pwdAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveModifiedData(Context context, PwdAccountModel pwdAccount) throws Exception {
+    public Boolean saveModifiedData(Context context, PwdAccountModel pwdAccount) throws Exception {
 
         // Encrypt all the Data before sending it to the DataBase
         mEncryptObject(
@@ -85,7 +107,7 @@ public abstract class Service_PwdAccount {
         );
 
         // Send the information to the DataBase
-        return DataBaseActions.editData(
+        return DataBaseActions.getInstance().editData(
                 context,
                 DB_PwdAccountTable.KEY_TABLE_NAME,
                 DB_PwdAccountTable.KEY_AlL_COLUMNS,
@@ -101,9 +123,9 @@ public abstract class Service_PwdAccount {
      * @param pwdAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean deleteData(Context context, PwdAccountModel pwdAccount) {
+    public Boolean deleteData(Context context, PwdAccountModel pwdAccount) {
         // Send the information to the DataBase.
-        return DataBaseActions.deleteData(
+        return DataBaseActions.getInstance().deleteData(
                 context,
                 DB_PwdAccountTable.KEY_TABLE_NAME,
                 pwdAccount.getId()
@@ -117,12 +139,12 @@ public abstract class Service_PwdAccount {
      * @param context : The Application context where the function is called.
      * @return true if everything correct, or false otherwise.
      */
-    public static List<PwdAccountModel> getAllAccounts(Context context , String oldPwdToDecryptWith) throws Exception {
+    public List<PwdAccountModel> getAllAccounts(Context context, String oldPwdToDecryptWith) throws Exception {
         List<Object> mEncryptedList;
         List<PwdAccountModel> mDecryptedList = new ArrayList<>();
 
         // Get All the UserAccount Object from DataBase
-        mEncryptedList = DataBaseActions.getAllAccounts(context, DB_PwdAccountTable.KEY_TABLE_NAME);
+        mEncryptedList = DataBaseActions.getInstance().getAllAccounts(context, DB_PwdAccountTable.KEY_TABLE_NAME);
 
 
         // Loop on the list of object that we get from the DataBase
@@ -150,7 +172,7 @@ public abstract class Service_PwdAccount {
      * @param context : The Application context where the function is called.
      * @return true if everything correct, or false otherwise.
      */
-    public static PwdAccountModel getAccountById(Context context, String id) throws Exception {
+    public PwdAccountModel getAccountById(Context context, String id) throws Exception {
         Object mEncryptedList;
 
         // Set The list of Columns and values to send to DataBase
@@ -160,7 +182,7 @@ public abstract class Service_PwdAccount {
         List<String> values = Arrays.asList(id);
 
         // Get All the UserAccount Object from DataBase
-        mEncryptedList = DataBaseActions.getAccount(context, DB_PwdAccountTable.KEY_TABLE_NAME
+        mEncryptedList = DataBaseActions.getInstance().getAccount(context, DB_PwdAccountTable.KEY_TABLE_NAME
                 , columns, values);
 
         // Return the temporary list
@@ -173,12 +195,12 @@ public abstract class Service_PwdAccount {
      * Function that decrypt and reEncrypt the PwdAccount
      * with the new password ans save it into the database.
      *
-     * @param context : Application context.
+     * @param context             : Application context.
      * @param oldPwdToDecryptWith : The old password, used to decrypt Data
      * @return : True or False.
      * @throws Exception
      */
-    public static Boolean reEncryptData(Context context, String oldPwdToDecryptWith) throws Exception {
+    public Boolean reEncryptData(Context context, String oldPwdToDecryptWith) throws Exception {
         // bool to test is the reEncrypting went ok
         boolean isEverythingGood = false;
 
@@ -207,10 +229,10 @@ public abstract class Service_PwdAccount {
      * @param value  : The value that we want to Encrypt and Add.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    private static String mEncryptValue(List<String> LValue, List<String> LCols,
-                                        String KeyCol, String value) throws Exception {
+    private String mEncryptValue(List<String> LValue, List<String> LCols,
+                                 String KeyCol, String value) throws Exception {
         if (!TextUtils.isEmpty(value)) {
-            value = DataEncryption.encryptData(
+            value = DataEncryption.getInstance().encryptData(
                     AppConfig.getInstance().getCurrentPassword(),
                     value);
             if (LValue != null && LCols != null) {
@@ -231,8 +253,8 @@ public abstract class Service_PwdAccount {
      * @param pwdAccount : the Password Account Object that contain the Data.
      * @throws Exception is case if an error occur in the Encryption process
      */
-    private static void mEncryptObject(List<String> value, List<String> columns,
-                                       PwdAccountModel pwdAccount) throws Exception {
+    private void mEncryptObject(List<String> value, List<String> columns,
+                                PwdAccountModel pwdAccount) throws Exception {
         String fieldValue;
 
         // Get the values that are not empty.
@@ -278,17 +300,17 @@ public abstract class Service_PwdAccount {
      * @return a Decrypted object
      * @throws Exception is case if an error occur in the Decryption process
      */
-    private static PwdAccountModel mDecryptObject(String mUsedPassword, PwdAccountModel pwdAccount) throws Exception {
+    private PwdAccountModel mDecryptObject(String mUsedPassword, PwdAccountModel pwdAccount) throws Exception {
         // Decrypt the Email/Username
         pwdAccount.setEmail(
-                DataEncryption.decryptData(
+                DataEncryption.getInstance().decryptData(
                         mUsedPassword,
                         pwdAccount.getEmail())
         );
 
         // Decrypt the Password
         pwdAccount.setPassword(
-                DataEncryption.decryptData(
+                DataEncryption.getInstance().decryptData(
                         mUsedPassword,
                         pwdAccount.getPassword())
         );
@@ -296,7 +318,7 @@ public abstract class Service_PwdAccount {
         // Decrypt the Other Information
         if (!pwdAccount.getOtherInfo().equals("")) {
             pwdAccount.setOtherInfo(
-                    DataEncryption.decryptData(
+                    DataEncryption.getInstance().decryptData(
                             mUsedPassword,
                             pwdAccount.getOtherInfo())
             );

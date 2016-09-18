@@ -67,7 +67,7 @@ public class SignInPwdInfoFragment extends Fragment {
         generatePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String generatedPwd = PwdGenerator.generatePassword(getActivity());
+                String generatedPwd = PwdGenerator.getInstance().generatePassword(getActivity());
                 tv_Password.setText(generatedPwd);
                 tv_Confirmation.setText(generatedPwd);
                 Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();

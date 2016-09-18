@@ -91,7 +91,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         try {
             if (mDataSet != null)
                 mDataSet.clear();
-            mDataSet = Service_PwdAccount.getAllAccounts(mActivity.getBaseContext(),
+            mDataSet = Service_PwdAccount.getInstance().getAllAccounts(mActivity.getBaseContext(),
                     AppConfig.getInstance().getCurrentPassword());
         } catch (Exception ex) {
             ex.printStackTrace();

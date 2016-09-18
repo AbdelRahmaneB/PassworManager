@@ -1,7 +1,5 @@
 package ub.passwordmanager.Models;
 
-import java.util.Date;
-
 /**
  * This Class represent the data holder for the user account information
  * Created by UcefBen on 28/08/2016.
@@ -17,11 +15,6 @@ public class UserAccountModel {
     private String mLastLogIn;
 
     public UserAccountModel() {
-    }
-
-    public UserAccountModel(String username, String pwd_email) {
-        this.mUsername = username;
-        this.mPassword = pwd_email;
     }
 
     public UserAccountModel(int mId, String mRef, String mUsername, String mEmail, String mPassword, String mLastLogIn) {

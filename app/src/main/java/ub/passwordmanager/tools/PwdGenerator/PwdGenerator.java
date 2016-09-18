@@ -10,23 +10,47 @@ import ub.passwordmanager.appConfig.AppConfig;
 /**
  * This class is responsible for generating a random password
  * depending on the user choice in the Password generator view.
- *
+ * <p/>
  * Created by UcefBen on 08/09/2016.
  */
-public abstract class PwdGenerator {
+public class PwdGenerator {
+
+    /**
+     * Our Instance for the factory using Singleton
+     */
+    private static PwdGenerator INSTANCE;
+
+    private PwdGenerator() {
+        // Required empty public constructor
+    }
+
+    /**
+     * This method allow us to be sure that there will be only one instance of this class
+     *
+     * @return the instance of this class
+     */
+    public static PwdGenerator getInstance() {
+        if (INSTANCE == null) {
+            synchronized (PwdGenerator.class) {
+                INSTANCE = new PwdGenerator();
+            }
+        }
+        return INSTANCE;
+    }
 
     /**
      * the role of this function is to generate a random password
+     *
      * @param activity : the current activity where the function is used
      * @return the generated password
      */
-    public static String generatePassword(Activity activity) {
+    public String generatePassword(Activity activity) {
         StringBuilder SALT_CHARS = new StringBuilder("");
 
         // Put together the chain that we gonna use to generate the password
         initTheSaltChars(activity, SALT_CHARS);
 
-        if (SALT_CHARS.length() == 0){
+        if (SALT_CHARS.length() == 0) {
             setSaltCharsToDefault(activity, SALT_CHARS);
         }
 
@@ -46,24 +70,24 @@ public abstract class PwdGenerator {
     /**
      * Initialise the Salt Chars depending on the user choice
      */
-    private static void initTheSaltChars(Activity activity, StringBuilder SALT_CHARS){
-        if(useLowerCase(activity))
+    private void initTheSaltChars(Activity activity, StringBuilder SALT_CHARS) {
+        if (useLowerCase(activity))
             SALT_CHARS.append(activity.getResources().getString(R.string.opt_lower_case_value));
 
-        if(useUpperCase(activity))
+        if (useUpperCase(activity))
             SALT_CHARS.append(activity.getResources().getString(R.string.opt_upper_case_value));
 
-        if(useSymbols(activity))
+        if (useSymbols(activity))
             SALT_CHARS.append(activity.getResources().getString(R.string.opt_symbols_value));
 
-        if(useNumbers(activity))
+        if (useNumbers(activity))
             SALT_CHARS.append(activity.getResources().getString(R.string.opt_numbers_value));
     }
 
     /**
      * Set the Salt Chars in case the user unChecked all the options
      */
-    private static void setSaltCharsToDefault(Activity activity, StringBuilder SALT_CHARS){
+    private void setSaltCharsToDefault(Activity activity, StringBuilder SALT_CHARS) {
         SALT_CHARS.append(activity.getResources().getString(R.string.opt_lower_case_value));
         SALT_CHARS.append(activity.getResources().getString(R.string.opt_upper_case_value));
         SALT_CHARS.append(activity.getResources().getString(R.string.opt_numbers_value));
@@ -74,7 +98,7 @@ public abstract class PwdGenerator {
     /**
      * Function that return the value for LowerCase
      */
-    public static Boolean useLowerCase(Activity activity){
+    public Boolean useLowerCase(Activity activity) {
         return (Boolean) AppConfig.getInstance().getSavedValueFromPreferences(
                 activity,
                 AppConfig.KEY_PREF_BOOLEAN,
@@ -84,7 +108,7 @@ public abstract class PwdGenerator {
     /**
      * Function that return the value for UpperCase
      */
-    public static Boolean useUpperCase(Activity activity){
+    public Boolean useUpperCase(Activity activity) {
         return (Boolean) AppConfig.getInstance().getSavedValueFromPreferences(
                 activity,
                 AppConfig.KEY_PREF_BOOLEAN,
@@ -95,7 +119,7 @@ public abstract class PwdGenerator {
     /**
      * Function that return the value for Symbols
      */
-    public static Boolean useSymbols(Activity activity){
+    public Boolean useSymbols(Activity activity) {
         return (Boolean) AppConfig.getInstance().getSavedValueFromPreferences(
                 activity,
                 AppConfig.KEY_PREF_BOOLEAN,
@@ -105,7 +129,7 @@ public abstract class PwdGenerator {
     /**
      * Function that return the value for Numbers
      */
-    public static Boolean useNumbers(Activity activity){
+    public Boolean useNumbers(Activity activity) {
         return (Boolean) AppConfig.getInstance().getSavedValueFromPreferences(
                 activity,
                 AppConfig.KEY_PREF_BOOLEAN,

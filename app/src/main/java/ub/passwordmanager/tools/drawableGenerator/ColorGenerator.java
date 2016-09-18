@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * @author amulya
- * @datetime 14 Oct 2014, 5:20 PM
+ * 14 Oct 2014, 5:20 PM
  */
 public class ColorGenerator {
 

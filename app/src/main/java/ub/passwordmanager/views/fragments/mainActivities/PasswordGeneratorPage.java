@@ -63,7 +63,7 @@ public class PasswordGeneratorPage extends Fragment {
         bt_pwdGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String generatedPwd = PwdGenerator.generatePassword(getActivity());
+                String generatedPwd = PwdGenerator.getInstance().generatePassword(getActivity());
                 mGeneratedPwd.setText(generatedPwd);
                 Toast.makeText(getContext(), "Data copied !!", Toast.LENGTH_SHORT).show();
             }
@@ -96,10 +96,10 @@ public class PasswordGeneratorPage extends Fragment {
 
         // Read from the preferences file
         mChecked = Arrays.asList(
-                PwdGenerator.useLowerCase(getActivity()),
-                PwdGenerator.useUpperCase(getActivity()),
-                PwdGenerator.useSymbols(getActivity()),
-                PwdGenerator.useNumbers(getActivity())
+                PwdGenerator.getInstance().useLowerCase(getActivity()),
+                PwdGenerator.getInstance().useUpperCase(getActivity()),
+                PwdGenerator.getInstance().useSymbols(getActivity()),
+                PwdGenerator.getInstance().useNumbers(getActivity())
         );
 
     }
