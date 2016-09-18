@@ -372,37 +372,25 @@ public class Service_ImportExportDataBase {
                 dataToEncrypt = element.getElementsByTagName(
                         DB_PwdAccountTable.KEY_USERNAME
                 ).item(0).getTextContent();
-                dataToEncrypt = DataEncryption.getInstance().encryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
-                        dataToEncrypt
-                );
                 mPwdAccount.setEmail(dataToEncrypt);
 
                 // Password elements
                 dataToEncrypt = element.getElementsByTagName(
                         DB_PwdAccountTable.KEY_PASSWORD
                 ).item(0).getTextContent();
-                dataToEncrypt = DataEncryption.getInstance().encryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
-                        dataToEncrypt
-                );
                 mPwdAccount.setPassword(dataToEncrypt);
 
                 // Other information elements
                 dataToEncrypt = element.getElementsByTagName(
                         DB_PwdAccountTable.KEY_OTHER_INFO
                 ).item(0).getTextContent();
-                dataToEncrypt = DataEncryption.getInstance().encryptData(
-                        AppConfig.getInstance().getCurrentPassword(),
-                        dataToEncrypt
-                );
                 mPwdAccount.setOtherInfo(dataToEncrypt);
 
                 // Last Update elements
                 dataToEncrypt = element.getElementsByTagName(
                         DB_PwdAccountTable.KEY_LAST_UPDATE
                 ).item(0).getTextContent();
-                mPwdAccount.setOtherInfo(dataToEncrypt);
+                mPwdAccount.setLastUpdate(dataToEncrypt);
 
                 // - Add the Data holder into DataBase
                 Service_PwdAccount.getInstance().saveNewData(context, mPwdAccount);
@@ -435,7 +423,7 @@ public class Service_ImportExportDataBase {
         if (!backUpFolder.exists()) {
             return createBackUpFolder(backUpFolder);
         }
-        return false;
+        return true;
     }
 
     private Boolean createBackUpFolder(File backUpFolder) {

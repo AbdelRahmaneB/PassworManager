@@ -89,4 +89,13 @@ public class LogIn extends AppCompatActivity {
         }
     }
 
+    /**
+     * Close the application if it's paused
+     */
+    @Override
+    protected void onUserLeaveHint() {
+        finish();
+        super.onUserLeaveHint();
+    }
+
 }

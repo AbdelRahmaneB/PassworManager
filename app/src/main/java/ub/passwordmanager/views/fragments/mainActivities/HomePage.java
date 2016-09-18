@@ -25,6 +25,7 @@ import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_ImportExportDataBase;
 import ub.passwordmanager.Services.Service_PwdAccount;
+import ub.passwordmanager.views.activities.MainActivity;
 import ub.passwordmanager.views.adapters.MyRecyclerViewAdapter;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
@@ -83,7 +84,8 @@ public class HomePage extends Fragment {
      */
     private void setFloatingButton(View view) {
         // Add the even handler for the floating button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

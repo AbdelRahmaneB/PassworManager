@@ -15,6 +15,7 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.factories.FragmentFactory;
+import ub.passwordmanager.views.SplashScreen;
 import ub.passwordmanager.views.fragments.OnDataPass;
 import ub.passwordmanager.views.fragments.Registration.SignInPwdInfoFragment;
 import ub.passwordmanager.views.fragments.Registration.SignInUserInfoFragment;
@@ -444,6 +445,15 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
 
         setErrorMessage(-2); // Pwd == Conf
         return true;
+    }
+
+    /**
+     * Close the application if it's paused
+     */
+    @Override
+    protected void onUserLeaveHint() {
+        finish();
+        super.onUserLeaveHint();
     }
 
 }

@@ -97,6 +97,8 @@ public class SettingPage extends Fragment {
                         break;
 
                 }
+                // recreate the mainActivity so that the changes can be seen
+                getActivity().recreate();
             }
         });
 

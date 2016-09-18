@@ -71,7 +71,7 @@
     <string name="l_import_xml_message_error">Un problème est survenu lors de l\'importation des données !!</string>
     <string name="l_imports_title">Importation des données:</string>
     <string name="l_note_email">* L\'email est uniquement utilisée pour vous permettre de récupérer votre mot de passe</string>
-    <string name="l_passwordAccount">Informations de compte - mot de passe:</string>
+    <string name="l_passwordAccount">Informations sur le mot de passe:</string>
     <string name="l_pwd_gen">Les informations sur le mot de passe généré:</string>
     <string name="l_pwd_gen_option">Options :</string>
     <string name="l_user_account">Informations du compte d\'utilisateur:</string>
@@ -99,8 +99,8 @@
     <string name="opt_title5_desc">Vous pouvez utiliser les nombres pour générer le mot de passe (1 - 9)</string>
     <string name="registration_error">Il y avait un problème lors de la création d\'un nouveau compte !!</string>
     <string name="registration_ok">Le compte est créé correctement !!</string>
-    <string name="sign_in_part1">Inscription - Informations sur l\'utilisateur</string>
-    <string name="sign_in_part2">Inscription - informations sur le mot de passe</string>
+    <string name="sign_in_part1">Inscription - utilisateur</string>
+    <string name="sign_in_part2">Inscription - mot de passe</string>
     <string name="title_log_in">Password Manager - login</string>
     <string name="title_password_recovery">Récupération du mot de passe</string>
     <string name="lang_dialog_arabic">Arabe</string>

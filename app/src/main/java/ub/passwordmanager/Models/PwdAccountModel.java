@@ -76,6 +76,10 @@ public class PwdAccountModel {
         return mLastUpdate;
     }
 
+    public void setLastUpdate(String mLastUpdate) {
+        this.mLastUpdate = mLastUpdate;
+    }
+
     public String getOtherInfo() {
         return mOtherInfo;
     }

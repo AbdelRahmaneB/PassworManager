@@ -108,7 +108,7 @@ public class AppConfig {
                 Log.e("Saving to preferences", "No match for value type");
                 break;
         }
-        prefEditor.apply();
+        prefEditor.commit();
     }
 
 
@@ -126,6 +126,10 @@ public class AppConfig {
      */
     public Object getSavedValueFromPreferences(Activity activity, String valueType, String preferencesKey) {
         SharedPreferences prefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
+        if (prefSettings == null){
+
+        }
+
         switch (valueType) {
             case "String":
                 return prefSettings.getString(preferencesKey, null);
@@ -178,8 +182,6 @@ public class AppConfig {
         saveValueToPreference(activity, AppConfig.KEY_PREF_STRING,
                 AppConfig.KEY_PREF_APP_LANGUAGE, lang);
 
-        // recreate the mainActivity so that the changes can be seen
-        activity.recreate();
     }
 
     //******************** Getters and Setters **************************//

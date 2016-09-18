@@ -3,6 +3,7 @@ package ub.passwordmanager.views.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,18 +29,12 @@ public class ImportExportListAdapter extends BaseAdapter {
 
 
     // Get the Context and the layoutInflater from the Fragment
-    private Context mContext;
     private LayoutInflater mInflater = null;
-    private static Activity mActivity;
 
-    private int position;
 
     public ImportExportListAdapter(Activity context, List<String> titles, List<String> description) {
         this.mTitles = titles;
         this.mDesc = description;
-
-        this.mContext = context;
-        mActivity = context;
 
         this.mInflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -79,52 +74,10 @@ public class ImportExportListAdapter extends BaseAdapter {
             dh.dh_Title.setText(mTitles.get(position));
             dh.dh_Desc.setText(mDesc.get(position));
 
-            // Create a listener for the those objects
-            convertView.setOnClickListener(mListener);
-
-            // set the selected position
-            this.position = position;
-
         }
 
         return convertView;
     }
-
-    /**
-     * The listener for the ListView
-     */
-    View.OnClickListener mListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            // For The DataBase import
-            if (mTitles.get(position).equals(mContext.getResources().getString(R.string.ie_title2))) {
-                // Import DataBase
-                if( Service_ImportExportDataBase.getInstance().importDataBase(mContext) ){
-                    mActivity.finish();
-                    mActivity.getFragmentManager().popBackStack();
-                    mActivity.startActivity(new Intent(mContext, SplashScreen.class));
-                }
-            }
-
-            // For The Data import
-            if (mTitles.get(position).equals(mContext.getResources().getString(R.string.ie_title4))) {
-                // Import XML File
-                Service_ImportExportDataBase.getInstance().importFromXml(mContext);
-            }
-
-            // For The DataBase Export
-            if (mTitles.get(position).equals(mContext.getResources().getString(R.string.ie_title1))) {
-                // Export DataBase
-                Service_ImportExportDataBase.getInstance().exportDataBase(mContext);
-            }
-
-            // For The Data Export
-            if (mTitles.get(position).equals(mContext.getResources().getString(R.string.ie_title3))) {
-                // Export XML File
-                Service_ImportExportDataBase.getInstance().exportToXml(mContext);
-            }
-        }
-    };
 
 
     /**

@@ -147,7 +147,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignEnd="@+id/pi_separator1"
-            android:layout_alignRight="@+id/l_pwd_prof"
+            android:layout_alignRight="@+id/pi_separator1"
             android:layout_below="@+id/l_notice"
             android:layout_marginTop="25dp"
             android:contentDescription="@string/app_name"

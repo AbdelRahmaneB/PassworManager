@@ -362,6 +362,8 @@ public class ProfilePage extends Fragment {
                 Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        getActivity().findViewById(R.id.fab).setVisibility(View.INVISIBLE);
     }
 
     /**

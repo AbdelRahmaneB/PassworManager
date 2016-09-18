@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,14 +231,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
                 configureEditDialog(holderActivity, holder);
             }
         });
-
-        // Center the negative button
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0, 0, 180, 0);
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(params);
 
 
         // Override the Neutral Button

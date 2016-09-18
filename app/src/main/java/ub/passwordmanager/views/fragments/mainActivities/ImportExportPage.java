@@ -1,17 +1,22 @@
 package ub.passwordmanager.views.fragments.mainActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.Arrays;
 import java.util.List;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_ImportExportDataBase;
+import ub.passwordmanager.views.SplashScreen;
 import ub.passwordmanager.views.adapters.ImportExportListAdapter;
 
 public class ImportExportPage extends Fragment {
@@ -33,7 +38,7 @@ public class ImportExportPage extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_import_export_page, container, false);
@@ -51,7 +56,39 @@ public class ImportExportPage extends Fragment {
 
         // Add the adapter to the ListView
         mImportOptionList.setAdapter(mImportListAdapter);
+        mImportOptionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                // For The DataBase import
+                if (index == 0) {
+                    // Import DataBase
+                    if (Service_ImportExportDataBase.getInstance().importDataBase(getContext())) {
+                        getActivity().finish();
+                        getActivity().getFragmentManager().popBackStack();
+                        getActivity().startActivity(new Intent(getContext(), SplashScreen.class));
+                    }
+                } else {
+                    // Import XML File
+                    Service_ImportExportDataBase.getInstance().importFromXml(getContext());
+                }
+            }
+        });
+
         mExportOptionList.setAdapter(mExportListAdapter);
+        mExportOptionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+
+                // For The DataBase Export
+                if (index == 0) {
+                    // Export DataBase
+                    Service_ImportExportDataBase.getInstance().exportDataBase(getContext());
+                } else {
+                    // Export XML File
+                    Service_ImportExportDataBase.getInstance().exportToXml(getContext());
+                }
+            }
+        });
 
         return view;
     }

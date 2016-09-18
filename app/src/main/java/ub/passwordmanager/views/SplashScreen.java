@@ -31,11 +31,11 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                //set the preference language
-                setLanguage();
-
                 // set The parameters for the Password Generator
                 setPwdGeneratorPreferences();
+
+                //set the preference language
+                setLanguage();
 
                 // Check if the username exist uin the preferences file
                 checkIfAccountExists();
@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
      * by default it's English
      */
     private void setLanguage() {
-        if (!AppConfig.getInstance().isKeyExist(
+        if (AppConfig.getInstance().isKeyExist(
                 SplashScreen.this,
                 AppConfig.KEY_PREF_APP_LANGUAGE)) {
 
