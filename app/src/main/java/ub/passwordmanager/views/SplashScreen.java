@@ -48,18 +48,18 @@ public class SplashScreen extends AppCompatActivity {
      * Function to get and set the language selected by the user
      * by default it's English
      */
-    private void setLanguage(){
+    private void setLanguage() {
         if (!AppConfig.getInstance().isKeyExist(
                 SplashScreen.this,
-                AppConfig.KEY_PREF_APP_LANGUAGE)){
+                AppConfig.KEY_PREF_APP_LANGUAGE)) {
 
             String lang = AppConfig.getInstance().getSavedValueFromPreferences(
-              SplashScreen.this,
+                    SplashScreen.this,
                     AppConfig.KEY_PREF_STRING,
                     AppConfig.KEY_PREF_APP_LANGUAGE
             ).toString();
 
-            AppConfig.getInstance().setAppLanguage(SplashScreen.this,lang);
+            AppConfig.getInstance().setAppLanguage(SplashScreen.this, lang);
 
         }
     }
@@ -68,10 +68,10 @@ public class SplashScreen extends AppCompatActivity {
      * Function check if the preferences for the Password Generator exists,
      * Otherwise it Create and init the Preferences file.
      */
-    private void setPwdGeneratorPreferences(){
+    private void setPwdGeneratorPreferences() {
         if (!AppConfig.getInstance().isKeyExist(
                 SplashScreen.this,
-                AppConfig.KEY_PREF_LOWER_CASE)){
+                AppConfig.KEY_PREF_LOWER_CASE)) {
 
             // Lower Case
             AppConfig.getInstance().saveValueToPreference(
@@ -111,7 +111,7 @@ public class SplashScreen extends AppCompatActivity {
      * Function that checks if the a UserAccount already exists in the DataBase,
      * and redirect the user to the proper Activity.
      */
-    private void checkIfAccountExists(){
+    private void checkIfAccountExists() {
         String username = (String) AppConfig.getInstance().getSavedValueFromPreferences(
                 SplashScreen.this,
                 AppConfig.KEY_PREF_STRING,
@@ -124,7 +124,6 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LogIn.class));
         }
     }
-
 
     @Override
     public void onBackPressed() {

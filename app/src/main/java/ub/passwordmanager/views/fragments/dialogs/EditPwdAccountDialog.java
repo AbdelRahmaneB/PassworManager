@@ -27,7 +27,7 @@ import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
  * - {@link #getDialog()} : To create the dialog and show it's content
  * - {@link #setDialogAction()} : to set the action to do if the "Save" button is clicked
  * <p/>
- * Created by UB on 30/08/2016.
+ * Created by UcefBen on 30/08/2016.
  */
 public class EditPwdAccountDialog extends CustomDialog {
 
@@ -64,6 +64,7 @@ public class EditPwdAccountDialog extends CustomDialog {
         // fill the fields
         fillTheFields();
 
+        // generate a random password
         final ImageView mPwdGen = (ImageView) getCurrentDialog().findViewById(R.id.iv_pwd_gen_account);
         mPwdGen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +75,6 @@ public class EditPwdAccountDialog extends CustomDialog {
 
         return getCurrentDialog();
     }
-
 
     /**
      * Set the Action to do when the "Save Button" is clicked - Edit
@@ -113,6 +113,10 @@ public class EditPwdAccountDialog extends CustomDialog {
             return false;
         }
     }
+
+
+    /********************* Private Functions *****************************/
+    //*******************************************************************//
 
     /**
      * Initialise the fields of the edit dialog
@@ -153,7 +157,6 @@ public class EditPwdAccountDialog extends CustomDialog {
         this.mOther.setText(mPwdAccount.getOtherInfo());
 
     }
-
 
     /**
      * Test the Website field

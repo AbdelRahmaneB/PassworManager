@@ -33,9 +33,11 @@ import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
 
 /**
  * Description :
- * ToDo : explain the purpose of this class
- * <p/>
- * Created by UB on 25/08/2016.
+ * This class represent the adapter for the cardView in the "Home fragment".
+ * it's used to show the account information : (Website, email, last update).
+ * This class contain the Data holder, the listener.
+ * <p>
+ * Created by UcefBen on 25/08/2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView
         .Adapter<MyRecyclerViewAdapter
@@ -49,7 +51,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     private static List<PwdAccountModel> mDataSet;
     private static MyClickListener myClickListener;
     protected static Activity mActivity;
-    /** *********************************************************************** */
+    /** *********************************************************************** **/
 
     /**
      * Adding the AdapterListener
@@ -98,7 +100,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
         }
     }
 
-
     /**
      * Binding between the DataHolder and the view
      *
@@ -139,6 +140,11 @@ public class MyRecyclerViewAdapter extends RecyclerView
         configureAddDialog(mActivity);
     }
 
+    /**
+     * Function to edit an object from the cardView in a specific position
+     *
+     * @param index : The position of the object that we want to edit
+     */
     public void itemChanged(int index) {
         notifyItemChanged(index);
     }
@@ -161,84 +167,28 @@ public class MyRecyclerViewAdapter extends RecyclerView
         return (mDataSet != null) ? mDataSet.size() : -1;
     }
 
-    /** *********************************************************************** */
-    //**************************************************************************//
-
     /**
-     * Our DataHolder for the Adapter
-     * In this class we add all the required listener that we want to use
+     * Function to build the icon for an account based on his first char
      */
-    public class DataObjectHolder extends RecyclerView.ViewHolder
-            implements View
-            .OnClickListener,
-            View.OnLongClickListener {
-
-        /**
-         * Those fields represent the object in the view
-         */
-        TextView hSiteWeb;
-        TextView hLastUpdate;
-        TextView hEmailAddress;
-        ImageView h_bt_Delete;
-        ImageView h_bt_Edit;
-        ImageView h_icon;
-        private Activity mHolderActivity;
-
-        /**
-         * Constructor of The DataHolder.
-         * Here we initialise the Holder fields and
-         * adding a listener to our current CardView
-         *
-         * @param itemView : The current View
-         */
-        public DataObjectHolder(View itemView, Activity holderActivity) {
-            super(itemView);
-
-            // Initialise the View objects
-            hSiteWeb = (TextView) itemView.findViewById(R.id.l_SiteWeb);
-            hLastUpdate = (TextView) itemView.findViewById(R.id.l_LastUpdate);
-            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
-            h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
-            h_bt_Edit = (ImageView) itemView.findViewById(R.id.bt_editAccount);
-            h_icon = (ImageView) itemView.findViewById(R.id.account_icon);
-
-            // Add the listeners to our view
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
-
-            mHolderActivity = holderActivity;
-        }
-
-        public void mHideShowButtons(Boolean hideShow) {
-            if (hideShow) {
-                h_bt_Delete.setVisibility(View.INVISIBLE);
-                h_bt_Edit.setVisibility(View.INVISIBLE);
-            } else {
-                h_bt_Delete.setVisibility(View.VISIBLE);
-                h_bt_Edit.setVisibility(View.VISIBLE);
-            }
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            configureViewDialog(mHolderActivity, this);
-            myClickListener.onItemClick(getAdapterPosition(), v);
-        }
-
-
-        @Override
-        public boolean onLongClick(View view) {
-            myClickListener.onItemLongClick(getAdapterPosition(), view);
-            return true;
-        }
+    private void setIconAccount(final DataObjectHolder holder) {
+        ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+        TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().roundRect(5);
+        TextDrawable drawable = mDrawableBuilder.build(
+                String.valueOf(Character.toUpperCase(holder.hSiteWeb.getText().toString().charAt(0))),
+                mColorGenerator.getColor(holder.hSiteWeb.getText().toString()));
+        holder.h_icon.setImageDrawable(drawable);
+        holder.h_icon.setBackgroundColor(Color.TRANSPARENT);
     }
 
-
+    /**
+     * Function to configure the addition dialog
+     */
     private void configureAddDialog(final Activity holderActivity) {
         // Create the Dialog to add a new Password Account
         final CustomDialog myDialog = new NewPwdAccountDialog(holderActivity);
         final AlertDialog dialog = myDialog.getDialog();
+
+        // set the action for the "save button"
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -349,7 +299,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
                 // Save the changes into DataBase
                 if (myDialog.setDialogAction()) {
                     deleteItem(holder.getAdapterPosition());
-                    //refreshDataSet();
                     dialog.dismiss(); // Close the current Dialog
                 }
             }
@@ -359,8 +308,83 @@ public class MyRecyclerViewAdapter extends RecyclerView
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
     }
 
+
+    /** *********************************************************************** */
+    //**************************************************************************//
+
     /**
-     * Our Listener for the Adapter that wil be implementer in the DataHolder
+     * Our DataHolder for the Adapter
+     * In this class we add all the required listener that we want to use
+     */
+    public class DataObjectHolder extends RecyclerView.ViewHolder
+            implements View
+            .OnClickListener,
+            View.OnLongClickListener {
+
+        /**
+         * Those fields represent the object in the view
+         */
+        TextView hSiteWeb;
+        TextView hLastUpdate;
+        TextView hEmailAddress;
+        ImageView h_bt_Delete;
+        ImageView h_bt_Edit;
+        ImageView h_icon;
+        private Activity mHolderActivity;
+
+        /**
+         * Constructor of The DataHolder.
+         * Here we initialise the Holder fields and
+         * adding a listener to our current CardView
+         *
+         * @param itemView : The current View
+         */
+        public DataObjectHolder(View itemView, Activity holderActivity) {
+            super(itemView);
+
+            // Initialise the View objects
+            hSiteWeb = (TextView) itemView.findViewById(R.id.l_SiteWeb);
+            hLastUpdate = (TextView) itemView.findViewById(R.id.l_LastUpdate);
+            hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
+            h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
+            h_bt_Edit = (ImageView) itemView.findViewById(R.id.bt_editAccount);
+            h_icon = (ImageView) itemView.findViewById(R.id.account_icon);
+
+            // Add the listeners to our view
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
+            mHolderActivity = holderActivity;
+        }
+
+        public void mHideShowButtons(Boolean hideShow) {
+            if (hideShow) {
+                h_bt_Delete.setVisibility(View.INVISIBLE);
+                h_bt_Edit.setVisibility(View.INVISIBLE);
+            } else {
+                h_bt_Delete.setVisibility(View.VISIBLE);
+                h_bt_Edit.setVisibility(View.VISIBLE);
+            }
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            configureViewDialog(mHolderActivity, this);
+            myClickListener.onItemClick(getAdapterPosition(), v);
+        }
+
+
+        @Override
+        public boolean onLongClick(View view) {
+            myClickListener.onItemLongClick(getAdapterPosition(), view);
+            return true;
+        }
+    }
+
+    /**
+     * The interface fot our Adapter listener
+     * that wil be implementer in the DataHolder
      */
     public interface MyClickListener {
         void onItemClick(int position, View v);
@@ -368,16 +392,4 @@ public class MyRecyclerViewAdapter extends RecyclerView
         void onItemLongClick(int position, View v);
     }
 
-    /**
-     * Function to build the icon for an account based on his first char
-     */
-    private void setIconAccount(final DataObjectHolder holder){
-        ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-        TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().roundRect(5);
-        TextDrawable drawable = mDrawableBuilder.build(
-                String.valueOf(Character.toUpperCase(holder.hSiteWeb.getText().toString().charAt(0))),
-                mColorGenerator.getColor(holder.hSiteWeb.getText().toString()));
-        holder.h_icon.setImageDrawable(drawable);
-        holder.h_icon.setBackgroundColor(Color.TRANSPARENT);
-    }
 }

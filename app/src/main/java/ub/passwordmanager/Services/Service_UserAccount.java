@@ -210,13 +210,21 @@ public class Service_UserAccount {
                 != null);
     }
 
-
+    /**
+     * Function to get the password if forgotten.
+     *
+     * @param context : The application context .
+     * @param key     : the key to decrypt the password.
+     * @return the password
+     * @throws Exception
+     */
     public String recoverPassword(Context context, String key) throws Exception {
         String mRef = getRef(context);
         return DataEncryption.getInstance().decryptData(
                 key,
                 mRef);
     }
+
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
 

@@ -24,10 +24,11 @@ import ub.passwordmanager.appConfig.AppConfig;
  * - {@link #getDialog()} : To create the dialog and show it's content
  * - {@link #setDialogAction()} : to set the action to do if the "Save" button is clicked
  * <p/>
- * Created by UB on 05/09/2016.
+ * Created by UcefBen on 05/09/2016.
  */
 public class ViewPwdAccountDialog extends CustomDialog {
 
+    // global field to hold the current password account object
     private PwdAccountModel mPwdAccount;
 
     /**
@@ -53,11 +54,13 @@ public class ViewPwdAccountDialog extends CustomDialog {
         final EditText mPwd = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_password);
         final EditText mOther = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_otherInfo);
 
+        // fill the fields with the password account information
         mWebSite.setText(mPwdAccount.getWebSite());
         mEmail.setText(mPwdAccount.getEmail());
         mPwd.setText(mPwdAccount.getPassword());
         mOther.setText(mPwdAccount.getOtherInfo());
 
+        // Copy the website into clipboard
         mWebSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +68,7 @@ public class ViewPwdAccountDialog extends CustomDialog {
             }
         });
 
+        // Copy the Username/Email into clipboard
         mEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +76,7 @@ public class ViewPwdAccountDialog extends CustomDialog {
             }
         });
 
+        // Copy the Password into clipboard
         mPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +90,7 @@ public class ViewPwdAccountDialog extends CustomDialog {
             }
         });
 
+        // Copy the other information into clipboard
         mOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,4 +109,5 @@ public class ViewPwdAccountDialog extends CustomDialog {
     public Boolean setDialogAction() {
         return false;
     }
+    
 }

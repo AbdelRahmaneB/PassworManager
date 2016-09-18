@@ -1,15 +1,11 @@
 package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +14,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 import ub.passwordmanager.R;
 import ub.passwordmanager.appConfig.AppConfig;
 
 
 public class SettingPage extends Fragment {
 
-
+    // Constructor
     public SettingPage() {
         // Required empty public constructor
-    }
-
-    public static SettingPage newInstance() {
-        return new SettingPage();
     }
 
     @Override
@@ -48,13 +38,16 @@ public class SettingPage extends Fragment {
 
         // Get the listView instance
         ListView mSettingListView = (ListView) view.findViewById(R.id.settings_list_view);
+
+        // Init the items for the listView
         String[] values = new String[]{
                 getResources().getString(R.string.setting_list_view_items_lang)
         };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+
+        // Create the adapter for the listView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         mSettingListView.setAdapter(adapter);
-
 
         // Add the listener for our listView
         mSettingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,17 +61,21 @@ public class SettingPage extends Fragment {
         return view;
     }
 
-
+    /**
+     * Function that create and initialise the language dialog
+     */
     private void showLocationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.lang_dialog_title));
 
+        // Set the supported languages
         final String[] lang = {
                 getResources().getString(R.string.lang_dialog_english),
                 getResources().getString(R.string.lang_dialog_french),
                 getResources().getString(R.string.lang_dialog_arabic)
         };
 
+        // The function that determine witch language is selected.
         builder.setItems(lang, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), lang[which], Toast.LENGTH_SHORT).show();
@@ -103,19 +100,17 @@ public class SettingPage extends Fragment {
             }
         });
 
-
+        // Create the dialog builder
         AlertDialog dialog = builder.create();
 
         // display dialog
         ListView listView = dialog.getListView();
 
         listView.setDivider(new ColorDrawable(Color.GRAY));
-
         listView.setDividerHeight(1);
 
+        // show thw dialog
         dialog.show();
     }
-
-
 
 }

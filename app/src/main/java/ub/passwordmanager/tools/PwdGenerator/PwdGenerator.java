@@ -10,7 +10,7 @@ import ub.passwordmanager.appConfig.AppConfig;
 /**
  * This class is responsible for generating a random password
  * depending on the user choice in the Password generator view.
- * <p/>
+ * <p>
  * Created by UcefBen on 08/09/2016.
  */
 public class PwdGenerator {

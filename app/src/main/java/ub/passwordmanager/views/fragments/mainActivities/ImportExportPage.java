@@ -22,12 +22,9 @@ public class ImportExportPage extends Fragment {
     private List<String> mExportTitles;
     private List<String> mExportDesc;
 
+    // Constructor
     public ImportExportPage() {
         // Required empty public constructor
-    }
-
-    public static ImportExportPage newInstance() {
-        return new ImportExportPage();
     }
 
     @Override
@@ -51,7 +48,6 @@ public class ImportExportPage extends Fragment {
         // Create a custom adapter and initialise it.
         ImportExportListAdapter mImportListAdapter = new ImportExportListAdapter(getActivity(), mImportTitles, mImportDesc);
         ImportExportListAdapter mExportListAdapter = new ImportExportListAdapter(getActivity(), mExportTitles, mExportDesc);
-
 
         // Add the adapter to the ListView
         mImportOptionList.setAdapter(mImportListAdapter);

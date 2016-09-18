@@ -17,8 +17,11 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.appConfig.AppConfig;
 
 /**
- * Class Description
- * Created by UB on 24/08/2016.
+ * Description :
+ * This class represent the adapter for the "Password Generator Fragment".
+ * it contain the data holder and Listeners.
+ * <p>
+ * Created by UcefBen on 24/08/2016.
  */
 public class PwdGenListAdapter extends BaseAdapter {
 
@@ -27,23 +30,24 @@ public class PwdGenListAdapter extends BaseAdapter {
     private List<Boolean> mCb;
     private static List<CheckBox> mCheckBoxHolder;
 
-    private Context context;
     private static LayoutInflater inflater = null;
-    private static Holder holder;
     private static Activity mMainActivity;
 
     public PwdGenListAdapter(Activity mainActivity, List<String> titles, List<String> desc,
                              List<Boolean> cb) {
+        // Init the fields
         mTitles = titles;
         mDesc = desc;
         mCb = cb;
 
-        context = mainActivity;
+        // Init the activity field
         mMainActivity = mainActivity;
 
+        // Init the CheckBoxHolder
         PwdGenListAdapter.mCheckBoxHolder = new ArrayList<>();
 
-        inflater = (LayoutInflater) context.
+        // Inflate the layout adapter
+        inflater = (LayoutInflater) mainActivity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -65,22 +69,28 @@ public class PwdGenListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
+            // Init the view
+            Holder holder;
             holder = new Holder();
             convertView = inflater.inflate(R.layout.adapter_row_option_list, null);
 
+            // Init the DataHolder fields
             holder.title = (TextView) convertView.findViewById(R.id.l_opt_title);
             holder.desc = (TextView) convertView.findViewById(R.id.l_opt_sub_item);
             holder.cb = (CheckBox) convertView.findViewById(R.id.l_opt_check);
 
+            // fill the fields with corresponding data
             holder.title.setText(mTitles.get(position));
             holder.desc.setText(mDesc.get(position));
             holder.cb.setChecked(mCb.get(position));
+
+            // set the onClickListener for the CheckBox's
             holder.cb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mCb.get(position)){
+                    if (mCb.get(position)) {
                         mCb.set(position, false);
-                    }else{
+                    } else {
                         mCb.set(position, true);
                     }
 
@@ -90,6 +100,7 @@ public class PwdGenListAdapter extends BaseAdapter {
             });
             PwdGenListAdapter.mCheckBoxHolder.add(holder.cb);
 
+            // set the onClickListener for when the line is selected
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,7 +112,6 @@ public class PwdGenListAdapter extends BaseAdapter {
                         mCb.set(position, true);
                         PwdGenListAdapter.mCheckBoxHolder.get(position).setChecked(true);
                     }
-
 
                     // Save the change into the Preferences file
                     changeCheckBoxState(position);
@@ -115,6 +125,10 @@ public class PwdGenListAdapter extends BaseAdapter {
 
     /**
      * Save the change into the Preferences file
+     *      - Position 0 : Save the choice of the Lowercase in the preferences file
+     *      - Position 1 : Save the choice of the Uppercase in the preferences file
+     *      - Position 2 : Save the choice of the Symbols in the preferences file
+     *      - Position 3 : Save the choice of the Numbers in the preferences file
      */
     private void changeCheckBoxState(int position) {
 
@@ -149,7 +163,6 @@ public class PwdGenListAdapter extends BaseAdapter {
                         mCb.get(position)
                 );
                 break;
-
 
             case 3:
                 // Numbers

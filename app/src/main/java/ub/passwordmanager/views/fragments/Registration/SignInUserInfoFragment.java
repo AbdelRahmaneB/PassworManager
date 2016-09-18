@@ -26,7 +26,6 @@ public class SignInUserInfoFragment extends Fragment {
     // Our DataHolder for the UserAccount
     private UserAccountModel mUserAccount;
 
-
     // Our view fields
     private EditText tv_Username;
     private EditText tv_Email;
@@ -37,38 +36,28 @@ public class SignInUserInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SignInUserInfoFragment.
-     */
-    public static SignInUserInfoFragment newInstance() {
-        return new SignInUserInfoFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in_user_info, container, false);
 
+        // Init the view fields
         this.tv_Username = (EditText) view.findViewById(R.id.t_username_signIn);
         this.tv_Email = (EditText) view.findViewById(R.id.t_email_signIn);
         this.t_InputEmail = (TextInputLayout) view.findViewById(R.id.input_email_signIn);
         this.t_InputUsername = (TextInputLayout) view.findViewById(R.id.input_username_signIn);
 
+        // Init the DataHolder
         this.mUserAccount = new UserAccountModel();
+
         // Add the textWatcher listener to  our fields
         this.tv_Username.addTextChangedListener(watchUsername);
         this.tv_Email.addTextChangedListener(watchEmail);
-
 
         // Inflate the layout for this fragment
         return view;
@@ -113,7 +102,6 @@ public class SignInUserInfoFragment extends Fragment {
             passData();
         }
     };
-
 
     /**
      * Method to define the Error Message of our Email TextView

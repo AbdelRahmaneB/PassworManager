@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
  * The function that can be used are
  * {@link #encryptData(String, String)} : to Encrypt the Data that we want.
  * {@link #decryptData(String, String)} : to Decrypt the Data that we want.
- * <p/>
+ * <p>
  * Created by UB on 09/09/2016.
  */
 public class DataEncryption {
@@ -160,4 +160,5 @@ public class DataEncryption {
     private void appendHex(StringBuffer value, byte mByte) {
         value.append(HEX.charAt((mByte >> 4) & 0x0f)).append(HEX.charAt(mByte & 0x0f));
     }
+
 }

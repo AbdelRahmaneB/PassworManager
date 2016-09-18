@@ -14,13 +14,11 @@ import ub.passwordmanager.R;
  * - Dialog for Adding a new Password Account.
  * - Dialog for Editing an existing Password Account.
  * - Dialog for Consulting the selected Password Account.
- * - Dialog for Choosing a new Theme.
- * - Dialog for Choosing a new language.
- * <p/>
+ * <p>
  * This class have two Methods that needs to be implemented by the
  * sub-classes : {@link #getDialog()} and {@link #setDialogAction()}
- * <p/>
- * Created by UB on 30/08/2016.
+ * <p>
+ * Created by UcefBen on 30/08/2016.
  */
 public abstract class CustomDialog {
 
@@ -61,6 +59,7 @@ public abstract class CustomDialog {
         builder.setView(this.mDialogLayout);
 
         // Set the action for the Save and Cancel button of the dialog
+        //**************************************************************//
 
         //save button
         builder.setPositiveButton(this.mCurrentActivity
@@ -107,6 +106,8 @@ public abstract class CustomDialog {
                     }
                 });
 
+        //*************************************************************//
+
         // Create the Dialog
         this.mCurrentDialog = builder.create();
 
@@ -138,7 +139,6 @@ public abstract class CustomDialog {
      */
     public abstract Boolean setDialogAction();
 
-
     /**
      * @return The current used activity. Mostly used in the Sub-Classes
      */
@@ -153,8 +153,14 @@ public abstract class CustomDialog {
         return this.mCurrentDialog;
     }
 
-    public PwdAccountModel setDialogActionForNew(){
+    /**
+     * This function is only used for the adding a new account dialog.
+     *
+     * @return an instance of the PwdAccountModel object
+     */
+    public PwdAccountModel setDialogActionForNew() {
         // Do nothing here it's gonna be override in the sub-classes
         return null;
     }
+
 }

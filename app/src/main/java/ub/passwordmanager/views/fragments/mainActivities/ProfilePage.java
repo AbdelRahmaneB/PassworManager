@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -31,28 +30,34 @@ import ub.passwordmanager.views.SplashScreen;
 
 public class ProfilePage extends Fragment {
 
+    // The EditText that represent the fields
     private EditText mUsername;
     private EditText mEmail;
     private EditText mOldPwd;
     private EditText mNewPwd;
     private EditText mConfirmPwd;
 
+    // The save button
     private Button bt_saveProfile;
 
+    // The TextInputLayout to manipulate the Errors
     private TextInputLayout tUsername;
     private TextInputLayout tEmail;
     private TextInputLayout tOldPwd;
     private TextInputLayout tNewPwd;
     private TextInputLayout tConfirmPwd;
 
+    // The button show and hide password
     private ImageView mShowHidePwd;
 
+    // The progress view and the profile view
     private View mProgressView;
     private View mProfileFormView;
 
+    // User Account Data Holder
     private UserAccountModel mUserAccountModel;
 
-
+    // Constructor
     public ProfilePage() {
         // Required empty public constructor
     }
@@ -81,73 +86,6 @@ public class ProfilePage extends Fragment {
 
         return view;
     }
-
-    /**
-     * Init the Fields from the view
-     *
-     * @param view : The user view in our case "ProfileView"
-     */
-    private void initialiseTheView(View view) {
-        // For the EditText
-        mUsername = (EditText) view.findViewById(R.id.t_prof_username_signIn);
-        mUsername.addTextChangedListener(tw_Username);
-
-        mEmail = (EditText) view.findViewById(R.id.t_prof_email);
-        mEmail.addTextChangedListener(tw_Email);
-
-        mOldPwd = (EditText) view.findViewById(R.id.t_password_prof);
-        mOldPwd.addTextChangedListener(tw_OldPwd);
-
-        mNewPwd = (EditText) view.findViewById(R.id.t_password_new_prof);
-        mNewPwd.addTextChangedListener(tw_NewPwd);
-
-        mConfirmPwd = (EditText) view.findViewById(R.id.t_confirmPwd_prof);
-        mConfirmPwd.addTextChangedListener(tw_ConfirmPwd);
-
-        // For the TextInputLayout
-        tUsername = (TextInputLayout) view.findViewById(R.id.input_prof_username);
-        tEmail = (TextInputLayout) view.findViewById(R.id.input_prof_email);
-        tOldPwd = (TextInputLayout) view.findViewById(R.id.input_prof_old_pwd);
-        tNewPwd = (TextInputLayout) view.findViewById(R.id.input_prof_pwd_new_prof);
-        tConfirmPwd = (TextInputLayout) view.findViewById(R.id.input_prof_confirmPwd_prof);
-
-        // For the views
-        mProfileFormView = view.findViewById(R.id.profile_form);
-        mProgressView = view.findViewById(R.id.login_progress);
-
-        // Hide/Show Password
-        mShowHidePwd = (ImageView) view.findViewById(R.id.iv_my_visibility_prof);
-        mShowHidePwd.setOnClickListener(mShowHideListener);
-
-        // For the Password generator
-        final ImageView generatePwd = (ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
-        generatePwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String generatedPwd = PwdGenerator.getInstance().generatePassword(getActivity());
-                mNewPwd.setText(generatedPwd);
-                mConfirmPwd.setText(generatedPwd);
-                Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * Function to get and show the information of the user in the fields of the view.
-     */
-    private void getUserAccountInformation() {
-        try {
-            mUserAccountModel = Service_UserAccount.getInstance().getAllAccounts(getContext()).get(0);
-            mUsername.setTag(mUserAccountModel.getId());
-            mUsername.setText(mUserAccountModel.getUsername());
-            mEmail.setText(mUserAccountModel.getEmail());
-            mOldPwd.setText(mUserAccountModel.getPassword());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * The Listener for the Show/Hide Password
@@ -187,7 +125,6 @@ public class ProfilePage extends Fragment {
             saveProfile();
         }
     };
-
 
     /**
      * TextWatcher for the username
@@ -374,34 +311,73 @@ public class ProfilePage extends Fragment {
         }
     };
 
-
-    //************************************************************************************************
-
-
-    /**
-     * This part is for the fields test
-     * -------------------------------------------------------------
-     */
+    /************* This part is for the private functions *************/
+    //****************************************************************//
 
     /**
-     * Verify if the Old password match's the one in the DataBase.
+     * Init the Fields from the view
      *
-     * @param pwd : The password that we want to check.
-     * @return True or False.
+     * @param view : The user view in our case "ProfileView"
      */
-    private Boolean isOldPwdCorrect(String pwd) {
-        return pwd.equals(AppConfig.getInstance().getCurrentPassword());
+    private void initialiseTheView(View view) {
+        // For the EditText
+        mUsername = (EditText) view.findViewById(R.id.t_prof_username_signIn);
+        mUsername.addTextChangedListener(tw_Username);
+
+        mEmail = (EditText) view.findViewById(R.id.t_prof_email);
+        mEmail.addTextChangedListener(tw_Email);
+
+        mOldPwd = (EditText) view.findViewById(R.id.t_password_prof);
+        mOldPwd.addTextChangedListener(tw_OldPwd);
+
+        mNewPwd = (EditText) view.findViewById(R.id.t_password_new_prof);
+        mNewPwd.addTextChangedListener(tw_NewPwd);
+
+        mConfirmPwd = (EditText) view.findViewById(R.id.t_confirmPwd_prof);
+        mConfirmPwd.addTextChangedListener(tw_ConfirmPwd);
+
+        // For the TextInputLayout
+        tUsername = (TextInputLayout) view.findViewById(R.id.input_prof_username);
+        tEmail = (TextInputLayout) view.findViewById(R.id.input_prof_email);
+        tOldPwd = (TextInputLayout) view.findViewById(R.id.input_prof_old_pwd);
+        tNewPwd = (TextInputLayout) view.findViewById(R.id.input_prof_pwd_new_prof);
+        tConfirmPwd = (TextInputLayout) view.findViewById(R.id.input_prof_confirmPwd_prof);
+
+        // For the views
+        mProfileFormView = view.findViewById(R.id.profile_form);
+        mProgressView = view.findViewById(R.id.login_progress);
+
+        // Hide/Show Password
+        mShowHidePwd = (ImageView) view.findViewById(R.id.iv_my_visibility_prof);
+        mShowHidePwd.setOnClickListener(mShowHideListener);
+
+        // For the Password generator
+        final ImageView generatePwd = (ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
+        generatePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String generatedPwd = PwdGenerator.getInstance().generatePassword(getActivity());
+                mNewPwd.setText(generatedPwd);
+                mConfirmPwd.setText(generatedPwd);
+                Toast.makeText(getContext(), "Password Generated !!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
-     * Test if the user changed the password
-     *
-     * @return True or False.
+     * Function to get and show the information of the user in the fields of the view.
      */
-    private boolean isNewAndPwdConfirmationEmpty() {
-        String newPwd = mNewPwd.getText().toString();
-        String confPwd = mConfirmPwd.getText().toString();
-        return (TextUtils.isEmpty(newPwd)) && (TextUtils.isEmpty(confPwd));
+    private void getUserAccountInformation() {
+        try {
+            mUserAccountModel = Service_UserAccount.getInstance().getAllAccounts(getContext()).get(0);
+            mUsername.setTag(mUserAccountModel.getId());
+            mUsername.setText(mUserAccountModel.getUsername());
+            mEmail.setText(mUserAccountModel.getEmail());
+            mOldPwd.setText(mUserAccountModel.getPassword());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -520,5 +496,31 @@ public class ProfilePage extends Fragment {
             mProfileFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
+
+    /************* This part is for the fields test *************/
+    //*********************************************************//
+
+    /**
+     * Verify if the Old password match's the one in the DataBase.
+     *
+     * @param pwd : The password that we want to check.
+     * @return True or False.
+     */
+    private Boolean isOldPwdCorrect(String pwd) {
+        return pwd.equals(AppConfig.getInstance().getCurrentPassword());
+    }
+
+    /**
+     * Test if the user changed the password
+     *
+     * @return True or False.
+     */
+    private boolean isNewAndPwdConfirmationEmpty() {
+        String newPwd = mNewPwd.getText().toString();
+        String confPwd = mConfirmPwd.getText().toString();
+        return (TextUtils.isEmpty(newPwd)) && (TextUtils.isEmpty(confPwd));
+    }
+
 
 }

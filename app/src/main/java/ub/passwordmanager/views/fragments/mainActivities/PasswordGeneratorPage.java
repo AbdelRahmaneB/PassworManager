@@ -1,11 +1,7 @@
 package ub.passwordmanager.views.fragments.mainActivities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +17,6 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 import ub.passwordmanager.views.adapters.PwdGenListAdapter;
-import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
 
 public class PasswordGeneratorPage extends Fragment {
 
@@ -31,11 +26,6 @@ public class PasswordGeneratorPage extends Fragment {
 
     public PasswordGeneratorPage() {
         // Required empty public constructor
-    }
-
-
-    public static PasswordGeneratorPage newInstance() {
-        return new PasswordGeneratorPage();
     }
 
     @Override
@@ -53,7 +43,7 @@ public class PasswordGeneratorPage extends Fragment {
         mGeneratedPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               AppConfig.copyToClipBoard(getActivity(),mGeneratedPwd.getText().toString());
+                AppConfig.copyToClipBoard(getActivity(), mGeneratedPwd.getText().toString());
             }
         });
 
@@ -69,6 +59,7 @@ public class PasswordGeneratorPage extends Fragment {
             }
         });
 
+        // Fill the information for the adapter
         configureTheAdapter();
 
         // Instantiate the ListView and set the adapter
@@ -103,8 +94,6 @@ public class PasswordGeneratorPage extends Fragment {
         );
 
     }
-
-
 
 
 }

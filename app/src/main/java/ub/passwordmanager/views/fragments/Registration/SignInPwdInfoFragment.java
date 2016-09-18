@@ -39,12 +39,6 @@ public class SignInPwdInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    public static SignInPwdInfoFragment newInstance() {
-        return new SignInPwdInfoFragment();
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +50,17 @@ public class SignInPwdInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_in_pwd_info, container, false);
 
+        // Init the view field
         this.tv_Password = (EditText) view.findViewById(R.id.t_password_signIn);
         this.tv_Confirmation = (EditText) view.findViewById(R.id.t_confirmPwd_signIn);
         this.t_InputPwd = (TextInputLayout) view.findViewById(R.id.input_pwd_sigIn);
         this.t_InputConfirmation = (TextInputLayout) view.findViewById(R.id.input_confirmPwd_signIn);
 
+        // Init the Data holder
         this.mUserAccount = new UserAccountModel();
 
-        final ImageView generatePwd =(ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
+        // Init the password generator
+        final ImageView generatePwd = (ImageView) view.findViewById(R.id.iv_pwd_gen_prof);
         generatePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +75,7 @@ public class SignInPwdInfoFragment extends Fragment {
         this.tv_Password.addTextChangedListener(watchPwd);
         this.tv_Confirmation.addTextChangedListener(watchConfirmation);
 
+        // return the view
         return view;
     }
 
@@ -121,12 +119,11 @@ public class SignInPwdInfoFragment extends Fragment {
         }
     };
 
-
     /**
      * Method to define the Error Message of our Password TextView
      */
     public void setPwdErrorMessage(String message) {
-        if(message == null)
+        if (message == null)
             t_InputPwd.setErrorEnabled(false);
         t_InputPwd.setError(message);
     }
@@ -135,7 +132,7 @@ public class SignInPwdInfoFragment extends Fragment {
      * Method to define the Error Message of our Confirmation TextView
      */
     public void setConfirmErrorMessage(String message) {
-        if(message == null)
+        if (message == null)
             t_InputConfirmation.setErrorEnabled(false);
         t_InputConfirmation.setError(message);
     }
@@ -153,7 +150,6 @@ public class SignInPwdInfoFragment extends Fragment {
             dataPasser = (OnDataPass) context;
         }
     }
-
 
     /**
      * Description :

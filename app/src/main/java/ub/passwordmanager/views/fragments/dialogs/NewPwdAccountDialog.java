@@ -27,13 +27,13 @@ import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
  * Extends the {@link CustomDialog} class, and redefine the :
  * - {@link #getDialog()} : To create the dialog and show it's content
  * - {@link #setDialogAction()} : to set the action to do if the "Save" button is clicked
- * <p/>
- * Created by UB on 30/08/2016.
+ * <p>
+ * Created by UcefBen on 30/08/2016.
  */
 public class NewPwdAccountDialog extends CustomDialog {
 
-
-    private PwdAccountModel mPwdAccountTosend;
+    // This global object is needed for after (Search for a better idea)
+    private PwdAccountModel mPwdAccountToSend;
 
     /**
      * Constructor of this class and initialise the "super class".
@@ -73,18 +73,20 @@ public class NewPwdAccountDialog extends CustomDialog {
         final EditText mPwd = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_password);
         final EditText mOther = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_otherInfo);
 
-
+        // check if the fields are correctly filled
         if (isWebSiteEmpty(mWebSite.getText().toString())
                 & isUsernameEmpty(mEmail.getText().toString())
                 & isPasswordEmpty(mPwd.getText().toString())
                 ) {
 
-            // Create object
+            // Create date object
             String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     .format(Calendar.getInstance().getTime());
 
+            // in case if the "other information" field is empty
             String otherInfo = "" + mOther.getText().toString();
 
+            // Initialise the password account object
             PwdAccountModel mPwdAccount = new PwdAccountModel(
                     mWebSite.getText().toString(),
                     mEmail.getText().toString(),
@@ -93,7 +95,8 @@ public class NewPwdAccountDialog extends CustomDialog {
                     date
             );
 
-            mPwdAccountTosend = new PwdAccountModel(
+            // This global object is needed for after (Search for a better idea)
+            mPwdAccountToSend = new PwdAccountModel(
                     mWebSite.getText().toString(),
                     mEmail.getText().toString(),
                     mPwd.getText().toString(),
@@ -114,13 +117,24 @@ public class NewPwdAccountDialog extends CustomDialog {
         }
     }
 
+    /**
+     * set the Action for the dialog.
+     *
+     * @return the instance of the object
+     */
     public PwdAccountModel setDialogActionForNew() {
         if (setDialogAction()) {
-            return mPwdAccountTosend;
+            return mPwdAccountToSend;
         }
         return null;
     }
 
+    /********************* Private Functions *****************************/
+    //*******************************************************************//
+
+    /**
+     * Test the Website field
+     */
     private Boolean isWebSiteEmpty(String value) {
         TextInputLayout mWebSite = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_siteWeb);
         if (TextUtils.isEmpty(value)) {
@@ -133,6 +147,9 @@ public class NewPwdAccountDialog extends CustomDialog {
         }
     }
 
+    /**
+     * Test the Username/Email field
+     */
     private Boolean isUsernameEmpty(String value) {
         TextInputLayout mUsername = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_email);
         if (TextUtils.isEmpty(value)) {
@@ -145,6 +162,9 @@ public class NewPwdAccountDialog extends CustomDialog {
         }
     }
 
+    /**
+     * Test the Password field
+     */
     private Boolean isPasswordEmpty(String value) {
         TextInputLayout mPassword = (TextInputLayout) getCurrentDialog().findViewById(R.id.home_ae_input_password);
         if (TextUtils.isEmpty(value)) {

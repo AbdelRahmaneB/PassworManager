@@ -31,21 +31,12 @@ import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class HomePage extends Fragment {
 
+    // The CardView adapter that will hold the Password Account objects
     private MyRecyclerViewAdapter mAdapter;
-    private  View mCurrentView;
 
+    // Constructor
     public HomePage() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment HomePage.
-     */
-    public static HomePage newInstance() {
-        return new HomePage();
     }
 
     @Override
@@ -59,28 +50,33 @@ public class HomePage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         view.setTag(getResources().getString(R.string.nav_label_home));
 
-        mCurrentView = view;
-
-        // Initialise the CardView and his ad
+        // Initialise the recycle view that will hold the CardView adapter
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter( getActivity());
+
+        // Initialise the CardView adapter
+        mAdapter = new MyRecyclerViewAdapter(getActivity());
         if (mAdapter.getItemCount() <= 0) {
             hideShowMessage(view, View.VISIBLE, View.INVISIBLE);
         } else {
             hideShowMessage(view, View.INVISIBLE, View.VISIBLE);
         }
-        mAdapter.getItemCount();
+        // Assign the adapter to the RecycleView
         mRecyclerView.setAdapter(mAdapter);
 
+        // Set the floating button to add a new password account
         setFloatingButton(view);
 
-
+        //return the current view
         return view;
     }
 
+    /**
+     * The role of this function is to initialise
+     * and show the foaling button for the new Password account
+     */
     private void setFloatingButton(View view) {
         // Add the even handler for the floating button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -92,28 +88,25 @@ public class HomePage extends Fragment {
         });
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
+        // Show the buttons for Edit and Delete onItemLongClick in the cardView
+        mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter
                 .MyClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
+            public void onItemClick(int position, View view) {
             }
 
             @Override
-            public void onItemLongClick(int position, View v) {
-                ImageView bt_delete = (ImageView) v.findViewById(R.id.bt_deleteAccount);
-                ImageView bt_edit = (ImageView) v.findViewById(R.id.bt_editAccount);
-                bt_delete.setVisibility(View.VISIBLE);
-                bt_edit.setVisibility(View.VISIBLE);
+            public void onItemLongClick(int position, View view) {
+                view.findViewById(R.id.bt_deleteAccount).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.bt_editAccount).setVisibility(View.VISIBLE);
             }
 
         });
 
     }
-
 
     @Override
     public void onAttach(Context context) {

@@ -227,7 +227,6 @@ public class SignIn extends AppCompatActivity implements OnDataPass {
         setTitle(R.string.sign_in_part1);
     }
 
-
     /**
      * This function is used to link between the fragments and their activity
      *

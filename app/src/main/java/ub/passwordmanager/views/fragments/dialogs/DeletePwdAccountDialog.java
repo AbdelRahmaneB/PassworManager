@@ -23,14 +23,15 @@ import ub.passwordmanager.Services.Service_PwdAccount;
  * - {@link #getDialog()} : To create the dialog and show it's content
  * - {@link #setDialogAction()} : to set the action to do if the "Save" button is clicked
  * <p/>
- * Created by UB on 30/08/2016.
+ * Created by UcefBen on 30/08/2016.
  */
 public class DeletePwdAccountDialog extends CustomDialog {
 
+    // fields for the object password account
     private PwdAccountModel mPwdAccount;
 
     /**
-     * Constructor of this class and initialise the "super class".
+     * Constructor of this class and calls the "super class".
      *
      * @param activity : the current activity where the dialog will be created.
      */
@@ -48,10 +49,12 @@ public class DeletePwdAccountDialog extends CustomDialog {
 
         // Initialise the fields in the current dialog
         final TextView mMessageTitle = (TextView) getCurrentDialog().findViewById(R.id.label_account_to_delete);
-        String str = "[" + mPwdAccount.getWebSite() + "]";
 
-        mMessageTitle.setText(str);
+        // set the Dialog Title
+        String mDialogTitle = "[" + mPwdAccount.getWebSite() + "]";
+        mMessageTitle.setText(mDialogTitle);
 
+        // return an instance of the dialog
         return getCurrentDialog();
     }
 
@@ -63,9 +66,10 @@ public class DeletePwdAccountDialog extends CustomDialog {
     public Boolean setDialogAction() {
         // Delete from DataBase
         try {
+            // return True or False depending on the service result if everything went correctly
             return Service_PwdAccount.getInstance().deleteData(getCurrentActivity(), mPwdAccount);
         } catch (Exception e) {
-            Log.e("*Deleting Account*", "[" + e.getMessage() + "]");
+            Log.e("*Deleting Account *", "[" + e.getMessage() + "]");
             e.printStackTrace();
             return false;
         }
