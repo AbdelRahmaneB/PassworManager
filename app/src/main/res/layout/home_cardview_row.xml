@@ -3,7 +3,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <!--******************* Our CardView **********************-->
@@ -24,12 +25,26 @@
             android:layout_height="fill_parent"
             android:background="@android:color/transparent">
 
+            <ImageView
+                android:id="@+id/account_icon"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@+id/l_EmailAddress"
+                android:layout_alignTop="@+id/l_SiteWeb"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/about_app_title"
+                android:src="@drawable/app_logo" />
+
+
             <!-- Add the controls that you want to show in this CardView-->
             <TextView
                 android:id="@+id/l_SiteWeb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/account_icon"
+                android:layout_toRightOf="@+id/account_icon"
                 android:text="@string/home_hint_site"
                 android:textStyle="bold" />
 
@@ -50,33 +65,35 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/l_SiteWeb"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/account_icon"
+                android:layout_toRightOf="@+id/account_icon"
                 android:text="@string/home_hint_email" />
 
             <ImageView
+                android:id="@+id/bt_deleteAccount"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:id="@+id/bt_deleteAccount"
-                android:src="@drawable/ic_delete"
-                android:layout_below="@+id/l_LastUpdate"
-                android:contentDescription="@string/app_name"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_below="@+id/l_LastUpdate"
                 android:layout_marginTop="8dp"
-                android:visibility="invisible"
-                android:layout_alignParentEnd="true" />
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_delete"
+                android:visibility="invisible" />
 
             <ImageView
+                android:id="@+id/bt_editAccount"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
+                android:layout_below="@+id/l_LastUpdate"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
-                android:contentDescription="@string/app_name"
-                android:id="@+id/bt_editAccount"
-                android:src="@drawable/ic_edit"
+                android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/bt_deleteAccount"
                 android:layout_toStartOf="@+id/bt_deleteAccount"
-                android:layout_below="@+id/l_LastUpdate"
-                android:visibility="invisible"
-                android:layout_marginTop="8dp"/>
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_edit"
+                android:visibility="invisible" />
 
 
         </RelativeLayout>

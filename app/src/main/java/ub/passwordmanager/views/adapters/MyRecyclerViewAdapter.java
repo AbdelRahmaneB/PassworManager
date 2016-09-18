@@ -1,6 +1,7 @@
 package ub.passwordmanager.views.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.LayoutDirection;
@@ -21,6 +22,9 @@ import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_PwdAccount;
 import ub.passwordmanager.appConfig.AppConfig;
+import ub.passwordmanager.tools.dataEncryption.DataEncryption;
+import ub.passwordmanager.tools.drawableGenerator.ColorGenerator;
+import ub.passwordmanager.tools.drawableGenerator.TextDrawable;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
@@ -107,6 +111,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
         holder.hLastUpdate.setText(mDataSet.get(position).getLastUpdate());
         holder.hEmailAddress.setText(mDataSet.get(position).getEmail());
 
+        setIconAccount(holder);
+
         holder.h_bt_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,6 +181,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView hEmailAddress;
         ImageView h_bt_Delete;
         ImageView h_bt_Edit;
+        ImageView h_icon;
         private Activity mHolderActivity;
 
         /**
@@ -193,6 +200,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             hEmailAddress = (TextView) itemView.findViewById(R.id.l_EmailAddress);
             h_bt_Delete = (ImageView) itemView.findViewById(R.id.bt_deleteAccount);
             h_bt_Edit = (ImageView) itemView.findViewById(R.id.bt_editAccount);
+            h_icon = (ImageView) itemView.findViewById(R.id.account_icon);
 
             // Add the listeners to our view
             itemView.setOnClickListener(this);
@@ -358,5 +366,18 @@ public class MyRecyclerViewAdapter extends RecyclerView
         void onItemClick(int position, View v);
 
         void onItemLongClick(int position, View v);
+    }
+
+    /**
+     * Function to build the icon for an account based on his first char
+     */
+    private void setIconAccount(final DataObjectHolder holder){
+        ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+        TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().roundRect(5);
+        TextDrawable drawable = mDrawableBuilder.build(
+                String.valueOf(Character.toUpperCase(holder.hSiteWeb.getText().toString().charAt(0))),
+                mColorGenerator.getColor(holder.hSiteWeb.getText().toString()));
+        holder.h_icon.setImageDrawable(drawable);
+        holder.h_icon.setBackgroundColor(Color.TRANSPARENT);
     }
 }
