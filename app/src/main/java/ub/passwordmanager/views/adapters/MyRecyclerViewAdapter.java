@@ -4,25 +4,19 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.LayoutDirection;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_PwdAccount;
 import ub.passwordmanager.appConfig.AppConfig;
-import ub.passwordmanager.tools.dataEncryption.DataEncryption;
 import ub.passwordmanager.tools.drawableGenerator.ColorGenerator;
 import ub.passwordmanager.tools.drawableGenerator.TextDrawable;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
@@ -36,7 +30,7 @@ import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
  * This class represent the adapter for the cardView in the "Home fragment".
  * it's used to show the account information : (Website, email, last update).
  * This class contain the Data holder, the listener.
- * <p>
+ * <p/>
  * Created by UcefBen on 25/08/2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView
@@ -98,6 +92,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
     /**
@@ -171,11 +166,18 @@ public class MyRecyclerViewAdapter extends RecyclerView
      * Function to build the icon for an account based on his first char
      */
     private void setIconAccount(final DataObjectHolder holder) {
+        // get the color generator
         ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+
+        // get the type of the image to show Round,RoundRect, Rect ...
         TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().roundRect(5);
+
+        // init the drawable
         TextDrawable drawable = mDrawableBuilder.build(
                 String.valueOf(Character.toUpperCase(holder.hSiteWeb.getText().toString().charAt(0))),
-                mColorGenerator.getColor(holder.hSiteWeb.getText().toString()));
+                mColorGenerator.getColor(holder.hEmailAddress.getText().toString()));
+
+        // Set the drawable in the imageView
         holder.h_icon.setImageDrawable(drawable);
         holder.h_icon.setBackgroundColor(Color.TRANSPARENT);
     }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -56,6 +57,8 @@ public class HomePage extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        ProgressBar pb = (ProgressBar) view.findViewById(R.id.home_progress);
+        pb.setVisibility(View.VISIBLE);
         // Initialise the CardView adapter
         mAdapter = new MyRecyclerViewAdapter(getActivity());
         if (mAdapter.getItemCount() <= 0) {
@@ -65,6 +68,7 @@ public class HomePage extends Fragment {
         }
         // Assign the adapter to the RecycleView
         mRecyclerView.setAdapter(mAdapter);
+        pb.setVisibility(View.INVISIBLE);
 
         // Set the floating button to add a new password account
         setFloatingButton(view);

@@ -521,6 +521,5 @@ public class ProfilePage extends Fragment {
         String confPwd = mConfirmPwd.getText().toString();
         return (TextUtils.isEmpty(newPwd)) && (TextUtils.isEmpty(confPwd));
     }
-
-
+    
 }
