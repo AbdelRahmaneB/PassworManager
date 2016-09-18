@@ -253,7 +253,8 @@ public class MainActivity extends AppCompatActivity
 
             tv_Username.setText(userAccount.getUsername());
             tv_Email.setText(userAccount.getEmail());
-            tv_LasConnection.setText("Last connection : " + userAccount.getLastLogIn());
+            String date = "Last connection : " + userAccount.getLastLogIn();
+            tv_LasConnection.setText(date);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,4 +262,12 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Close the application if it's paused
+     */
+    @Override
+    protected void onUserLeaveHint() {
+        finish();
+        super.onUserLeaveHint();
+    }
 }

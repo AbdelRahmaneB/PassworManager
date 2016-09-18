@@ -23,11 +23,11 @@
     <string name="l_note_email">* The email is only used to allow you to recover your password</string>
 
     <string name="invalid_email_error_signIn">Invalid email. ex: exemple@exemple.ex</string>
-    <string name="empty_email_error_signIn">Required email.</string>
+    <string name="empty_email_error_signIn">Email required.</string>
     <string name="empty_username_error_signIn">Required username.</string>
     <string name="empty_password_error_signIn">Required password.</string>
     <string name="not_correct_password_error_signIn">Password incorrect !!</string>
-    <string name="empty_confirmation_error_signIn">Required confirmation.</string>
+    <string name="empty_confirmation_error_signIn">Confirmation required.</string>
     <string name="diff_error_signIn">Confirmation does not match the password.</string>
     <!--******************************************************************************-->
 
@@ -36,7 +36,7 @@
     <string name="title_log_in">Password Manager - log in</string>
     <string name="button_log_in">Log In</string>
     <string name="button_forgot_pass">Forgot password ?</string>
-    <string name="logIn_empty_password">Required password</string>
+    <string name="logIn_empty_password">Required password.</string>
     <string name="hint_log">[UcefBen]</string>
     <!--******************************************************************************-->
 
@@ -53,8 +53,8 @@
     <!--******************************************************************************-->
 
     <!-- Menu Drawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="nav_label_home">Home</string>
     <string name="nav_label_profile">Profile</string>
@@ -64,10 +64,10 @@
     <string name="nav_label_about">About</string>
 
     <!-- Home Fragment -->
-    <string name="home_hint_site">Facebook</string>
-    <string name="home_hint_email">MyEmailAddress@Gmail.com</string>
-    <string name="home_hint_date">Last update : 27/08/2016</string>
-    <string name="home_hint_last_conn">Last connection : 27/08/2016</string>
+    <string name="home_hint_site" translatable="false">Facebook</string>
+    <string name="home_hint_email" translatable="false">MyEmailAddress@Gmail.com</string>
+    <string name="home_hint_date" translatable="false">Last update : 27/08/2016</string>
+    <string name="home_hint_last_conn" translatable="false">Last connection : 27/08/2016</string>
 
     <string name="home_add_edit_webSite">WebSite</string>
     <string name="home_add_edit_email">Username or email</string>
@@ -75,22 +75,22 @@
     <string name="home_add_edit_other">Other Information (Optional)</string>
 
     <string name="home_add_edit_ATitle">Adding a new account</string>
-    <string name="home_add_edit_ETitle">Editing account</string>
+    <string name="home_add_edit_ETitle">Editing an account</string>
     <string name="home_add_edit_DTitle">Deleting an account</string>
     <string name="home_add_edit_VTitle">Account details</string>
     <string name="home_add_edit_DMessage">You\'r about to delete the following account :</string>
     <string name="home_add_edit_DMessage_suite">Would you like to continue ?</string>
 
-    <string name="home_no_data">Sorry, no records found !!</string>
+    <string name="home_no_data">Sorry, no record found !!</string>
 
-    <string name="empty_email_error_home">Required email.</string>
+    <string name="empty_email_error_home">Email required.</string>
     <string name="empty_website_error_home">Required website.</string>
     <string name="empty_username_error_home">Required username or email.</string>
     <string name="empty_password_error_home">Required password.</string>
     <!--******************************************************************************-->
 
     <!-- Consulting an Account Fragment-->
-    <string name="Consult_Account_details">Account details</string>
+    <string name="Consult_Account_details">Account details.</string>
     <!--******************************************************************************-->
 
     <!-- Profile Fragment -->
@@ -99,7 +99,7 @@
 
     <!-- Import / Export Fragment -->
     <string name="ie_title">
-        This tool helps you to import and export your data.\n
+        This tool lets you import and export your data.\n
         Note that it is recommended to backup your data frequently.
     </string>
 
@@ -158,24 +158,21 @@
     <string name="opt_title5">Use numbers</string>
     <string name="opt_title4">Password length :</string>
 
-    <string name="opt_title1_desc">You can use the lower case characters to generate the password (a-z).</string>
+    <string name="opt_title1_desc">You can use the lowercase characters to generate the password (a-z).</string>
     <string name="opt_title2_desc">You can use the upper case characters to generate the password (A-Z).</string>
     <string name="opt_title3_desc">You can use the symbols to generate the password (,%:#;_).</string>
     <string name="opt_title5_desc">You can use the numbers to generate the password (1 &#8211; 9)</string>
     <string name="opt_title4_desc">Password length :</string>
 
 
-    <string name="opt_lower_case_value">abcdefghijklmnopqrstuvwxyz</string>
-    <string name="opt_upper_case_value">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="opt_symbols_value">!@#$%^&amp;*()_/-</string>
-    <string name="opt_numbers_value">1234567890</string>
+    <string name="opt_lower_case_value" translatable="false">abcdefghijklmnopqrstuvwxyz</string>
+    <string name="opt_upper_case_value" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="opt_symbols_value" translatable="false">!@#$%^&amp;*()_/-</string>
+    <string name="opt_numbers_value" translatable="false">1234567890</string>
     <!--******************************************************************************-->
 
     <!-- Settings Fragment -->
-    <string-array name="setting_list_view_items">
-        <item>Language</item>
-        <item>Theme</item>
-    </string-array>
+    <string name="setting_list_view_items_lang">Language</string>
     <!--******************************************************************************-->
 
     <!-- About Fragment -->
@@ -198,6 +195,15 @@
     <string name="registration_ok">The account is created correctly !!</string>
     <string name="registration_error">There was a problem when creating a new account!!</string>
     <string name="editing_account_error">There was a problem while saving the new data !!!!</string>
+    <!--******************************************************************************-->
+
+
+    <!-- Language Dialog-->
+    <string name="lang_dialog_title">Select the language :</string>
+    <string name="lang_dialog_english">English</string>
+    <string name="lang_dialog_french">French</string>
+    <string name="lang_dialog_arabic">Arabic</string>
+
     <!--******************************************************************************-->
 
 

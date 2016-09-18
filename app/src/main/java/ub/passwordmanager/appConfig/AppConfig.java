@@ -3,9 +3,11 @@ package ub.passwordmanager.appConfig;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +27,6 @@ public class AppConfig {
     // The current Password that the uses to connect
     private String mCurrentPassword;
     private String mCurrentUser;
-    private String mCurrentUserEmail;
 
     // Our Regex Pattern for the validity of the Email Address
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -35,7 +36,8 @@ public class AppConfig {
     public static final String KEY_PREF_LOWER_CASE = "LowerCase";
     public static final String KEY_PREF_UPPER_CASE = "UpperCase";
     public static final String KEY_PREF_USE_SYMBOLS = "Symbols";
-    public static final String KEY_PREF_USE_NUMBERS= "Numbers";
+    public static final String KEY_PREF_USE_NUMBERS = "Numbers";
+    public static final String KEY_PREF_APP_LANGUAGE = "Language";
 
     public static final String KEY_PREF_STRING = "String";
     public static final String KEY_PREF_BOOLEAN = "Boolean";
@@ -143,16 +145,17 @@ public class AppConfig {
     /**
      * Function to test if a key exists in the preferences file
      */
-    public Boolean isKeyExist(Activity activity, String key){
+    public Boolean isKeyExist(Activity activity, String key) {
         SharedPreferences prefSettings = activity.getSharedPreferences(this.PREFS_NAME, 0);
         return prefSettings.contains(key);
     }
 
     /**
      * Function to copy Data into clipboard
+     *
      * @param value : To save into Clipboard.
      */
-    public static void copyToClipBoard( Activity activity, String value) {
+    public static void copyToClipBoard(Activity activity, String value) {
 
         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
         android.content.ClipData clip = android.content.ClipData.newPlainText("DataKey", value);
@@ -161,6 +164,22 @@ public class AppConfig {
         Toast.makeText(activity, "Data copied !!", Toast.LENGTH_SHORT).show();
     }
 
+
+    // Function to change the language within the application
+    public void setAppLanguage(Activity activity, String lang) {
+
+        Locale myLocale = new Locale(lang);
+        Resources res = activity.getResources();
+        res.getConfiguration().locale = myLocale;
+        res.updateConfiguration(res.getConfiguration(), res.getDisplayMetrics());
+
+        // Save the language into the preferences file
+        saveValueToPreference(activity, AppConfig.KEY_PREF_STRING,
+                AppConfig.KEY_PREF_APP_LANGUAGE, lang);
+
+        // recreate the mainActivity so that the changes can be seen
+        activity.recreate();
+    }
 
     //******************** Getters and Setters **************************//
     //------------------------------------------------------------------//
@@ -179,6 +198,5 @@ public class AppConfig {
     public void setCurrentUser(String mCurrentUser) {
         this.mCurrentUser = mCurrentUser;
     }
-
 
 }
