@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -118,6 +119,8 @@ public class SignInUserInfoFragment extends Fragment {
      * Method to define the Error Message of our Email TextView
      */
     public void setEmailErrorMessage(String message) {
+        if (message == null)
+            t_InputEmail.setErrorEnabled(false);
         t_InputEmail.setError(message);
     }
 
@@ -125,6 +128,8 @@ public class SignInUserInfoFragment extends Fragment {
      * Method to define the Error Message of our Username TextView
      */
     public void setUsernameErrorMessage(String message) {
+        if (message == null)
+            t_InputUsername.setErrorEnabled(false);
         t_InputUsername.setError(message);
     }
 

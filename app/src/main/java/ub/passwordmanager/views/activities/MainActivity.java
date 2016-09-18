@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +21,7 @@ import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.factories.FragmentFactory;
+import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -39,17 +41,32 @@ public class MainActivity extends AppCompatActivity
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
-            // Add the even handler for the floating button
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // Create the Dialog to add a new Password Account
-                    new NewPwdAccountDialog(MainActivity.this).getDialog();
-
-                }
-            });
+//            // Add the even handler for the floating button
+//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//            fab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    // Create the Dialog to add a new Password Account
+//                    final CustomDialog myDialog = new NewPwdAccountDialog(MainActivity.this);
+//                    final AlertDialog dialog = myDialog.getDialog();
+//                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (myDialog.setDialogAction()) {
+//                                dialog.dismiss();
+//                                getSupportFragmentManager().beginTransaction()
+//                                        .detach(activeFragment)
+//                                        .attach(activeFragment)
+//                                        .commit();
+//                            }
+//                        }
+//                    });
+//                    // Hide the delete button
+//                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+//
+//                }
+//            });
 
             // Add the navigation menu drawer to the view
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -216,13 +233,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        // set the visibility of the floating button
-        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setVisibility(View.VISIBLE);
     }
 
     /**
      * Function to get the user information and set the title in the Menu Drawer
+     *
      * @param navigationView : The current menu drawer
      */
     private void getAccountInformation(NavigationView navigationView) {
@@ -235,7 +250,8 @@ public class MainActivity extends AppCompatActivity
 
             tv_Username.setText(userAccount.getUsername());
             tv_Email.setText(userAccount.getEmail());
-            tv_LasConnection.setText("Last connection : " + userAccount.getLastLogIn());
+            String date = "Last connection : " + userAccount.getLastLogIn();
+            tv_LasConnection.setText(date);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,4 +259,12 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Close the application if it's paused
+     */
+    @Override
+    protected void onUserLeaveHint() {
+        finish();
+        super.onUserLeaveHint();
+    }
 }

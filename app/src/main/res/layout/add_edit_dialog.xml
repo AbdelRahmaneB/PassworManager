@@ -108,7 +108,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
-            android:id="@+id/iv_pwd_gen_prof"
+            android:id="@+id/iv_pwd_gen_account"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"

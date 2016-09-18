@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ub.passwordmanager.Models.UserAccountModel;
 import ub.passwordmanager.appConfig.AppConfig;
@@ -38,7 +39,7 @@ public abstract class Service_UserAccount {
                 userAccount);
 
         // Set the date of last connexion
-        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()));
         userAccount.setId(-1); // No Id
 
         // Create the list of values to send to the DataBase
@@ -67,7 +68,12 @@ public abstract class Service_UserAccount {
      * @param userAccount : the user account object with all the data from the view.
      * @return true if everything correct, or false otherwise.
      */
-    public static Boolean saveModifiedData(Context context, UserAccountModel userAccount, Boolean reEncryptTheData) throws Exception {
+    public static Boolean saveModifiedData(Context context,String oldPwd, UserAccountModel userAccount, Boolean reEncryptTheData) throws Exception {
+
+        if (reEncryptTheData) {
+
+            Service_PwdAccount.reEncryptData(context,oldPwd);
+        }
 
         // Encrypt all the Data before sending it to the DataBase
         mEncryptValues(
@@ -76,7 +82,7 @@ public abstract class Service_UserAccount {
                 userAccount);
 
         // Set the date of last connexion
-        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
+        userAccount.setLastLogIn(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()));
 
         // Create the list of values to send to the DataBase
         List<String> values = Arrays.asList(
@@ -87,11 +93,6 @@ public abstract class Service_UserAccount {
                 userAccount.getPassword(),
                 userAccount.getLastLogIn()
         );
-
-        if (reEncryptTheData){
-            // ToDo : Decrypt and Encrypt All the Data in the PwdAccountTable in DataBase.
-            // ToDo : Restart the Application and initialise all the Data.
-        }
 
 
         // Send the information to the DataBase
@@ -188,8 +189,21 @@ public abstract class Service_UserAccount {
     }
 
 
+    public static String recoverPassword(Context context, String key) throws Exception {
+        String mRef = getRef(context);
+        return DataEncryption.decryptData(
+                key,
+                mRef);
+    }
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
+
+    private static String getRef(Context context){
+        return ((UserAccountModel) DataBaseActions.getAllAccounts(
+                context,
+                DB_UserAccountTable.KEY_TABLE_NAME
+        ).get(0)).getRef();
+    }
 
     /**
      * Generic function to Encrypt and add Data into a list with the corresponding Column.
@@ -306,5 +320,6 @@ public abstract class Service_UserAccount {
 
         return userAccount;
     }
+
 
 }

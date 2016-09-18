@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ub.passwordmanager.dataBase.DB_TablesInformation.*;
 import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.Models.UserAccountModel;
 
@@ -89,7 +90,7 @@ public abstract class DataBaseActions {
             ContentValues cv = new ContentValues();
 
             // Get the data and insert it into the query Adapter
-            for (int i = 1; i < columns.size() - 1; i++) {
+            for (int i = 1; i < columns.size(); i++) {
                 cv.put(columns.get(i), values.get(i));
             }
 
@@ -205,16 +206,18 @@ public abstract class DataBaseActions {
             db = getDataBase(context);
 
             // Set the string query and Create a cursor to fetch all the Data from te query
+            if (DB_UserAccountTable.KEY_TABLE_NAME.equals(tableName))
+                mCursor = db.rawQuery(buildQueryString(tableName, DB_UserAccountTable.KEY_LAST_CONNECTION), null);
+            else
+                mCursor = db.rawQuery(buildQueryString(tableName, DB_PwdAccountTable.KEY_LAST_UPDATE), null);
 
-            mCursor = db.rawQuery(buildQueryString(tableName), null);
             List<Object> mTempObject = new ArrayList<>();
 
             // Get the data from the cursor
-            if (mCursor != null) {
-                mCursor.moveToFirst();
-                do{
+            if (mCursor.moveToFirst()) {
+                do {
                     mTempObject.add(fillTheObject(mCursor, tableName));
-                }while (mCursor.moveToNext());
+                } while (mCursor.moveToNext());
             }
 
             // Close the cursor
@@ -302,9 +305,10 @@ public abstract class DataBaseActions {
      * @param tableName : The table from which we want to extract the data.
      * @return the customise query
      */
-    private static String buildQueryString(String tableName) {
-        return ("SELECT * FROM " + tableName);
+    private static String buildQueryString(String tableName, String dateColumnName) {
+        return ("SELECT * FROM " + tableName + " order  by "+ dateColumnName + " DESC");
     }
+
 
     /**
      * Choose the model class we will use to fill the object.
@@ -334,7 +338,7 @@ public abstract class DataBaseActions {
     /**
      * Function to fill the UserAccount Object
      *
-     * @param cursor    : Cursor that contain the extracted data.
+     * @param cursor : Cursor that contain the extracted data.
      * @return UserAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
@@ -353,7 +357,7 @@ public abstract class DataBaseActions {
     /**
      * Function to fill the PwdAccount Object
      *
-     * @param cursor    : Cursor that contain the extracted data.
+     * @param cursor : Cursor that contain the extracted data.
      * @return PwdAccount object filled with data.
      * @throws ParseException : to catch the error if there is a parsing error.
      */
@@ -363,9 +367,11 @@ public abstract class DataBaseActions {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4),
+                (cursor.getString(4) == null) ? "" : cursor.getString(4),
                 cursor.getString(5)
         );
+
+
     }
 
 

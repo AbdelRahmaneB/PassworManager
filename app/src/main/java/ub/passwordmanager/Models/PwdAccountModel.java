@@ -20,7 +20,7 @@ public class PwdAccountModel {
     }
 
 
-    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
+    public PwdAccountModel(String mWebSite, String mEmail, String mPassword, String otherInfo, String mLastUpdate) {
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
@@ -28,13 +28,13 @@ public class PwdAccountModel {
         this.mOtherInfo = otherInfo;
     }
 
-    public PwdAccountModel(int id,String mWebSite, String mEmail, String mPassword, String mLastUpdate, String otherInfo) {
+    public PwdAccountModel(int id, String mWebSite, String mEmail, String mPassword, String otherInfo, String mLastUpdate) {
         this.mId = id;
         this.mWebSite = mWebSite;
         this.mEmail = mEmail;
         this.mPassword = mPassword;
-        this.mLastUpdate = mLastUpdate;
         this.mOtherInfo = otherInfo;
+        this.mLastUpdate = mLastUpdate;
     }
 
     public PwdAccountModel(String mWebSite, String mEmail, String mLastUpdate) {
@@ -83,7 +83,11 @@ public class PwdAccountModel {
         this.mLastUpdate = mLastUpdate;
     }
 
-    public String getOtherInfo() {return mOtherInfo;}
+    public String getOtherInfo() {
+        return mOtherInfo;
+    }
 
-    public void setOtherInfo(String mOtherInfo) {this.mOtherInfo = mOtherInfo;}
+    public void setOtherInfo(String mOtherInfo) {
+        this.mOtherInfo = mOtherInfo;
+    }
 }

@@ -10,9 +10,7 @@ import java.util.TimerTask;
 
 import ub.passwordmanager.R;
 import ub.passwordmanager.appConfig.AppConfig;
-import ub.passwordmanager.dataBase.DB_Helper;
 import ub.passwordmanager.views.activities.LogIn;
-import ub.passwordmanager.views.activities.MainActivity;
 import ub.passwordmanager.views.activities.SignIn;
 
 /**
@@ -33,6 +31,9 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
+                //set the preference language
+                setLanguage();
+
                 // set The parameters for the Password Generator
                 setPwdGeneratorPreferences();
 
@@ -41,6 +42,26 @@ public class SplashScreen extends AppCompatActivity {
 
             }
         }, 2000);
+    }
+
+    /**
+     * Function to get and set the language selected by the user
+     * by default it's English
+     */
+    private void setLanguage(){
+        if (!AppConfig.getInstance().isKeyExist(
+                SplashScreen.this,
+                AppConfig.KEY_PREF_APP_LANGUAGE)){
+
+            String lang = AppConfig.getInstance().getSavedValueFromPreferences(
+              SplashScreen.this,
+                    AppConfig.KEY_PREF_STRING,
+                    AppConfig.KEY_PREF_APP_LANGUAGE
+            ).toString();
+
+            AppConfig.getInstance().setAppLanguage(SplashScreen.this,lang);
+
+        }
     }
 
     /**
@@ -109,4 +130,5 @@ public class SplashScreen extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

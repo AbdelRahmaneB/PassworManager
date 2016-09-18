@@ -29,6 +29,20 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/tertiary_text_dark" />
 
+    <ImageView
+        android:id="@+id/iv_pwd_gen_prof"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/app_logo_signIn2"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/password_gen"
+        android:tag="@string/hint_tagVisibility" />
+
 
     <View
         android:id="@+id/pi_separator1"
