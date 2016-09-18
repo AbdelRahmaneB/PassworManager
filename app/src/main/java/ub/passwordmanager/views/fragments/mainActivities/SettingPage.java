@@ -65,10 +65,6 @@ public class SettingPage extends Fragment {
             }
         });
 
-        // Deactivate the Floating button
-        FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.setVisibility(View.INVISIBLE);
-
         return view;
     }
 

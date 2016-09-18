@@ -47,9 +47,6 @@ public class AboutPage extends Fragment {
 
         myear.setText(this.creationYear);
 
-        FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.setVisibility(View.INVISIBLE);
-
         return view;
     }
 

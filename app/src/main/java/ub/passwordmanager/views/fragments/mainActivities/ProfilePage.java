@@ -79,12 +79,6 @@ public class ProfilePage extends Fragment {
         // Set the user information.
         this.getUserAccountInformation();
 
-
-        // Deactivate the Floating button
-        FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.setVisibility(View.INVISIBLE);
-
-
         return view;
     }
 

@@ -2,7 +2,9 @@ package ub.passwordmanager.views.fragments.mainActivities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,11 +25,13 @@ import ub.passwordmanager.R;
 import ub.passwordmanager.Services.Service_ImportExportDataBase;
 import ub.passwordmanager.Services.Service_PwdAccount;
 import ub.passwordmanager.views.adapters.MyRecyclerViewAdapter;
+import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
+import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 
 
 public class HomePage extends Fragment {
 
-    private RecyclerView.Adapter mAdapter;
+    private MyRecyclerViewAdapter mAdapter;
     private  View mCurrentView;
 
     public HomePage() {
@@ -71,8 +75,23 @@ public class HomePage extends Fragment {
         mAdapter.getItemCount();
         mRecyclerView.setAdapter(mAdapter);
 
+        setFloatingButton(view);
+
+
         return view;
     }
+
+    private void setFloatingButton(View view) {
+        // Add the even handler for the floating button
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.addItem();
+            }
+        });
+    }
+
 
     @Override
     public void onResume() {

@@ -24,6 +24,7 @@ import ub.passwordmanager.appConfig.AppConfig;
 import ub.passwordmanager.views.fragments.dialogs.CustomDialog;
 import ub.passwordmanager.views.fragments.dialogs.DeletePwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.EditPwdAccountDialog;
+import ub.passwordmanager.views.fragments.dialogs.NewPwdAccountDialog;
 import ub.passwordmanager.views.fragments.dialogs.ViewPwdAccountDialog;
 
 /**
@@ -111,6 +112,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             public void onClick(View view) {
                 // Open the deleting Dialog
                 configureDeleteDialog(mActivity, holder);
+                holder.mHideShowButtons(true);
             }
         });
 
@@ -118,6 +120,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             @Override
             public void onClick(View view) {
                 configureEditDialog(mActivity, holder);
+                holder.mHideShowButtons(true);
 
             }
         });
@@ -125,15 +128,12 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     /**
      * Function to add a new object to the CardView in a specific position
-     *
-     * @param dataObj : The data information "DataObject" for the CardView
      */
-    public void addItem(PwdAccountModel dataObj) {
-        mDataSet.add(getItemCount(), dataObj);
-        notifyItemInserted(getItemCount());
+    public void addItem() {
+        configureAddDialog(mActivity);
     }
 
-    public void itemChanged(int index){
+    public void itemChanged(int index) {
         notifyItemChanged(index);
     }
 
@@ -201,6 +201,16 @@ public class MyRecyclerViewAdapter extends RecyclerView
             mHolderActivity = holderActivity;
         }
 
+        public void mHideShowButtons(Boolean hideShow) {
+            if (hideShow) {
+                h_bt_Delete.setVisibility(View.INVISIBLE);
+                h_bt_Edit.setVisibility(View.INVISIBLE);
+            } else {
+                h_bt_Delete.setVisibility(View.VISIBLE);
+                h_bt_Edit.setVisibility(View.VISIBLE);
+            }
+
+        }
 
         @Override
         public void onClick(View v) {
@@ -216,6 +226,26 @@ public class MyRecyclerViewAdapter extends RecyclerView
         }
     }
 
+
+    private void configureAddDialog(final Activity holderActivity) {
+        // Create the Dialog to add a new Password Account
+        final CustomDialog myDialog = new NewPwdAccountDialog(holderActivity);
+        final AlertDialog dialog = myDialog.getDialog();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PwdAccountModel mPwd = myDialog.setDialogActionForNew();
+                if (mPwd != null) {
+                    mDataSet.add(getItemCount(), mPwd);
+                    notifyItemInserted(getItemCount());
+                    mActivity.recreate();
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Hide the delete button
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+    }
 
     /**
      * Function to configure the View Data Dialog

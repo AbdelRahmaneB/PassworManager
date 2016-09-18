@@ -33,6 +33,8 @@ import ub.passwordmanager.tools.PwdGenerator.PwdGenerator;
 public class NewPwdAccountDialog extends CustomDialog {
 
 
+    private PwdAccountModel mPwdAccountTosend;
+
     /**
      * Constructor of this class and initialise the "super class".
      *
@@ -72,14 +74,13 @@ public class NewPwdAccountDialog extends CustomDialog {
         final EditText mOther = (EditText) getCurrentDialog().findViewById(R.id.home_ae_t_otherInfo);
 
 
-
         if (isWebSiteEmpty(mWebSite.getText().toString())
                 & isUsernameEmpty(mEmail.getText().toString())
                 & isPasswordEmpty(mPwd.getText().toString())
                 ) {
 
             // Create object
-            String date = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
+            String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     .format(Calendar.getInstance().getTime());
 
             String otherInfo = "" + mOther.getText().toString();
@@ -92,9 +93,17 @@ public class NewPwdAccountDialog extends CustomDialog {
                     date
             );
 
+            mPwdAccountTosend = new PwdAccountModel(
+                    mWebSite.getText().toString(),
+                    mEmail.getText().toString(),
+                    mPwd.getText().toString(),
+                    otherInfo,
+                    date
+            );
+
             // save into database
             try {
-                return Service_PwdAccount.saveNewData(getCurrentActivity(),mPwdAccount);
+                return Service_PwdAccount.saveNewData(getCurrentActivity(), mPwdAccount);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -103,6 +112,13 @@ public class NewPwdAccountDialog extends CustomDialog {
         } else {
             return false;
         }
+    }
+
+    public PwdAccountModel setDialogActionForNew() {
+        if (setDialogAction()) {
+            return mPwdAccountTosend;
+        }
+        return null;
     }
 
     private Boolean isWebSiteEmpty(String value) {

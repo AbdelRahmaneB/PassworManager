@@ -76,11 +76,6 @@ public class PasswordGeneratorPage extends Fragment {
         PwdGenListAdapter PwdGenAdapter = new PwdGenListAdapter(getActivity(), mTitles, mDesc, mChecked);
         mOptionList.setAdapter(PwdGenAdapter);
 
-
-        // Deactivate the Floating button
-        FloatingActionButton mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        mFab.setVisibility(View.INVISIBLE);
-
         return view;
     }
 

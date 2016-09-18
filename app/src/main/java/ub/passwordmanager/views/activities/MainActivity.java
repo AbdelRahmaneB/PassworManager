@@ -41,32 +41,32 @@ public class MainActivity extends AppCompatActivity
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
-            // Add the even handler for the floating button
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // Create the Dialog to add a new Password Account
-                    final CustomDialog myDialog = new NewPwdAccountDialog(MainActivity.this);
-                    final AlertDialog dialog = myDialog.getDialog();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (myDialog.setDialogAction()) {
-                                dialog.dismiss();
-                                getSupportFragmentManager().beginTransaction()
-                                        .detach(activeFragment)
-                                        .attach(activeFragment)
-                                        .commit();
-                            }
-                        }
-                    });
-                    // Hide the delete button
-                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
-
-                }
-            });
+//            // Add the even handler for the floating button
+//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//            fab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    // Create the Dialog to add a new Password Account
+//                    final CustomDialog myDialog = new NewPwdAccountDialog(MainActivity.this);
+//                    final AlertDialog dialog = myDialog.getDialog();
+//                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (myDialog.setDialogAction()) {
+//                                dialog.dismiss();
+//                                getSupportFragmentManager().beginTransaction()
+//                                        .detach(activeFragment)
+//                                        .attach(activeFragment)
+//                                        .commit();
+//                            }
+//                        }
+//                    });
+//                    // Hide the delete button
+//                    dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+//
+//                }
+//            });
 
             // Add the navigation menu drawer to the view
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -233,9 +233,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        // set the visibility of the floating button
-        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setVisibility(View.VISIBLE);
     }
 
     /**

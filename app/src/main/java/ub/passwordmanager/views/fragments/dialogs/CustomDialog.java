@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.Window;
 
+import ub.passwordmanager.Models.PwdAccountModel;
 import ub.passwordmanager.R;
 
 /**
@@ -137,6 +138,7 @@ public abstract class CustomDialog {
      */
     public abstract Boolean setDialogAction();
 
+
     /**
      * @return The current used activity. Mostly used in the Sub-Classes
      */
@@ -149,5 +151,10 @@ public abstract class CustomDialog {
      */
     protected AlertDialog getCurrentDialog() {
         return this.mCurrentDialog;
+    }
+
+    public PwdAccountModel setDialogActionForNew(){
+        // Do nothing here it's gonna be override in the sub-classes
+        return null;
     }
 }
