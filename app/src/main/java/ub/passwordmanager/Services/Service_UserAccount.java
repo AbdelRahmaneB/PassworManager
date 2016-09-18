@@ -225,6 +225,27 @@ public class Service_UserAccount {
                 mRef);
     }
 
+
+    /**
+     * Function to change the date of the last connection of the user
+     *
+     * @param context : Application context
+     * @throws Exception
+     */
+    public void setLastConnection(Context context) throws Exception {
+        // get the account
+        UserAccountModel mUser = getAllAccounts(context).get(0);
+
+        // set the Date
+        mUser.setLastLogIn(
+                new SimpleDateFormat("dd/MM/yyyy",
+                        Locale.getDefault()).format(Calendar.getInstance().getTime()));
+
+        // save the object
+        saveModifiedData(context, DB_UserAccountTable.KEY_TABLE_NAME,
+                mUser, false);
+
+    }
     /* ************************** Private Methods *******************************/
     //---------------------------------------------------------------------------/
 

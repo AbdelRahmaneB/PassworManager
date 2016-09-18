@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ub.passwordmanager.R;
+import ub.passwordmanager.Services.Service_ImportExportDataBase;
 import ub.passwordmanager.Services.Service_UserAccount;
 import ub.passwordmanager.appConfig.AppConfig;
 
@@ -73,6 +74,8 @@ public class LogIn extends AppCompatActivity {
             AppConfig.getInstance().setCurrentPassword(tv_pwd.getText().toString());
 
             if (Service_UserAccount.getInstance().verifyAuthenticationData(getBaseContext())) {
+                // Change the last connection date
+                Service_UserAccount.getInstance().setLastConnection(getBaseContext());
 
                 // Start the MainActivity
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
